@@ -5,12 +5,10 @@ import pandas as pd
 import numpy as np
 
 
-os.chdir("..")
-
 bin_sizes = [5, 20, 40]
 
 antibiotic_dictionary_file = open("data/antibiotics.json", "r")
-antibiotic_dictionary = json.loads(antibiotic_dictionary_file)
+antibiotic_dictionary = json.load(antibiotic_dictionary_file)
 
 raw_folder = "data/unprocessed/raw/"
 binned_folder = "data/unprocessed/binned/"
@@ -34,6 +32,7 @@ for bin_size in bin_sizes:
 
         binned_bac = pd.DataFrame(np.column_stack([binned_malditof, bacteria[antibiotics]]))
         binned_bac.columns = list(binned_malditof.columns) + antibiotics
+        binned_bac["species"] = species
 
         file_name_ext = os.path.basename(file)
         file_name = os.path.splitext(file_name_ext)[0]
