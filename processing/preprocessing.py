@@ -1,5 +1,6 @@
 import os
 import json
+import argparse
 
 import pandas as pd
 import numpy as np
@@ -8,13 +9,24 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 
 
+parser = argparse.ArgumentParser()
+parser.add_argument("-f", "--Folder", help = "Wheter to process the raw or the binned folder")
+parser.add_argument("-m", "--Min", help = "Minimum amount of instances a class must have to be included")
+args = parser.parse_args()
+
 min_instances = 10
+if args.Min:
+    min_instances = args.Min
+
+unprocessed_folder = "data/unprocessed/raw/"
+processed_folder = "data/processed/raw/"
+if args.Folder:
+    unprocessed_folder = "data/unprocessed/"+args.Folder+"/"
+    processed_folder = "data/processed/"+args.Folder+"/"
 
 antibiotic_dictionary_file = open("data/antibiotics.json", "r")
 antibiotic_dictionary = json.load(antibiotic_dictionary_file)
 
-unprocessed_folder = "data/unprocessed/raw/"
-processed_folder = "data/processed/raw/"
 unprocessed_files = os.listdir(unprocessed_folder)
 unprocessed_file_paths = [unprocessed_folder + file for file in unprocessed_files]
 

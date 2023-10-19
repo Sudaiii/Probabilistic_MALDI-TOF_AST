@@ -136,9 +136,6 @@ def tsne_scatterplot(x, y, perplexities, class_names, output_file, n_iter=1000):
 
 
 
-antibiotic_dictionary_file = open("data/antibiotics.json", "r")
-antibiotic_dictionary = json.load(antibiotic_dictionary_file)
-
 processed_raw_folder = "data/processed/raw/"
 output_folder = "exploration/outputs/"
 processed_raw_files = os.listdir(processed_raw_folder)
@@ -160,27 +157,36 @@ for file in processed_raw_file_paths:
 
     class_count = profile.value_counts().count()
 
-    print("     Single-Label Class Distribution...")
-    single_label_class_distribution(bacteria, antibiotics, base_name+"_single_label_class_dist.png")
-    print("     Aggregated-Label Class Distribution...")
-    agg_label_class_distribution(bacteria, antibiotics, base_name+"_agg_label_class_dist.csv")
+    if not os.path.exists(base_name+"_single_label_class_dist.png"):
+        print("     Single-Label Class Distribution...")
+        single_label_class_distribution(bacteria, antibiotics, base_name+"_single_label_class_dist.png")
 
-    print("     Label Correlation...")
-    numeric_profile = profile.replace({'S': 0, 'R': 1})
-    label_correlation(numeric_profile, base_name+"_corr.png")
+    if not os.path.exists(base_name+"_agg_label_class_dist.csv"):
+        print("     Aggregated-Label Class Distribution...")
+        agg_label_class_distribution(bacteria, antibiotics, base_name+"_agg_label_class_dist.csv")
+
+    if not os.path.exists(base_name+"_corr.png"):
+        print("     Label Correlation...")
+        numeric_profile = profile.replace({'S': 0, 'R': 1})
+        label_correlation(numeric_profile, base_name+"_corr.png")
+
 
     print("     Antibiotic Mean Mass Spectra Correlation...")
     meltdata = bacteria.melt(antibiotics, var_name='Da', value_name='Value')
     meltdata["Da"] = meltdata["Da"].astype(str).astype(int)
 
     for antibiotic in antibiotics:
-        mean_mass_spectra_lineplot(meltdata, antibiotic, base_name+"_"+antibiotic+"_lineplot.png")
+        if not os.path.exists(base_name+"_"+antibiotic+"_lineplot.png"):
+            mean_mass_spectra_lineplot(meltdata, antibiotic, base_name+"_"+antibiotic+"_lineplot.png")
 
-    print("     Aggregated Antibiotic Mean Mass Spectra Correlation...")
-    meltdata_agg = meltdata
-    meltdata_agg["agg_class"] = meltdata[antibiotics].agg(''.join, axis=1)
-    meltdata_agg["agg_class"] = meltdata_agg["agg_class"].astype(str)
-    mean_mass_spectra_lineplot(meltdata_agg, "agg_class", base_name+"_agg_class"+"_lineplot.png")
+
+    if not os.path.exists(base_name+"_agg_class"+"_lineplot.png"):
+        print("     Aggregated Antibiotic Mean Mass Spectra Correlation...")
+        meltdata_agg = meltdata
+        meltdata_agg["agg_class"] = meltdata[antibiotics].agg(''.join, axis=1)
+        meltdata_agg["agg_class"] = meltdata_agg["agg_class"].astype(str)
+        mean_mass_spectra_lineplot(meltdata_agg, "agg_class", base_name+"_agg_class"+"_lineplot.png")
+
 
     profile_agg = pd.DataFrame()
     profile_agg["Class"] = bacteria[antibiotics].agg(''.join, axis=1)
@@ -189,11 +195,17 @@ for file in processed_raw_file_paths:
     lc.fit(profile_agg.values.ravel())
     profile_agg_lc = lc.transform(profile_agg.values.ravel())
 
-    print("     PCA Scatter Plot...")
-    pca_scatterplot(malditof, profile_agg_lc, lc.inverse_transform(range(class_count)), base_name+"_pca.png")
+    if not os.path.exists(base_name+"_pca.png"):
+        print("     PCA Scatter Plot...")
+        pca_scatterplot(malditof, profile_agg_lc, lc.inverse_transform(range(class_count)), base_name+"_pca.png")
 
-    print("     T-SNE Scatter Plot...")
-    pca_scatterplot(malditof, profile_agg_lc, lc.inverse_transform(range(class_count)), base_name+"_tsne.png")
+    if not os.path.exists(base_name+"_tsne.png"):
+        print("     T-SNE Scatter Plot...")
+        pca_scatterplot(malditof, profile_agg_lc, lc.inverse_transform(range(class_count)), base_name+"_tsne.png")
 
 
     print("Done.\n")
+
+
+
+
