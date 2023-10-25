@@ -1,6 +1,6 @@
 import os
 import itertools
-import json
+import argparse
 import seaborn as sns
 import pandas as pd
 import numpy as np
@@ -21,6 +21,8 @@ BASE_PALETTE = sns.color_palette("tab20")
 
 
 def single_label_class_distribution(data, labels, output_file):
+    plt.clf()
+
     sns.set(rc={'figure.figsize':(5, 5)})
     sns.set(font_scale=1.2)
     class_dist = sns.heatmap(data[labels].apply(pd.Series.value_counts).T, annot=True, fmt="d", linewidth=.5, cmap="rocket_r")
@@ -30,6 +32,8 @@ def single_label_class_distribution(data, labels, output_file):
 
 
 def agg_label_class_distribution(data, labels, output_file):
+    plt.clf()
+
     value_counts = data[labels].value_counts()
     df_value_counts = value_counts.rename("Count").to_frame().reset_index()
 
@@ -47,6 +51,8 @@ def agg_label_class_distribution(data, labels, output_file):
 
 
 def label_correlation(y, output_file):
+    plt.clf()
+
     sns.set(rc={'figure.figsize':(7, 7)})
     corr = y.corr()
     mask = np.triu(np.ones_like(corr, dtype=bool))
@@ -58,6 +64,8 @@ def label_correlation(y, output_file):
 
 
 def mean_mass_spectra_lineplot(data, label, output_file):
+    plt.clf()
+
     lower_limit = int(malditof.columns[0])
     upper_limit = int(malditof.columns[-1])
     jump = int((upper_limit - lower_limit + 1) / 20)
@@ -90,6 +98,8 @@ def mean_mass_spectra_lineplot(data, label, output_file):
 
 
 def pca_scatterplot(x, y, class_names, output_file):
+    plt.clf()
+
     class_count = np.unique(y).size
     palette = BASE_PALETTE[:class_count]
 
@@ -110,7 +120,9 @@ def pca_scatterplot(x, y, class_names, output_file):
     fig.savefig(output_file, bbox_inches = "tight")
 
 
-def tsne_scatterplot(x, y, perplexities, class_names, output_file, n_iter=1000):
+def tsne_scatterplot(x, y, perplexities, class_names, output_file):
+    plt.clf()
+
     class_count = np.unique(y).size
     palette = BASE_PALETTE[:class_count]
 
@@ -136,13 +148,22 @@ def tsne_scatterplot(x, y, perplexities, class_names, output_file, n_iter=1000):
 
 
 
+parser = argparse.ArgumentParser()
+parser.add_argument("-f", "--Folder", help = "What folder to get the data from")
+parser.add_argument("-m", "--Mode", help = "Whether to use data as is (no argument) or to select specific features based on a .txt file")
+args = parser.parse_args()
+
 processed_raw_folder = "data/processed/raw/"
+if args.Folder:
+    processed_raw_folder = "data/processed/"+args.Folder+"/"
 output_folder = "exploration/outputs/"
 processed_raw_files = os.listdir(processed_raw_folder)
 processed_raw_train_files = [x for x in processed_raw_files if "test" not in x]
 processed_raw_file_paths = [processed_raw_folder + file for file in processed_raw_train_files]
 
 for file in processed_raw_file_paths:
+    plt.close("all")
+    
     print("Processing", file)
     bacteria = pd.read_csv(file)
 
@@ -154,6 +175,17 @@ for file in processed_raw_file_paths:
     antibiotics = bacteria.columns.drop(malditof.columns)
     bacteria[antibiotics] = bacteria[antibiotics].replace([0.0, 1.0], ["S", "R"])
     profile = bacteria[antibiotics]
+
+    if args.Mode == "selected":
+        print("Using selected features")
+        with open("data/features/"+file_name+"_selected_features.txt") as file:
+            selected_features = file.read().split(",")
+        selected_features.pop()
+
+        base_name = output_folder+file_name+"_selected"
+
+        malditof = malditof[selected_features]
+        bacteria = bacteria[malditof.columns.append(antibiotics)]    
 
     class_count = profile.value_counts().count()
 
@@ -201,7 +233,7 @@ for file in processed_raw_file_paths:
 
     if not os.path.exists(base_name+"_tsne.png"):
         print("     T-SNE Scatter Plot...")
-        pca_scatterplot(malditof, profile_agg_lc, lc.inverse_transform(range(class_count)), base_name+"_tsne.png")
+        tsne_scatterplot(malditof, profile_agg_lc, [20], lc.inverse_transform(range(class_count)), base_name+"_tsne.png")
 
 
     print("Done.\n")

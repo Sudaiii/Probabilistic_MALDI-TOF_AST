@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-f", "--Folder", help = "Wheter to process the raw or the binned folder")
+parser.add_argument("-f", "--Folder", help = "What folder to get the data from")
 parser.add_argument("-m", "--Min", help = "Minimum amount of instances a class must have to be included")
 args = parser.parse_args()
 
