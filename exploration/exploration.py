@@ -153,15 +153,15 @@ parser.add_argument("-f", "--Folder", help = "What folder to get the data from")
 parser.add_argument("-m", "--Mode", help = "Whether to use data as is (no argument) or to select specific features based on a .txt file")
 args = parser.parse_args()
 
-processed_raw_folder = "data/processed/raw/"
+input_folder = "data/processed/raw/"
 if args.Folder:
-    processed_raw_folder = "data/processed/"+args.Folder+"/"
+    input_folder = "data/processed/"+args.Folder+"/"
 output_folder = "exploration/outputs/"
-processed_raw_files = os.listdir(processed_raw_folder)
-processed_raw_train_files = [x for x in processed_raw_files if "test" not in x]
-processed_raw_file_paths = [processed_raw_folder + file for file in processed_raw_train_files]
+input_files = os.listdir(input_folder)
+input_train_files = [x for x in input_files if "test" not in x and not os.path.isdir(os.path.join(input_folder, x))]
+input_file_paths = [input_folder + file for file in input_train_files]
 
-for file in processed_raw_file_paths:
+for file in input_file_paths:
     plt.close("all")
     
     print("Processing", file)
