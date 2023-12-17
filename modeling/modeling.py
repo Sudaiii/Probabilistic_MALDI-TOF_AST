@@ -157,7 +157,7 @@ def confusion_matrix(test_y, pred, output_file):
     plt.savefig(output_file)
 
 
-def classificate(model, test_x, test_y, output_results_file, output_confusion_file):
+def classify(model, test_x, test_y, output_results_file, output_confusion_file):
     pred = model.predict(test_x)
     metrics_report(test_y, pred, output_results_file)
     confusion_matrix(test_y, pred, output_confusion_file)
@@ -282,7 +282,7 @@ for file in input_file_paths:
 
     if not os.path.exists(base_name+"_results.txt") or not os.path.exists(base_name+"_confusion_matrix.png"):
         print("     Classification...")
-        classificate(model, test_x, test_y, base_name+"_results.txt", base_name+"_confusion_matrix.png")
+        classify(model, test_x, test_y, base_name+"_results.txt", base_name+"_confusion_matrix.png")
 
     if not os.path.exists(base_name+"_proba.txt"):
         print("     Probability prediction...")

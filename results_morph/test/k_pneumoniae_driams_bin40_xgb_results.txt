@@ -1,0 +1,9 @@
+Main metrics:
+ Hamming Loss: 0.07598920863309352
+ Accuracy: 0.802158273381295
+ F1 Score (Weighted): 0.908175023983266
+================================================
+Other metrics:
+ F1 Score (Unweighted): 0.5749855028802163
+ F1 Score (sklearn Unweighted): 0.19259049773755657
+ F1 Score (sklearn Weighted): 0.35315328054298645
