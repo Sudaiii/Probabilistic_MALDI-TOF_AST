@@ -153,7 +153,7 @@ parser.add_argument("-f", "--Folder", help = "What folder to get the data from")
 parser.add_argument("-m", "--Mode", help = "Whether to use data as is (no argument) or to select specific features based on a .txt file")
 args = parser.parse_args()
 
-input_folder = "data/processed/raw/"
+input_folder = "data/processed/raw/standard"
 if args.Folder:
     input_folder = "data/processed/"+args.Folder+"/"
 output_folder = "exploration/outputs/"

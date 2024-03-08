@@ -5,21 +5,21 @@ import pandas as pd
 import numpy as np
 
 
-bin_sizes = [5, 20, 40]
+bin_sizes = [5, 20]
 
 antibiotic_dictionary_file = open("data/antibiotics.json", "r")
 antibiotic_dictionary = json.load(antibiotic_dictionary_file)
 
-raw_folder = "data/unprocessed/raw/"
+unbinned_folder = "data/unprocessed/unbinned/"
 binned_folder = "data/unprocessed/binned/"
-raw_files = os.listdir(raw_folder)
-raw_file_paths = [raw_folder + file for file in raw_files]
+unbinned_files = os.listdir(unbinned_folder)
+unbinned_file_paths = [unbinned_folder + file for file in unbinned_files]
 
 for bin_size in bin_sizes:
-    print("Binning:", raw_file_paths)
+    print("Binning:", unbinned_file_paths)
     print("Bin Size:", bin_size)
 
-    for file in raw_file_paths:
+    for file in unbinned_file_paths:
         bacteria = pd.read_csv(file)
 
         species = bacteria["species"][0]

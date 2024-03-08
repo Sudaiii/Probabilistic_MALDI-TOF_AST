@@ -5,30 +5,23 @@ import argparse
 import pandas as pd
 import numpy as np
 
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.model_selection import train_test_split
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-f", "--Folder", help = "What folder to get the data from")
-parser.add_argument("-m", "--Min", help = "Minimum amount of instances a class must have to be included")
-parser.add_argument("-n", "--Norm", help = "Data normalization method. Supports \"none\" and \"min-max\"")
+parser.add_argument("-f", "--Folder", help="What folder to get the data from", default="unbinned")
+parser.add_argument("-m", "--Min", help="Minimum amount of instances a class must have to be included", default=10)
+parser.add_argument("-n", "--Norm", help="Data normalization method. Supports \"none\",\"min-max\" and \"standard\"", required=True)
 args = parser.parse_args()
 
-min_instances = 10
-if args.Min:
-    min_instances = args.Min
+min_instances = args.Min
 
-unprocessed_folder = "data/unprocessed/raw/"
-processed_folder = "data/processed/raw/none/"
-if args.Folder:
-    unprocessed_folder = "data/unprocessed/"+args.Folder+"/"
-    processed_folder = "data/processed/"+args.Folder+"/"
-    if args.Norm:
-        processed_folder = processed_folder+args.Norm+"/"
-else:
-    if args.Norm:
-        processed_folder = "data/processed/raw/"+args.Norm+"/"
+unprocessed_folder = "data/unprocessed/"+args.Folder+"/"
+processed_folder = "data/processed/"+args.Folder+"/"
+if args.Norm:
+    processed_folder = processed_folder+args.Norm+"/"
+
 
 if not os.path.exists(processed_folder):
     os.makedirs(processed_folder)
@@ -68,10 +61,15 @@ for file in unprocessed_file_paths:
     y = reduced_bac[antibiotics]
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=0, stratify=y[antibiotics])
 
-    if args.Norm and args.Norm == "min-max":
-        minmax_scaler = MinMaxScaler()
-        x_train = minmax_scaler.fit_transform(x_train)
-        x_test = minmax_scaler.transform(x_test)
+    if args.Norm:
+        if args.Norm == "min-max":
+            minmax_scaler = MinMaxScaler()
+            x_train = minmax_scaler.fit_transform(x_train)
+            x_test = minmax_scaler.transform(x_test)
+        elif args.Norm == "standard":
+            standard_scaler = StandardScaler()
+            x_train = standard_scaler.fit_transform(x_train)
+            x_test = standard_scaler.transform(x_test)
 
     train = pd.DataFrame(np.column_stack([x_train, y_train]))
     train.columns = list(malditof.columns) + antibiotics

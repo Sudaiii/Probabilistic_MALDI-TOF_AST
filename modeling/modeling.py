@@ -9,7 +9,7 @@ import seaborn as sns
 
 from sklearn.multioutput import ClassifierChain
 from sklearn.metrics import (f1_score, multilabel_confusion_matrix,
-                             accuracy_score, hamming_loss, jaccard_score, make_scorer)
+                             accuracy_score, hamming_loss, make_scorer)
 from sklearn.model_selection import train_test_split, cross_validate
 
 
@@ -18,11 +18,11 @@ from skopt.space import Real, Categorical, Integer
 
 import xgboost as xgb
 from sklearn.svm import SVC
-from tabpfn import TabPFNClassifier
+# from tabpfn import TabPFNClassifier
 
 from joblib import dump, load
 
-
+np.int = int
 N_CV = 5
 
 def multilabel_f1_wrapper(true, pred, average="weighted"):
@@ -217,14 +217,18 @@ def probability(model, test_x, test_y, output_file):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-f", "--Folder", help="What folder to get the data from", default="raw")
-parser.add_argument("-m", "--Mode", help="Whether to use data as is (no argument) or to select specific features based on a .txt file", choices=["raw", "selected"])
+parser.add_argument("-f", "--Folder", help="What folder to get the data from", default="unbinned", choices=["unbinned", "binned"])
+parser.add_argument("-m", "--Mode", 
+                    help="Whether to use data as is (no argument) or to select specific features based on a .txt file", default="normal", choices=["normal", "selected"]
+)
+parser.add_argument("-n", "--Norm", help="Data normalization method. Supports \"none\",\"min-max\" and \"standard\"", default="standard", choices=["none", "min-max", "standard"])
+
 parser.add_argument("-a", "--Algorithm", help="ML Algorithm to use (options: xgb, svc, tabpfn, nn)", choices=["xgb", "svc", "tabpfn", "nn"], required=True)
 args = parser.parse_args()
 
-input_folder = "data/processed/"+args.Folder+"/"
+input_folder = "data/processed/"+args.Folder+"/"+args.Norm+"/"
 if args.Algorithm == "tabpfn":
-    input_folder = "data/processed/raw/none/"
+    input_folder = "data/processed/unbinned/none/"
 
 output_folder = "modeling/results/"
 input_files = os.listdir(input_folder)
@@ -265,7 +269,7 @@ for file in input_file_paths:
         test_x = test_x[selected_features]
 
     base_name = base_name+"_"+args.Algorithm
-    model_file = "modeling/models/"+file_name+"_"+args.Algorithm+".joblib"
+    model_file = "modeling/models/"+file_name+"_"+args.Algorithm+"_"+args.Norm+".joblib"
 
     if not os.path.exists(model_file) or not os.path.exists(base_name+"_cv.txt"):
         print("     Model training...")
