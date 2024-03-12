@@ -57,7 +57,7 @@ def optimize(data_x, data_y, algorithm, output_model_file, output_validation_fil
                 "base_estimator__gamma": Real(1e-6, 10, prior="log-uniform"),
                 "base_estimator__eta": Real(1e-6, 1, prior="log-uniform")
             },
-            n_iter=250,
+            n_iter=200,
             cv=N_CV,
             random_state=0,
             n_jobs=10,
@@ -268,7 +268,7 @@ for file in input_file_paths:
         train_x = train_x[selected_features]
         test_x = test_x[selected_features]
 
-    base_name = base_name+"_"+args.Algorithm
+    base_name = base_name+"_"+args.Algorithm+"_"+args.Norm
     model_file = "modeling/models/"+file_name+"_"+args.Algorithm+"_"+args.Norm+".joblib"
 
     if not os.path.exists(model_file) or not os.path.exists(base_name+"_cv.txt"):
