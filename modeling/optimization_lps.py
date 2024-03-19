@@ -7,7 +7,7 @@ from skopt.space import Real, Categorical, Integer
 
 from sklearn.neural_network import MLPClassifier
 from sklearn.base import BaseEstimator, ClassifierMixin
-
+from sklearn.ensemble import RandomForestClassifier
 import xgboost as xgb
 from sklearn.svm import SVC
 
@@ -53,6 +53,25 @@ def optimize_svc(n_cv, n_iter):
     )
     return bayesopt
 
+
+def optimize_rf(n_cv, n_iter):
+    bayesopt = BayesSearchCV(
+        RandomForestClassifier(),
+        {
+            "n_estimators": Integer(1, 1000),
+            "max_depth": Integer(1, 10),
+            "min_samples_leaf": Integer(1, 10),
+            "bootstrap": Categorical([False, True]),
+            "random_state": Categorical([0])
+        },
+        n_iter=n_iter,
+        cv=n_cv,
+        random_state=0,
+        n_jobs=10,
+        n_points=2,
+        verbose=1
+    )
+    return bayesopt
 
 class MLPWrapper(BaseEstimator, ClassifierMixin):
     def __init__(

@@ -162,3 +162,54 @@ def confusion_matrix(true, pred, label_names, output_file):
         sns.heatmap(ax=axes[i], data=cm[i], annot=True, fmt='d', cbar=None, cmap="Blues", xticklabels=["S", "R"], yticklabels=["S", "R"]).set(title=label_names[i])
     
     plt.savefig(output_file)
+
+
+def proba_report(test_labels, proba, label_names, output_file):
+    label_names = test_labels.columns
+    
+    output_text = []
+    for antibiotic in range(len(label_names)):
+        count_tp = 0
+        count_tn = 0
+        count_fp = 0
+        count_fn = 0
+        sum_tp = 0
+        sum_tn = 0
+        sum_fp = 0
+        sum_fn = 0
+        for i in range(len(proba[:, antibiotic])):
+            disc_pred = int(proba[i, antibiotic] > 0.5)
+            if disc_pred == 1:
+                if disc_pred == test_labels.iloc[i, antibiotic]:
+                    count_tp += 1
+                    sum_tp += proba[i, antibiotic]
+                else:
+                    count_fp += 1
+                    sum_fp += proba[i, antibiotic]
+            else:
+                if disc_pred == test_labels.iloc[i, antibiotic]:
+                    count_tn += 1
+                    sum_tn += proba[i, antibiotic]
+                else:
+                    count_fn += 1
+                    sum_fn += proba[i, antibiotic]
+        output_text.append("Results for antibiotic " + label_names[antibiotic] + "\n")
+        if count_tp == 0:
+            output_text.append(" Mean TP: None\n")
+        else: 
+            output_text.append(" Mean TP: " + str(sum_tp/count_tp) + "\n")
+        if count_tn == 0:
+            output_text.append(" Mean TN: None\n")
+        else: 
+            output_text.append(" Mean TN: " + str(sum_tn/count_tn) + "\n")
+        if count_fp == 0:
+            output_text.append(" Mean FP: None\n")
+        else: 
+            output_text.append(" Mean FP: " + str(sum_fp/count_fp) + "\n")
+        if count_fn == 0:
+            output_text.append(" Mean FN: None\n")
+        else: 
+            output_text.append(" Mean FN: " + str(sum_fn/count_fn) + "\n")
+    output = open(output_file, "w") 
+    output.writelines(output_text)
+    output.close()

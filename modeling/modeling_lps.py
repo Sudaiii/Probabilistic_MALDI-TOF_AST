@@ -6,8 +6,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from problem_transformation import agg_columns
-from evaluation import multilabel_f1_wrapper, metrics_report, confusion_matrix
-from lps_optimization import optimize_svc, optimize_xgb
+from evaluation import multilabel_f1_wrapper, metrics_report, confusion_matrix, proba_report
+from optimization_lps import optimize_svc, optimize_xgb, optimize_mlp, optimize_rf
 from sklearn.metrics import make_scorer
 
 from sklearn.preprocessing import LabelEncoder
@@ -19,7 +19,6 @@ from joblib import dump, load
 np.int = int
 N_CV = 5
 N_ITER = 200
-MODE = "lps"
 lc = LabelEncoder()
 
 
@@ -48,8 +47,10 @@ def optimize(train_features, train_labels, algorithm, output_model_file, output_
         bayesopt = optimize_xgb(N_CV, N_ITER)
     elif algorithm == "svc":
         bayesopt = optimize_svc(N_CV, N_ITER)
+    elif algorithm == "rf":
+        bayesopt = optimize_rf(N_CV, N_ITER)
     elif algorithm == "mlp":
-        bayesopt = optimize_svc(N_CV, N_ITER)
+        bayesopt = optimize_mlp(N_CV, N_ITER)
     bayesopt.scoring = make_scorer(lps_f1_wrapper)
     bayesopt.fit(train_features, train_labels)
     dump(bayesopt.best_estimator_, output_model_file)
@@ -71,72 +72,76 @@ def optimize(train_features, train_labels, algorithm, output_model_file, output_
     output.close() 
 
 
-def classify(model, test_features, test_labels, label_names, output_results_file, output_confusion_file):
-    pred = model.predict(test_features)
-    test_labels = lps_to_multilabel_list(test_labels)
-    pred = lps_to_multilabel_list(pred)
+def report(test_labels, pred, label_names, output_results_file, output_confusion_file):
     metrics_report(test_labels, pred, label_names, output_results_file)
     confusion_matrix(test_labels, pred, label_names, output_confusion_file)
 
 
-def probability(model, test_features, test_labels, output_file):
-    proba = model.predict_proba(test_features)
-    antibiotics = test_labels.columns
-    
-    output_text = []
-    for antibiotic in range(len(antibiotics)):
-        count_tp = 0
-        count_tn = 0
-        count_fp = 0
-        count_fn = 0
-        sum_tp = 0
-        sum_tn = 0
-        sum_fp = 0
-        sum_fn = 0
-        for i in range(len(proba[:, antibiotic])):
-            disc_pred = int(proba[i, antibiotic] > 0.5)
-            if disc_pred == 1:
-                if disc_pred == test_labels.iloc[i, antibiotic]:
-                    count_tp += 1
-                    sum_tp += proba[i, antibiotic]
-                else:
-                    count_fp += 1
-                    sum_fp += proba[i, antibiotic]
-            else:
-                if disc_pred == test_labels.iloc[i, antibiotic]:
-                    count_tn += 1
-                    sum_tn += proba[i, antibiotic]
-                else:
-                    count_fn += 1
-                    sum_fn += proba[i, antibiotic]
-        output_text.append("Results for antibiotic " + antibiotics[antibiotic] + "\n")
-        if count_tp == 0:
-            output_text.append(" Mean TP: None\n")
-        else: 
-            output_text.append(" Mean TP: " + str(sum_tp/count_tp) + "\n")
-        if count_tn == 0:
-            output_text.append(" Mean TN: None\n")
-        else: 
-            output_text.append(" Mean TN: " + str(sum_tn/count_tn) + "\n")
-        if count_fp == 0:
-            output_text.append(" Mean FP: None\n")
-        else: 
-            output_text.append(" Mean FP: " + str(sum_fp/count_fp) + "\n")
-        if count_fn == 0:
-            output_text.append(" Mean FN: None\n")
-        else: 
-            output_text.append(" Mean FN: " + str(sum_fn/count_fn) + "\n")
-    output = open(output_file, "w") 
-    output.writelines(output_text)
-    output.close()
+
+def multilabel(train_features, train_labels, test_features, base_name, model_file):
+    model_file = model_file+".joblib"
+
+    train_y = agg_columns(train_labels)
+
+    lc.fit(train_y.values.ravel())
+    train_y = lc.transform(train_y.values.ravel())
+
+    if not os.path.exists(model_file) or not os.path.exists(base_name+"_cv.txt"):
+        print("     Model training...")
+        optimize(train_features, train_y, args.Algorithm, model_file, base_name+"_cv.txt")
+
+    model = load(model_file) 
+
+    pred = model.predict(test_features)
+    pred = lps_to_multilabel_list(pred)
+
+    # proba = model.proba(test_x)
+
+    return pred
+
+
+def independent(train_features, train_labels, test_features, antibiotics, base_name, model_file):
+    classifications = []
+    probabilities = []
+
+    for antibiotic in antibiotics:
+        antibiotic_base_name = base_name+"_"+antibiotic
+        antibiotic_model_file = model_file+"_"+antibiotic+".joblib"
+
+        antibiotic_train_y = train_labels[antibiotic]
+
+        if not os.path.exists(antibiotic_model_file) or not os.path.exists(antibiotic_base_name+"_cv.txt"):
+            print("     Model training...")
+            optimize(train_features, antibiotic_train_y, args.Algorithm, antibiotic_model_file, antibiotic_base_name+"_cv.txt")
+
+        model = load(antibiotic_model_file) 
+
+        classifications = model.pred(test_features)
+
+        # probabilities = model.proba(test_x)
+
+    pred = []
+    for i in range(len(classifications[0])):
+        pred_instance = []
+        for j in range(len(classifications)):
+            pred_instance.append(classifications[j][i])
+        pred.append(pred_instance)
+
+    return pred
+
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-f", "--Folder", help="What folder to get the data from", default="binned", choices=["unbinned", "binned"])
     parser.add_argument("-n", "--Norm", help="Data normalization method. Supports \"none\",\"min-max\" and \"standard\"", default="standard", choices=["none", "min-max", "standard"])
-    parser.add_argument("-a", "--Algorithm", help="ML Algorithm to use (options: xgb, svc, mlp)", choices=["xgb", "svc", "mlp"], required=True)
+    parser.add_argument("-a", "--Algorithm", help="ML Algorithm to use (options: xgb, svc, rf, mlp)", choices=["xgb", "svc", "rf", "mlp"], required=True)
+    parser.add_argument("-m", "--Multilabel", help="Evaluate all labels through a single model using LPS or not", default=True, choices=[True, False])
     args = parser.parse_args()
+    
+    mode = "independent"
+    if args.Multilabel:
+        mode = "lps"
 
     input_folder = "data/processed/"+args.Folder+"/"+args.Norm+"/"
 
@@ -146,6 +151,8 @@ if __name__ == "__main__":
     input_file_paths = [input_folder + file for file in input_train_files]
 
     for file in input_file_paths:
+        if args.Algorithm == "mlp" and "bin20" not in file:
+            continue
         lc = LabelEncoder()
         plt.close("all")
         
@@ -156,8 +163,8 @@ if __name__ == "__main__":
         file_name_ext = os.path.basename(file)
         file_name = os.path.splitext(file_name_ext)[0].replace("train_", "")
 
-        base_name = output_folder+file_name+"_"+args.Algorithm+"_"+args.Norm+"_"+MODE
-        model_file = "modeling/models/"+file_name+"_"+args.Algorithm+"_"+args.Norm+"_"+MODE+".joblib"
+        base_name = output_folder+file_name+"_"+args.Algorithm+"_"+args.Norm+"_"+mode
+        model_file = "modeling/models/"+file_name+"_"+args.Algorithm+"_"+args.Norm+"_"+mode
 
         antibiotics = train_bac.columns.drop(train_bac[train_bac.columns.drop(list(train_bac.filter(regex='[^0-9]')))].columns)
 
@@ -167,29 +174,22 @@ if __name__ == "__main__":
         train_y = train_bac[antibiotics].astype(int)
         test_y = test_bac[antibiotics].astype(int)
 
-        train_y = agg_columns(train_y)
-        test_y = agg_columns(test_y)
-
-        lc.fit(train_y.values.ravel())
-        train_y = lc.transform(train_y.values.ravel())
-        test_y = lc.transform(test_y.values.ravel())
-
-        if not os.path.exists(model_file) or not os.path.exists(base_name+"_cv.txt"):
-            print("     Model training...")
-            optimize(train_x, train_y, args.Algorithm, model_file, base_name+"_cv.txt")
-
-        model = load(model_file) 
+        if args.Multilabel:
+            pred = multilabel(train_x, train_y, test_y, antibiotics, base_name, model_file)
+        else:
+            pred = independent(train_x, train_y, test_y, antibiotics, base_name, model_file)
 
         if not os.path.exists(base_name+"_results.txt") or not os.path.exists(base_name+"_confusion_matrix.png"):
             print("     Classification...")
-            classify(model, test_x, test_y, antibiotics, base_name+"_results.txt", base_name+"_confusion_matrix.png")
+            report(test_y, pred, antibiotics, base_name+"_results.txt", base_name+"_confusion_matrix.png")
+                
 
-        if not os.path.exists(base_name+"_proba.txt"):
-            print("     Probability prediction...")
-            if args.Algorithm == "svc":
-                print("To-do")
-            else:
-                probability(model, test_x, test_y, base_name+"_proba.txt")
+        # if not os.path.exists(base_name+"_proba.txt"):
+        #     print("     Probability prediction...")
+        #     if args.Algorithm == "svc" or args.Algorithm == "mlp":
+        #         print("To-do")
+        #     else:
+        #         proba_report(proba, test_y, antibiotics, base_name+"_proba.txt")
 
         print("Done.\n")
 
