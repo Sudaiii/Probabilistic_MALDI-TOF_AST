@@ -71,13 +71,6 @@ def optimize(train_features, train_labels, algorithm, output_model_file, output_
     output.writelines(output_text)
     output.close() 
 
-
-def report(test_labels, pred, label_names, output_results_file, output_confusion_file):
-    metrics_report(test_labels, pred, label_names, output_results_file)
-    confusion_matrix(test_labels, pred, label_names, output_confusion_file)
-
-
-
 def multilabel(train_features, train_labels, test_features, base_name, model_file):
     model_file = model_file+".joblib"
 
@@ -174,15 +167,16 @@ if __name__ == "__main__":
         train_y = train_bac[antibiotics].astype(int)
         test_y = test_bac[antibiotics].astype(int)
 
+        print("     Optimization...")
         if args.Multilabel:
             pred = multilabel(train_x, train_y, test_y, antibiotics, base_name, model_file)
         else:
             pred = independent(train_x, train_y, test_y, antibiotics, base_name, model_file)
 
+        print("     Results...")
         if not os.path.exists(base_name+"_results.txt") or not os.path.exists(base_name+"_confusion_matrix.png"):
-            print("     Classification...")
-            report(test_y, pred, antibiotics, base_name+"_results.txt", base_name+"_confusion_matrix.png")
-                
+            metrics_report(test_y, pred, antibiotics, base_name+"_results.txt")
+            confusion_matrix(test_y, pred, antibiotics, base_name+"_confusion_matrix.png")                
 
         # if not os.path.exists(base_name+"_proba.txt"):
         #     print("     Probability prediction...")

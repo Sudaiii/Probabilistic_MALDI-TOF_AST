@@ -57,7 +57,10 @@ def metrics_report(true, pred, label_names, output_file):
     f1u = 0
     f1w = 0
     
-    print("Individual Results:")
+    output_text = ""
+
+    output_text = output_text + "\n" + "Individual Results:"
+
     individual_results = {}
     label_n = len(label_names)
     for i in range(label_n):
@@ -87,14 +90,15 @@ def metrics_report(true, pred, label_names, output_file):
             "F1 Score Unweighted": label_f1u,
             "F1 Score Weighted": label_f1w,
         }
-        print("---"+str(label_names[i])+"---")
+        output_text = output_text + "\n" + "---"+str(label_names[i])+"---"
         for j in label_results:
-            print("", j,":",label_results[j])
+            output_text = output_text + "\n" + " "+ j + ":" + label_results[j]
         individual_results[label_names[i]] = label_results
     
 
-    print("=======================")
-    print("Multi-label Results:")
+    output_text = output_text + "\n" + "======================="
+    output_text = output_text + "\n" + "Multi-label Results:"
+
     acc = accuracy_score(true, pred)
     
     hl = hamming_loss(true, pred)
@@ -114,7 +118,6 @@ def metrics_report(true, pred, label_names, output_file):
         jsw = jssw
         f1u = f1su
         f1w = f1sw
-        
 
     multi_label_results = {
         "Accuracy": acc,
@@ -130,20 +133,10 @@ def metrics_report(true, pred, label_names, output_file):
         "F1 Score Weighted (Sci-kit)": f1sw,
     }
     for i in multi_label_results:
-        print("", i,":",multi_label_results[i])
+        output_text = output_text + "\n" + "" + i + ": " + multi_label_results[i]
 
+    print(output_text)
 
-    output_text = [
-        "Main metrics:\n",
-        " Hamming Loss: " + str(hl) + "\n",
-        " Accuracy: " + str(acc) + "\n",
-        " F1 Score (Weighted): " + str(f1w) + "\n",
-        "================================================\n",
-        "Other metrics:\n",
-        " F1 Score (Unweighted): " + str(f1u) + "\n",
-        " F1 Score (sklearn Unweighted): " + str(f1su) + "\n",
-        " F1 Score (sklearn Weighted): " + str(f1sw) + "\n"
-    ]
     output = open(output_file, "w") 
     output.writelines(output_text)
     output.close()
