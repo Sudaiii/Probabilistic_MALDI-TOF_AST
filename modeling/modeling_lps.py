@@ -169,7 +169,7 @@ if __name__ == "__main__":
 
         print("     Optimization...")
         if args.Multilabel:
-            pred = multilabel(train_x, train_y, test_y, antibiotics, base_name, model_file)
+            pred = multilabel(train_x, train_y, test_y, base_name, model_file)
         else:
             pred = independent(train_x, train_y, test_y, antibiotics, base_name, model_file)
 
