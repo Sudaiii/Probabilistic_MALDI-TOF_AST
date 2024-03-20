@@ -167,11 +167,11 @@ if __name__ == "__main__":
         train_y = train_bac[antibiotics].astype(int)
         test_y = test_bac[antibiotics].astype(int)
 
-        print("     Optimization...")
+
         if args.Multilabel:
-            pred = multilabel(train_x, train_y, test_y, base_name, model_file)
+            pred = multilabel(train_x, train_y, test_x, base_name, model_file)
         else:
-            pred = independent(train_x, train_y, test_y, antibiotics, base_name, model_file)
+            pred = independent(train_x, train_y, test_x, antibiotics, base_name, model_file)
 
         print("     Results...")
         if not os.path.exists(base_name+"_results.txt") or not os.path.exists(base_name+"_confusion_matrix.png"):

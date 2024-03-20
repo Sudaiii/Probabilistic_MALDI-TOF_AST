@@ -92,7 +92,7 @@ def metrics_report(true, pred, label_names, output_file):
         }
         output_text = output_text + "\n" + "---"+str(label_names[i])+"---"
         for j in label_results:
-            output_text = output_text + "\n" + " "+ j + ":" + label_results[j]
+            output_text = output_text + "\n" + " " + j + ":" + str(label_results[j])
         individual_results[label_names[i]] = label_results
     
 
@@ -133,7 +133,7 @@ def metrics_report(true, pred, label_names, output_file):
         "F1 Score Weighted (Sci-kit)": f1sw,
     }
     for i in multi_label_results:
-        output_text = output_text + "\n" + "" + i + ": " + multi_label_results[i]
+        output_text = output_text + "\n" + "" + i + ": " + str(multi_label_results[i])
 
     print(output_text)
 
