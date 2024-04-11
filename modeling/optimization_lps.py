@@ -73,6 +73,7 @@ def optimize_rf(n_cv, n_iter):
     )
     return bayesopt
 
+
 class MLPWrapper(BaseEstimator, ClassifierMixin):
     def __init__(
         self,
@@ -80,7 +81,7 @@ class MLPWrapper(BaseEstimator, ClassifierMixin):
         solver="adam", 
         alpha=0.0001, 
         learning_rate="constant",
-        max_iter=2000, 
+        max_iter=1500, 
         random_state=0,
         layer1=10, 
         layer2=10, 
@@ -126,9 +127,9 @@ def optimize_mlp(n_cv, n_iter):
             "solver": Categorical(["sgd", "adam"]),
             "alpha": Real(1e-6, 1e-2, prior="log-uniform"),
             "learning_rate": Categorical(["constant", "invscaling", "adaptive"]),
-            "layer1": Integer(10, 1000),
-            "layer2": Integer(10, 1000),
-            "layer3": Integer(10, 1000)
+            "layer1": Integer(10, 500),
+            "layer2": Integer(10, 500),
+            "layer3": Integer(10, 500)
         },
         n_iter=n_iter,
         cv=n_cv,

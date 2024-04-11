@@ -158,8 +158,6 @@ if __name__ == "__main__":
     input_file_paths = [input_folder + file for file in input_train_files]
 
     for file in input_file_paths:
-        if args.Algorithm == "mlp" and "bin20" not in file:
-            continue
         lc = LabelEncoder()
         plt.close("all")
         
@@ -188,9 +186,8 @@ if __name__ == "__main__":
             pred = independent(train_x, train_y, test_x, antibiotics, args.Algorithm, base_name, model_file)
 
         print("     Results...")
-        if not os.path.exists(base_name+"_results.txt") or not os.path.exists(base_name+"_confusion_matrix.png"):
-            metrics_report(test_y, pred, antibiotics, base_name+"_results.txt")
-            confusion_matrix(test_y, pred, antibiotics, base_name+"_confusion_matrix.png")                
+        metrics_report(test_y, pred, antibiotics, base_name+"_results.txt")
+        confusion_matrix(test_y, pred, antibiotics, base_name+"_confusion_matrix.png")                
 
         # if not os.path.exists(base_name+"_proba.txt"):
         #     print("     Probability prediction...")

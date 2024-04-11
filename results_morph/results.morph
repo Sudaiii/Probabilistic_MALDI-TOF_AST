@@ -1,90 +1,115 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Version="26" AppVersion="5.5.0.6" ReadKey="readkey.qxt3JIeOrIY=.OXiUF+LFBZMSorIdBPzeRw==.DHLqzdp1fTjkxMP9NPtFjjVrcfRUDzS5rSNXda6t9OQvP3n2sDLPK8lxjQnvynlZjy4/4ihw36xBkVUD4isGV5iTKaI1uR9B33PeWmOUZIw=.WEnpuB36UoaG2xcXnsqcWOAMQQAa+aBDzcVqAVwQtlc=." WriteKeyPublic="BgIAAACkAABSU0ExAAgAAAEAAQCtNL6ihZ7TG2Dvgk6CSi7VfrbR5knPf6rrD0IkcVXNUOl1oC9U8wZUE5BObDUWSVISaHXdxEgFjQOiwelOUMMOwutF5cU0TopWUP/C2BbKewj+jW/efo9D8M+y/IIgqKkLv7J8ReFAfd/eDG3YiaOzYnYWZhJfSrMQCTDwiQb/BBDGuc2oG92uj8RGYoX6hIMvFj/XncuSxsdGjUkco4WjnA8DrBA+R1vs1SS6X2SUGfdRLFOj1pi6wMkWGObSFa7LPfvEH1UIrDJ/fmBQQoZeG3rDBu2irpgoK5mQZi2Bn3W41Zd8H2OdS28k3vkNHIrn5j8pnRIo4RWQQwcHRDjY" StartModuleName="Main" EditedBy="CORP\Stratify" LastEdited="2023-11-29T01:50:19.2188277Z" Signature="rhQ5JgmME3YuOUovQqWOn+Z4LbICDBykJfY5e0Aoz2w=">
+<Project Version="26" AppVersion="5.7.0.13" ReadKey="readkey.rDIUOHxjHh4=.VtvyN+fBVft3bPHbxHslCQ==.y6IBfRuerUNvLgCtrv1vOVhAgq7r25WX+ZrBBFTc/zU4zk2ZWRgwYW+3wSRgsZigSq71Ywa7EAziqpBftpEYHbNGT7zW8rb6jEVpKMx5QAc=.Mi96uY0a3kHgEHZwIkDt6NQxSZibotAVFtkL2Cg1Q34=." WriteKeyPublic="BgIAAACkAABSU0ExAAgAAAEAAQBVRq3tBo2Eaf0mFYaEXJC8PcEb+e+iQCGv9md6IzUOOC2f1gJ6P24vJTqkqmfcDblqxak39OpMCuSJRlTTbtwaXEiX2zIn1xNGrRg9i7P5b1BCVVVvocEcc7wzcKOeV/AWTEQmVqbZDTWSJ2LwbJdluet4MtdDeTfoer1ahEDvnjMo9kgGHDLxZu2kQE1U4v7ral7knjlk1AXC6MyrBJkAZMNmTaw8x3jXk/YXAoCP2wCtcGUCKAacGtEw2oV3jmKn657AeTmCHtFLFmjNW3TNex0EcMB/XOWabJUNE0dQaeTDfOKSQQdn2N1FlfmO+jbpkX7iJyUZ1mnT0Mpivii7" StartModuleName="Main" EditedBy="CORP\Server01" LastEdited="2024-04-10T03:09:35.2931428Z" Signature="GwbdZIlLl7GJ2+kMz/M0mxULrOO4tEpXXyRb6dFY8SM=">
   <Modules>
     <Module Name="Main" AutoRun="true" SelectedGroupName="Group 1">
       <Groups>
         <Group Name="Group 1">
           <ModelObjects>
-            <Table Name="Table 1" Left="714" Top="247" Width="500" Height="300" IsMinimized="false" ActiveActionIndex="10">
+            <Table Name="Bin 20" Left="916" Top="33" Width="333" Height="300" IsMinimized="false" ActiveActionIndex="3">
               <Actions>
-                <DeriveTableAction SourceTableName="Table 2" IsConditional="false" />
-                <IterateAction IterationMode="IterateAndAppendResults" UseDefaultResultTable="true" FailureOption="Halt">
-                  <MetaColumns>
-                    <MetaColumn OriginalName="Main_x0020_metrics" Width="109" />
-                  </MetaColumns>
-                  <CallableUnitDefinition Type="Module">
-                    <ModuleName Value="Module 1" Type="List" />
-                  </CallableUnitDefinition>
-                  <CallParameters>
-                    <CallParameter ParameterName="File name">
-                      <Value Value="File name with full path" Type="List" />
-                    </CallParameter>
-                  </CallParameters>
-                </IterateAction>
-                <MergeAction SecondTableName="Table 2" SecondTableExists="true" MergeMode="Lookup">
-                  <Columns>
-                    <Item>bacteria</Item>
-                    <Item>model</Item>
-                    <Item>bin</Item>
-                  </Columns>
-                  <MatchingColumns>
-                    <NamePair Name1="File name with full path" Name2="File name with full path" />
-                  </MatchingColumns>
-                </MergeAction>
+                <DeriveTableAction SourceTableName="Pivot" IsConditional="false" />
                 <KeepRemoveColumnsAction Mode="Remove">
                   <ColumnNames>
-                    <Item>File name with full path</Item>
+                    <Item>Accuracy I Bin 5</Item>
+                    <Item>Accuracy LPS Bin 5</Item>
+                    <Item>F1 Score Unweighted (Sci-kit) I Bin 5</Item>
+                    <Item>F1 Score Unweighted (Sci-kit) LPS Bin 5</Item>
+                    <Item>F1 Score Unweighted I Bin 5</Item>
+                    <Item>F1 Score Unweighted LPS Bin 5</Item>
+                    <Item>F1 Score Weighted (Sci-kit) I Bin 5</Item>
+                    <Item>F1 Score Weighted (Sci-kit) LPS Bin 5</Item>
+                    <Item>F1 Score Weighted I Bin 5</Item>
+                    <Item>F1 Score Weighted LPS Bin 5</Item>
+                    <Item>Hamming Loss I Bin 5</Item>
+                    <Item>Hamming Loss LPS Bin 5</Item>
+                    <Item>Jaccard Score Unweighted (Sci-kit) I Bin 5</Item>
+                    <Item>Jaccard Score Unweighted (Sci-kit) LPS Bin 5</Item>
+                    <Item>Jaccard Score Unweighted I Bin 5</Item>
+                    <Item>Jaccard Score Unweighted LPS Bin 5</Item>
+                    <Item>Jaccard Score Weighted (Sci-kit) I Bin 5</Item>
+                    <Item>Jaccard Score Weighted (Sci-kit) LPS Bin 5</Item>
+                    <Item>Jaccard Score Weighted I Bin 5</Item>
+                    <Item>Jaccard Score Weighted LPS Bin 5</Item>
                   </ColumnNames>
                 </KeepRemoveColumnsAction>
-                <RenameColumnsAction>
-                  <Names>
-                    <NamePair Name1="Column 1" Name2="Result" />
-                    <NamePair Name1="Main metrics" Name2="Metric" />
-                  </Names>
-                </RenameColumnsAction>
-                <AddColumnsAction>
-                  <Columns>
-                    <NameExpressionPair Name="Metric_Bin">
-                      <Expression Value="[Metric]&amp;[bin]" Type="Expression" />
-                    </NameExpressionPair>
-                  </Columns>
-                  <InsertPosition ColumnName="" Position="Rightmost" />
-                </AddColumnsAction>
-                <KeepRemoveColumnsAction Mode="Remove">
-                  <ColumnNames>
-                    <Item>bin</Item>
-                    <Item>Metric</Item>
-                  </ColumnNames>
-                </KeepRemoveColumnsAction>
-                <PivotAction LabelsColumnName="Metric_Bin" DataColumnName="Result" Aggregation="Sum" PreserveFormatting="false" />
+                <LookupRenameAction LookupTableName="Metric Names" SecondTableExists="true" OldColumnName="Metric_Multilabel_Bin" NewColumnName="Metric" />
                 <ReorderColumnsAction>
                   <PositionRules>
-                    <ColumnPositionRule ColumnName="model" Position="Leftmost" />
+                    <ColumnPositionRule ColumnName="F1 UW I" Position="AfterColumn" AfterColumnName="ACC LPS" />
+                    <ColumnPositionRule ColumnName="F1 UW LPS" Position="AfterColumn" AfterColumnName="F1 UW I" />
+                    <ColumnPositionRule ColumnName="F1 W I" Position="AfterColumn" AfterColumnName="F1 UW LPS" />
+                    <ColumnPositionRule ColumnName="F1 W LPS" Position="AfterColumn" AfterColumnName="F1 W I" />
+                    <ColumnPositionRule ColumnName="HL I" Position="AfterColumn" AfterColumnName="ACC LPS" />
+                    <ColumnPositionRule ColumnName="HL LPS" Position="AfterColumn" AfterColumnName="HL I" />
+                    <ColumnPositionRule ColumnName="JS UW I" Position="AfterColumn" AfterColumnName="F1 W scikit LPS" />
+                    <ColumnPositionRule ColumnName="JS UW LPS" Position="AfterColumn" AfterColumnName="JS UW I" />
+                    <ColumnPositionRule ColumnName="JS W I" Position="AfterColumn" AfterColumnName="JS UW LPS" />
+                    <ColumnPositionRule ColumnName="JS W LPS" Position="AfterColumn" AfterColumnName="JS W I" />
                   </PositionRules>
                 </ReorderColumnsAction>
-                <SortAction>
-                  <SortColumns>
-                    <SortColumn ColumnName="model" SortOrder="Ascending" />
-                  </SortColumns>
-                </SortAction>
                 <ExportExcelAction ExportMode="Create" CreateNamedRange="false" CreateTable="false" FileExistsOption="Overwrite">
-                  <FileName Value="results_agg" Type="Path" />
+                  <FileName Value="results_agg_bin20" Type="Path" />
                   <WorksheetName Value="Sheet1" Type="Text" />
                 </ExportExcelAction>
               </Actions>
-              <AnalysisView LayoutMode="Filters">
-                <Filters>
-                  <Filter ColumnName="model" Width="230" ValueColumnWidth="120" CountColumnWidth="80" />
-                </Filters>
-              </AnalysisView>
+              <AnalysisView LayoutMode="Filters" />
             </Table>
-            <Table Name="Table 2" Left="103" Top="184" Width="500" Height="307" IsMinimized="false" ActiveActionIndex="1">
+            <Table Name="Bin 5" Left="918" Top="386" Width="344" Height="300" IsMinimized="false" ActiveActionIndex="3">
+              <Actions>
+                <DeriveTableAction SourceTableName="Pivot" IsConditional="false" />
+                <KeepRemoveColumnsAction Mode="Remove">
+                  <ColumnNames>
+                    <Item>Accuracy I Bin 20</Item>
+                    <Item>Accuracy LPS Bin 20</Item>
+                    <Item>F1 Score Unweighted (Sci-kit) I Bin 20</Item>
+                    <Item>F1 Score Unweighted (Sci-kit) LPS Bin 20</Item>
+                    <Item>F1 Score Unweighted I Bin 20</Item>
+                    <Item>F1 Score Unweighted LPS Bin 20</Item>
+                    <Item>F1 Score Weighted (Sci-kit) I Bin 20</Item>
+                    <Item>F1 Score Weighted (Sci-kit) LPS Bin 20</Item>
+                    <Item>F1 Score Weighted I Bin 20</Item>
+                    <Item>F1 Score Weighted LPS Bin 20</Item>
+                    <Item>Hamming Loss I Bin 20</Item>
+                    <Item>Hamming Loss LPS Bin 20</Item>
+                    <Item>Jaccard Score Unweighted (Sci-kit) I Bin 20</Item>
+                    <Item>Jaccard Score Unweighted (Sci-kit) LPS Bin 20</Item>
+                    <Item>Jaccard Score Unweighted I Bin 20</Item>
+                    <Item>Jaccard Score Unweighted LPS Bin 20</Item>
+                    <Item>Jaccard Score Weighted (Sci-kit) I Bin 20</Item>
+                    <Item>Jaccard Score Weighted (Sci-kit) LPS Bin 20</Item>
+                    <Item>Jaccard Score Weighted I Bin 20</Item>
+                    <Item>Jaccard Score Weighted LPS Bin 20</Item>
+                  </ColumnNames>
+                </KeepRemoveColumnsAction>
+                <LookupRenameAction LookupTableName="Metric Names" SecondTableExists="true" OldColumnName="Metric_Multilabel_Bin" NewColumnName="Metric" />
+                <ReorderColumnsAction>
+                  <PositionRules>
+                    <ColumnPositionRule ColumnName="F1 UW I" Position="AfterColumn" AfterColumnName="ACC LPS" />
+                    <ColumnPositionRule ColumnName="F1 UW LPS" Position="AfterColumn" AfterColumnName="F1 UW I" />
+                    <ColumnPositionRule ColumnName="F1 W I" Position="AfterColumn" AfterColumnName="F1 UW LPS" />
+                    <ColumnPositionRule ColumnName="F1 W LPS" Position="AfterColumn" AfterColumnName="F1 W I" />
+                    <ColumnPositionRule ColumnName="HL I" Position="AfterColumn" AfterColumnName="ACC LPS" />
+                    <ColumnPositionRule ColumnName="HL LPS" Position="AfterColumn" AfterColumnName="HL I" />
+                    <ColumnPositionRule ColumnName="JS UW I" Position="AfterColumn" AfterColumnName="F1 W scikit LPS" />
+                    <ColumnPositionRule ColumnName="JS UW LPS" Position="AfterColumn" AfterColumnName="JS UW I" />
+                    <ColumnPositionRule ColumnName="JS W I" Position="AfterColumn" AfterColumnName="JS UW LPS" />
+                    <ColumnPositionRule ColumnName="JS W LPS" Position="AfterColumn" AfterColumnName="JS W I" />
+                  </PositionRules>
+                </ReorderColumnsAction>
+                <ExportExcelAction ExportMode="Create" CreateNamedRange="false" CreateTable="false" FileExistsOption="Overwrite">
+                  <FileName Value="results_agg_bin5" Type="Path" />
+                  <WorksheetName Value="Sheet1" Type="Text" />
+                </ExportExcelAction>
+              </Actions>
+              <AnalysisView LayoutMode="Filters" />
+            </Table>
+            <Table Name="Files" Left="41" Top="52" Width="211" Height="307" IsMinimized="false" ActiveActionIndex="3">
               <Actions>
                 <FileListAction ScanSubfolders="false">
                   <MetaColumns>
-                    <MetaColumn OriginalName="File_x0020_name_x0020_with_x0020_full_x0020_path" Width="122" />
+                    <MetaColumn OriginalName="File_x0020_name_x0020_with_x0020_full_x0020_path" Width="808" />
                   </MetaColumns>
-                  <FolderPath Value="D:\Users\Stratify\Stratify\Stratify Interno - Documents\Old\test" Type="Path" />
+                  <FolderPath Value="" Type="Path" />
                   <Columns>
                     <Item>FileNameWithPath</Item>
                     <Item>FileName</Item>
@@ -96,20 +121,131 @@
                     <C T="s" V=".txt" />
                   </Cells>
                 </SelectionFilterAction>
-                <AddColumnsAction>
+                <ExpressionFilterAction Condition="contains([File name only], &quot;results&quot;)" />
+                <AddColumnsAction ColumnExistsOption="Rename">
                   <Columns>
                     <NameExpressionPair Name="bacteria">
                       <Expression Value="if(&#xD;&#xA;    contains([File name only], &quot;e_coli&quot;), &#xD;&#xA;    &quot;E. Coli&quot;, &#xD;&#xA;    if(&#xD;&#xA;        contains([File name only], &quot;k_pneumoniae&quot;),&#xD;&#xA;        &quot;K. Pneumoniae&quot;,&#xD;&#xA;        if(&#xD;&#xA;            contains([File name only], &quot;s_aureus&quot;),&#xD;&#xA;            &quot;S. Aureus&quot;,&#xD;&#xA;            if(&#xD;&#xA;                contains([File name only], &quot;p_aeruginosa&quot;),&#xD;&#xA;                &quot;P. Aeruginosa&quot;,&#xD;&#xA;                &quot;&quot;&#xD;&#xA;            &#xD;&#xA;            )&#xD;&#xA;        &#xD;&#xA;        )&#xD;&#xA;    &#xD;&#xA;    )&#xD;&#xA;)" Type="Expression" />
                     </NameExpressionPair>
                     <NameExpressionPair Name="model">
-                      <Expression Value="if(&#xD;&#xA;    contains([File name only], &quot;xgb&quot;), &#xD;&#xA;    &quot;XGB&quot;, &#xD;&#xA;    if(&#xD;&#xA;        contains([File name only], &quot;svc&quot;),&#xD;&#xA;        &quot;SVC&quot;,&#xD;&#xA;        if(&#xD;&#xA;            contains([File name only], &quot;tabpfn&quot;),&#xD;&#xA;            &quot;TabPFN&quot;,&#xD;&#xA;            if(&#xD;&#xA;                contains([File name only], &quot;nn&quot;),&#xD;&#xA;                &quot;NN&quot;,&#xD;&#xA;                &quot;&quot;&#xD;&#xA;            &#xD;&#xA;            )&#xD;&#xA;        &#xD;&#xA;        )&#xD;&#xA;    &#xD;&#xA;    )&#xD;&#xA;)" Type="Expression" />
+                      <Expression Value="if(&#xD;&#xA;    contains([File name only], &quot;xgb&quot;), &#xD;&#xA;    &quot;XGB&quot;, &#xD;&#xA;    if(&#xD;&#xA;        contains([File name only], &quot;svc&quot;),&#xD;&#xA;        &quot;SVC&quot;,&#xD;&#xA;        if(&#xD;&#xA;            contains([File name only], &quot;rf&quot;),&#xD;&#xA;            &quot;RF&quot;,&#xD;&#xA;            if(&#xD;&#xA;                contains([File name only], &quot;mlp&quot;),&#xD;&#xA;                &quot;MLP&quot;,&#xD;&#xA;                &quot;&quot;&#xD;&#xA;            &#xD;&#xA;            )&#xD;&#xA;        &#xD;&#xA;        )&#xD;&#xA;    &#xD;&#xA;    )&#xD;&#xA;)" Type="Expression" />
                     </NameExpressionPair>
                     <NameExpressionPair Name="bin">
                       <Expression Value="if(&#xD;&#xA;    contains([File name only], &quot;bin5&quot;), &#xD;&#xA;    &quot;Bin 5&quot;, &#xD;&#xA;    if(&#xD;&#xA;        contains([File name only], &quot;bin20&quot;),&#xD;&#xA;        &quot;Bin 20&quot;,&#xD;&#xA;        if(&#xD;&#xA;            contains([File name only], &quot;bin40&quot;),&#xD;&#xA;            &quot;Bin 40&quot;,&#xD;&#xA;            if(&#xD;&#xA;                contains([File name only], &quot;selected&quot;),&#xD;&#xA;                &quot;RFE&quot;,&#xD;&#xA;                &quot;Bin 1&quot;&#xD;&#xA;            &#xD;&#xA;            )&#xD;&#xA;        &#xD;&#xA;        )&#xD;&#xA;    &#xD;&#xA;    )&#xD;&#xA;)" Type="Expression" />
                     </NameExpressionPair>
+                    <NameExpressionPair Name="multilabel">
+                      <Expression Value="if(&#xD;&#xA;    contains([File name only], &quot;lps&quot;), &#xD;&#xA;    &quot;LPS&quot;,&#xD;&#xA;    &quot;I&quot;&#xD;&#xA;)" Type="Expression" />
+                    </NameExpressionPair>
                   </Columns>
                   <InsertPosition ColumnName="" Position="Rightmost" />
                 </AddColumnsAction>
+              </Actions>
+              <AnalysisView LayoutMode="Filters" />
+            </Table>
+            <Table Name="Iterate" Left="296" Top="165" Width="242" Height="300" IsMinimized="false" ActiveActionIndex="4">
+              <Actions>
+                <DeriveTableAction SourceTableName="Files" IsConditional="false" />
+                <IterateAction IterationMode="IterateAndAppendResults" UseDefaultResultTable="true" FailureOption="Halt">
+                  <MetaColumns>
+                    <MetaColumn OriginalName="metric" Width="140" />
+                    <MetaColumn OriginalName="value" Width="116" />
+                  </MetaColumns>
+                  <CallableUnitDefinition Type="Module">
+                    <ModuleName Value="Module 1" Type="List" />
+                  </CallableUnitDefinition>
+                  <CallParameters>
+                    <CallParameter ParameterName="File name">
+                      <Value Value="File name with full path" Type="List" />
+                    </CallParameter>
+                  </CallParameters>
+                </IterateAction>
+                <MergeAction SecondTableName="Files" SecondTableExists="true" MergeMode="Lookup">
+                  <Columns>
+                    <Item>bacteria</Item>
+                    <Item>model</Item>
+                    <Item>bin</Item>
+                    <Item>multilabel</Item>
+                  </Columns>
+                  <MatchingColumns>
+                    <NamePair Name1="File name with full path" Name2="File name with full path" />
+                  </MatchingColumns>
+                </MergeAction>
+                <KeepRemoveColumnsAction Mode="Remove">
+                  <ColumnNames>
+                    <Item>File name with full path</Item>
+                  </ColumnNames>
+                </KeepRemoveColumnsAction>
+                <AddColumnsAction ColumnExistsOption="Rename">
+                  <Columns>
+                    <NameExpressionPair Name="Metric_Multilabel_Bin">
+                      <Expression Value="[metric]&amp;&quot; &quot;&amp;[multilabel]&amp;&quot; &quot;&amp;[bin]" Type="Expression" />
+                    </NameExpressionPair>
+                  </Columns>
+                  <InsertPosition ColumnName="" Position="Rightmost" />
+                </AddColumnsAction>
+              </Actions>
+              <AnalysisView LayoutMode="Filters">
+                <Filters>
+                  <Filter ColumnName="model" Width="230" ValueColumnWidth="120" CountColumnWidth="80" />
+                </Filters>
+              </AnalysisView>
+            </Table>
+            <Table Name="Metric Names" Left="583" Top="29" Width="202" Height="261" IsMinimized="false" ActiveActionIndex="3">
+              <Actions>
+                <DeriveTableAction SourceTableName="Iterate" IsConditional="false" />
+                <KeepRemoveColumnsAction Mode="Remove">
+                  <ColumnNames>
+                    <Item>metric</Item>
+                    <Item>value</Item>
+                    <Item>antibiotic</Item>
+                    <Item>bacteria</Item>
+                    <Item>model</Item>
+                    <Item>bin</Item>
+                    <Item>multilabel</Item>
+                  </ColumnNames>
+                </KeepRemoveColumnsAction>
+                <AddColumnsAction ColumnExistsOption="Rename">
+                  <Columns>
+                    <NameExpressionPair Name="Metric">
+                      <Expression Value="removetext(removetext([Metric_Multilabel_Bin],&quot;Bin 5&quot;),&quot;Bin 20&quot;)" Type="Expression" />
+                    </NameExpressionPair>
+                  </Columns>
+                  <InsertPosition ColumnName="" Position="Rightmost" />
+                </AddColumnsAction>
+                <ReplaceColumnsAction>
+                  <Columns>
+                    <NameExpressionPair Name="Metric">
+                      <Expression Value="replace(&#xD;&#xA;    replace(&#xD;&#xA;        replace(&#xD;&#xA;            replace(&#xD;&#xA;                replace(&#xD;&#xA;                    replace(&#xD;&#xA;                        replace(&#xD;&#xA;                            [Metric],&#xD;&#xA;                            &quot;Hamming Loss&quot;,&#xD;&#xA;                            &quot;HL&quot;&#xD;&#xA;                        ),&#xD;&#xA;                        &quot;(Sci-kit)&quot;,&#xD;&#xA;                        &quot;scikit&quot;&#xD;&#xA;                    ),&#xD;&#xA;                    &quot;Unweighted&quot;,&#xD;&#xA;                    &quot;UW&quot;&#xD;&#xA;                ),&#xD;&#xA;                &quot;Weighted&quot;,&#xD;&#xA;                &quot;W&quot;&#xD;&#xA;            ),&#xD;&#xA;            &quot;F1 Score&quot;,&#xD;&#xA;            &quot;F1&quot;&#xD;&#xA;        ), &#xD;&#xA;        &quot;Accuracy&quot;, &#xD;&#xA;        &quot;ACC&quot;&#xD;&#xA;    ),&#xD;&#xA;    &quot;Jaccard Score&quot;,&#xD;&#xA;    &quot;JS&quot;&#xD;&#xA;)" Type="Expression" />
+                    </NameExpressionPair>
+                  </Columns>
+                </ReplaceColumnsAction>
+              </Actions>
+              <AnalysisView LayoutMode="Filters" />
+            </Table>
+            <Table Name="Pivot" Left="579" Top="350" Width="276" Height="300" IsMinimized="false" ActiveActionIndex="4">
+              <Actions>
+                <DeriveTableAction SourceTableName="Iterate" IsConditional="false" />
+                <KeepRemoveColumnsAction Mode="Remove">
+                  <ColumnNames>
+                    <Item>metric</Item>
+                    <Item>bin</Item>
+                    <Item>multilabel</Item>
+                  </ColumnNames>
+                </KeepRemoveColumnsAction>
+                <PivotAction LabelsColumnName="Metric_Multilabel_Bin" DataColumnName="value" Aggregation="Sum" PreserveFormatting="false" />
+                <ReorderColumnsAction>
+                  <PositionRules>
+                    <ColumnPositionRule ColumnName="bacteria" Position="Leftmost" />
+                    <ColumnPositionRule ColumnName="antibiotic" Position="AfterColumn" AfterColumnName="bacteria" />
+                  </PositionRules>
+                </ReorderColumnsAction>
+                <SortAction>
+                  <SortColumns>
+                    <SortColumn ColumnName="bacteria" SortOrder="Ascending" />
+                    <SortColumn ColumnName="antibiotic" SortOrder="Ascending" />
+                    <SortColumn ColumnName="model" SortOrder="Ascending" />
+                  </SortColumns>
+                </SortAction>
               </Actions>
               <AnalysisView LayoutMode="Filters" />
             </Table>
@@ -130,27 +266,54 @@
       <Groups>
         <Group Name="Group 1">
           <ModelObjects>
-            <Table Name="e_coli_driams_bin5_svc_results.txt" Left="344" Top="173" Width="500" Height="300" IsMinimized="false" ActiveActionIndex="0">
+            <Table Name="e_coli_driams_bin5_svc_results.txt" Left="297" Top="175" Width="823" Height="300" IsMinimized="false" ActiveActionIndex="1">
               <Actions>
                 <ImportDelimitedTextAction DecimalSeparator="Point" ThousandSeparator="Default" ShowParsingErrors="false" IgnoreQuoting="false" NumericValuesTreatmentOption="AlwaysAsNumbers" ColumnsDontHaveHeaders="false" LoadAllColumns="true" AddColumnsWhenRowsHaveMoreValuesThanHeaders="false">
                   <MetaColumns>
-                    <MetaColumn OriginalName="Main_x0020_metrics" Width="109" />
+                    <MetaColumn OriginalName="Column_x0020_1" Width="116" />
+                    <MetaColumn OriginalName="Individual_x0020_Results" Width="180" />
                   </MetaColumns>
                   <InputFileDefinition Mode="Single">
                     <FileName Value="File name" Type="Parameter" />
                   </InputFileDefinition>
-                  <SkipLines Value="0" Type="Number" />
+                  <SkipLines Value="1" Type="Number" />
                   <MaxLines Value="0" Type="Number" />
                   <Separator SeparatorType="Custom" CustomSeparator="3A" />
                   <Encoding EncodingType="UTF8" />
                 </ImportDelimitedTextAction>
-                <SelectionFilterAction ColumnName="Main metrics" RemoveSelectedValues="false">
+                <AddColumnsAction ColumnExistsOption="Rename">
+                  <Columns>
+                    <NameExpressionPair Name="Column">
+                      <Expression Value="removechars(if(contains([Individual Results],&quot;---&quot;) or contains([Individual Results],&quot;=&quot;),[Individual Results],&quot;&quot;),&quot;---&quot;)" Type="Expression" />
+                    </NameExpressionPair>
+                  </Columns>
+                  <InsertPosition ColumnName="" Position="Rightmost" />
+                </AddColumnsAction>
+                <SelectionFilterAction ColumnName="Individual Results" RemoveSelectedValues="true">
                   <Cells>
-                    <C T="s" V="Hamming Loss" />
-                    <C T="s" V="Accuracy" />
-                    <C T="s" V="F1 Score (Weighted)" />
+                    <C T="s" V="Multi-label Results" />
                   </Cells>
                 </SelectionFilterAction>
+                <FillGapsAction GroupByColumns="false">
+                  <ColumnNames>
+                    <Item>Column</Item>
+                  </ColumnNames>
+                </FillGapsAction>
+                <ReplaceAction ColumnName="Column" MissingValueOption="Fail">
+                  <Values>
+                    <RC R="Overall">
+                      <C T="s" V="=======================" />
+                    </RC>
+                  </Values>
+                </ReplaceAction>
+                <ExpressionFilterAction Condition="not (contains([Individual Results], &quot;=&quot;) or contains([Individual Results], &quot;---&quot;))" />
+                <RenameColumnsAction>
+                  <Names>
+                    <NamePair Name1="Individual Results" Name2="metric" />
+                    <NamePair Name1="Column 1" Name2="value" />
+                    <NamePair Name1="Column" Name2="antibiotic" />
+                  </Names>
+                </RenameColumnsAction>
               </Actions>
               <AnalysisView LayoutMode="Filters" />
             </Table>
@@ -158,7 +321,7 @@
         </Group>
       </Groups>
       <Parameters>
-        <FilePathParameter Name="File name" Value="D:\Users\Stratify\Stratify\Stratify Interno - Documents\Old\test\e_coli_driams_bin5_svc_results.txt" />
+        <FilePathParameter Name="File name" Value="e_coli_driams_bin5_rf_standard_independent_results.txt" />
       </Parameters>
       <Report UseCustomFileNameForPdfExport="false" ShowPageBorders="true">
         <Pages>

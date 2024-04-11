@@ -149,13 +149,12 @@ def tsne_scatterplot(x, y, perplexities, class_names, output_file):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-f", "--Folder", help = "What folder to get the data from")
-parser.add_argument("-m", "--Mode", help = "Whether to use data as is (no argument) or to select specific features based on a .txt file")
+parser.add_argument("-f", "--Folder", help="What folder to get the data from", default="binned", choices=["unbinned", "binned"])
+parser.add_argument("-n", "--Norm", help="Data normalization method. Supports \"none\",\"min-max\" and \"standard\"", default="standard", choices=["none", "min-max", "standard"])
+parser.add_argument("-m", "--Mode", help="Whether to use data as is (no argument) or to select specific features based on a .txt file", default="all")
 args = parser.parse_args()
 
-input_folder = "data/processed/raw/standard"
-if args.Folder:
-    input_folder = "data/processed/"+args.Folder+"/"
+input_folder = "data/processed/"+args.Folder+"/"+args.Norm+"/"
 output_folder = "exploration/outputs/"
 input_files = os.listdir(input_folder)
 input_train_files = [x for x in input_files if "test" not in x and not os.path.isdir(os.path.join(input_folder, x))]
