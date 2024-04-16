@@ -81,7 +81,7 @@ class MLPWrapper(BaseEstimator, ClassifierMixin):
         solver="adam", 
         alpha=0.0001, 
         learning_rate="constant",
-        max_iter=1500, 
+        max_iter=1200, 
         random_state=0,
         layer1=10, 
         layer2=10, 
