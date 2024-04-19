@@ -185,7 +185,7 @@ if __name__ == "__main__":
         else:
             pred = independent(train_x, train_y, test_x, antibiotics, args.Algorithm, base_name, model_file)
 
-        print("     Results...")
+        print("  Results...")
         metrics_report(test_y, pred, antibiotics, base_name+"_results.txt")
         confusion_matrix(test_y, pred, antibiotics, base_name+"_confusion_matrix.png")                
 
