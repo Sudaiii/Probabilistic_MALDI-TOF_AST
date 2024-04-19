@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from sklearn.metrics import (f1_score, jaccard_score, multilabel_confusion_matrix,
-                             accuracy_score, hamming_loss)
+                             accuracy_score, hamming_loss, roc_auc_score, recall_score)
 import numpy as np
 import pandas as pd
 
@@ -57,6 +57,10 @@ def metrics_report(true, pred, label_names, output_file):
     jsw = 0
     f1u = 0
     f1w = 0
+    sen = 0
+    spe = 0
+    roc_auc_u = 0
+    roc_auc_w = 0
     
     output_text = ""
 
@@ -83,6 +87,18 @@ def metrics_report(true, pred, label_names, output_file):
         label_f1w = f1_score(sliced_true, sliced_pred, average="weighted")
         f1w+=label_f1w
 
+        label_sen = recall_score(sliced_true, sliced_pred)
+        sen+=label_sen
+
+        label_spe = recall_score(np.logical_not(sliced_true), np.logical_not(sliced_pred))
+        spe+=label_spe
+
+        label_roc_auc_u = roc_auc_score(sliced_true, sliced_pred, average="macro")
+        roc_auc_u+=label_roc_auc_u
+
+        label_roc_auc_w = roc_auc_score(sliced_true, sliced_pred, average="weighted")
+        roc_auc_w+=label_roc_auc_w
+
         label_results = {
             "Accuracy": label_acc,
             "Hamming Loss": label_hl,
@@ -90,6 +106,10 @@ def metrics_report(true, pred, label_names, output_file):
             "Jaccard Score Weighted": label_jsw,
             "F1 Score Unweighted": label_f1u,
             "F1 Score Weighted": label_f1w,
+            "Sensitivity": label_sen,
+            "Specificity": label_spe,
+            "ROC AUC Unweighted": label_roc_auc_u,
+            "ROC AUC Weighted": label_roc_auc_w
         }
         output_text = output_text + "\n" + "---"+str(label_names[i])+"---"
         for j in label_results:
@@ -113,6 +133,12 @@ def metrics_report(true, pred, label_names, output_file):
     f1w/=label_n
     f1su = f1_score(true, pred, average="macro")
     f1sw = f1_score(true, pred, average="weighted")
+
+    sen/=label_n
+    spe/=label_n
+
+    roc_auc_u/=label_n
+    roc_auc_w/=label_n
     
     if label_n <= 1:
         jsu = jssu
@@ -127,7 +153,11 @@ def metrics_report(true, pred, label_names, output_file):
         "Jaccard Score Weighted": jsw,
         "F1 Score Unweighted": f1u,
         "F1 Score Weighted": f1w,
-        
+        "Sensitivity": sen,
+        "Specificity": spe,
+        "ROC AUC Unweighted": roc_auc_u,
+        "ROC AUC Weighted": roc_auc_w,
+
         "Jaccard Score Unweighted (Sci-kit)": jssu,
         "Jaccard Score Weighted (Sci-kit)": jssw,
         "F1 Score Unweighted (Sci-kit)": f1su,

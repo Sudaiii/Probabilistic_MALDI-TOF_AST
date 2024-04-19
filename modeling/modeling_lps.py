@@ -93,9 +93,9 @@ def multilabel(train_features, train_labels, test_features, algorithm, base_name
     pred = model.predict(test_features)
     pred = lps_to_multilabel_list(pred)
 
-    if (not os.path.exists(base_name+"_shap.npy")) and "bin5" not in base_name:
+    if "bin5" not in base_name:
         print("     SHAP...")
-        feature_importance(model, train_features, train_y, test_features, algorithm, base_name+"_shap.txt")
+        feature_importance(model, train_features, train_y, test_features, algorithm, base_name)
 
     # proba = model.proba(test_x)
 
@@ -124,9 +124,9 @@ def independent(train_features, train_labels, test_features, antibiotics, algori
         antibiotic_pred = model.predict(test_features)
         classifications.append(antibiotic_pred)
         
-        if not os.path.exists(base_name+"_shap.npy") and "bin5" not in base_name:
+        if "bin5" not in base_name:
             print("     SHAP...")
-            feature_importance(model, train_features, antibiotic_train_y, test_features, algorithm, antibiotic_base_name+"_shap.txt")
+            feature_importance(model, train_features, antibiotic_train_y, test_features, algorithm, antibiotic_base_name)
         # probabilities = model.proba(test_x)
 
     pred = []
