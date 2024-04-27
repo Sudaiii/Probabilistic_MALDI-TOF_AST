@@ -1,8 +1,8 @@
 python modeling/modeling_lps.py -a mlp
 python modeling/modeling_lps.py -a mlp -m lps
 
-python modeling/modeling_lps.py -a svm
-python modeling/modeling_lps.py -a svm -m lps
+python modeling/modeling_lps.py -a svc
+python modeling/modeling_lps.py -a svc -m lps
 
 python modeling/modeling_lps.py -a rf
 python modeling/modeling_lps.py -a rf -m lps

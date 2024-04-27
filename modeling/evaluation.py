@@ -83,7 +83,6 @@ def metrics_report(true, pred, label_names, output_file):
 
         label_f1u = f1_score(sliced_true, sliced_pred, average="macro")
         f1u+=label_f1u
-
         label_f1w = f1_score(sliced_true, sliced_pred, average="weighted")
         f1w+=label_f1w
 

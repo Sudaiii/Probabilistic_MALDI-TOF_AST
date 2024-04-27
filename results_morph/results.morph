@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Version="26" AppVersion="5.7.0.13" ReadKey="readkey.rDIUOHxjHh4=.VtvyN+fBVft3bPHbxHslCQ==.y6IBfRuerUNvLgCtrv1vOVhAgq7r25WX+ZrBBFTc/zU4zk2ZWRgwYW+3wSRgsZigSq71Ywa7EAziqpBftpEYHbNGT7zW8rb6jEVpKMx5QAc=.Mi96uY0a3kHgEHZwIkDt6NQxSZibotAVFtkL2Cg1Q34=." WriteKeyPublic="BgIAAACkAABSU0ExAAgAAAEAAQBVRq3tBo2Eaf0mFYaEXJC8PcEb+e+iQCGv9md6IzUOOC2f1gJ6P24vJTqkqmfcDblqxak39OpMCuSJRlTTbtwaXEiX2zIn1xNGrRg9i7P5b1BCVVVvocEcc7wzcKOeV/AWTEQmVqbZDTWSJ2LwbJdluet4MtdDeTfoer1ahEDvnjMo9kgGHDLxZu2kQE1U4v7ral7knjlk1AXC6MyrBJkAZMNmTaw8x3jXk/YXAoCP2wCtcGUCKAacGtEw2oV3jmKn657AeTmCHtFLFmjNW3TNex0EcMB/XOWabJUNE0dQaeTDfOKSQQdn2N1FlfmO+jbpkX7iJyUZ1mnT0Mpivii7" StartModuleName="Main" EditedBy="CORP\Server01" LastEdited="2024-04-10T03:09:35.2931428Z" Signature="GwbdZIlLl7GJ2+kMz/M0mxULrOO4tEpXXyRb6dFY8SM=">
+<Project Version="26" AppVersion="5.7.0.13" ReadKey="readkey.5VeX+NcHjxE=.RfUYtjNvjIBPqDTfOfLmeg==.CeyCFLyRWzNnbuxCW5CeAZzLC1Ghfj3yaMURo7kO8iFXKeERmkZoOHPK1yFPvMO3E3CdtP20EXcF2WdGHTug4udoxVrbqwFQu5fWrweCPIE=.EpPuBiOZM4UykPilZnQYRL8PQynL9WfdP69CcE6Znpk=." WriteKeyPublic="BgIAAACkAABSU0ExAAgAAAEAAQBV1cM0OrX42EvNAoK7VIOeqrgoLWH3fMPsJLFrLaGjl9UoZNREbsQUF7bseDqgRaoJRDZjrFLVGdn07nqfnByYMggIWrpJASYOtQq8quw1EjgDHGs9YwQiSGkYOcxC6fQCnwQeiiucv3CTmlciuP2i/lL4Y0ShzUOxkT8FM2mmTH9sWLdDSUW+0GGg8czjulrA4OJtzWNSKeh4C+0N3fMUDZCyMeN3sSegfE91pBzG8XSmzcP65qskcpKxmjocdOTz8ng+GSEBt7FF9Rb2lT9J6WnPmsxjQksoidp24vKjnGTkLVM/Oan1yq8bgbwgv4U9JyG0zzpVXplGn2oahT33" StartModuleName="Main" EditedBy="CORP\Server01" LastEdited="2024-04-24T21:59:37.3234822Z" Signature="GVMF3EIi09PVthhr1nR8ETgpvP9yxfRShg2gvPxtuJM=">
   <Modules>
     <Module Name="Main" AutoRun="true" SelectedGroupName="Group 1">
       <Groups>
         <Group Name="Group 1">
           <ModelObjects>
-            <Table Name="Bin 20" Left="916" Top="33" Width="333" Height="300" IsMinimized="false" ActiveActionIndex="3">
+            <Table Name="Bin 20" Left="917" Top="32" Width="333" Height="300" IsMinimized="false" ActiveActionIndex="1">
               <Actions>
                 <DeriveTableAction SourceTableName="Pivot" IsConditional="false" />
                 <KeepRemoveColumnsAction Mode="Remove">
@@ -30,6 +30,14 @@
                     <Item>Jaccard Score Weighted (Sci-kit) LPS Bin 5</Item>
                     <Item>Jaccard Score Weighted I Bin 5</Item>
                     <Item>Jaccard Score Weighted LPS Bin 5</Item>
+                    <Item>ROC AUC Unweighted I Bin 5</Item>
+                    <Item>ROC AUC Unweighted LPS Bin 5</Item>
+                    <Item>ROC AUC Weighted I Bin 5</Item>
+                    <Item>ROC AUC Weighted LPS Bin 5</Item>
+                    <Item>Sensitivity I Bin 5</Item>
+                    <Item>Sensitivity LPS Bin 5</Item>
+                    <Item>Specificity I Bin 5</Item>
+                    <Item>Specificity LPS Bin 5</Item>
                   </ColumnNames>
                 </KeepRemoveColumnsAction>
                 <LookupRenameAction LookupTableName="Metric Names" SecondTableExists="true" OldColumnName="Metric_Multilabel_Bin" NewColumnName="Metric" />
@@ -79,6 +87,14 @@
                     <Item>Jaccard Score Weighted (Sci-kit) LPS Bin 20</Item>
                     <Item>Jaccard Score Weighted I Bin 20</Item>
                     <Item>Jaccard Score Weighted LPS Bin 20</Item>
+                    <Item>ROC AUC Unweighted I Bin 20</Item>
+                    <Item>ROC AUC Unweighted LPS Bin 20</Item>
+                    <Item>ROC AUC Weighted I Bin 20</Item>
+                    <Item>ROC AUC Weighted LPS Bin 20</Item>
+                    <Item>Sensitivity I Bin 20</Item>
+                    <Item>Sensitivity LPS Bin 20</Item>
+                    <Item>Specificity I Bin 20</Item>
+                    <Item>Specificity LPS Bin 20</Item>
                   </ColumnNames>
                 </KeepRemoveColumnsAction>
                 <LookupRenameAction LookupTableName="Metric Names" SecondTableExists="true" OldColumnName="Metric_Multilabel_Bin" NewColumnName="Metric" />
@@ -142,7 +158,7 @@
               </Actions>
               <AnalysisView LayoutMode="Filters" />
             </Table>
-            <Table Name="Iterate" Left="296" Top="165" Width="242" Height="300" IsMinimized="false" ActiveActionIndex="4">
+            <Table Name="Iterate" Left="296" Top="165" Width="242" Height="300" IsMinimized="false" ActiveActionIndex="3">
               <Actions>
                 <DeriveTableAction SourceTableName="Files" IsConditional="false" />
                 <IterateAction IterationMode="IterateAndAppendResults" UseDefaultResultTable="true" FailureOption="Halt">
@@ -190,7 +206,7 @@
                 </Filters>
               </AnalysisView>
             </Table>
-            <Table Name="Metric Names" Left="583" Top="29" Width="202" Height="261" IsMinimized="false" ActiveActionIndex="3">
+            <Table Name="Metric Names" Left="583" Top="29" Width="242" Height="261" IsMinimized="false" ActiveActionIndex="3">
               <Actions>
                 <DeriveTableAction SourceTableName="Iterate" IsConditional="false" />
                 <KeepRemoveColumnsAction Mode="Remove">
@@ -266,7 +282,7 @@
       <Groups>
         <Group Name="Group 1">
           <ModelObjects>
-            <Table Name="e_coli_driams_bin5_svc_results.txt" Left="297" Top="175" Width="823" Height="300" IsMinimized="false" ActiveActionIndex="1">
+            <Table Name="e_coli_driams_bin5_svc_results.txt" Left="297" Top="175" Width="823" Height="300" IsMinimized="false" ActiveActionIndex="6">
               <Actions>
                 <ImportDelimitedTextAction DecimalSeparator="Point" ThousandSeparator="Default" ShowParsingErrors="false" IgnoreQuoting="false" NumericValuesTreatmentOption="AlwaysAsNumbers" ColumnsDontHaveHeaders="false" LoadAllColumns="true" AddColumnsWhenRowsHaveMoreValuesThanHeaders="false">
                   <MetaColumns>
