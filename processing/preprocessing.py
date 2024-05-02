@@ -8,6 +8,8 @@ import numpy as np
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.model_selection import train_test_split
 
+import joblib
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-f", "--Folder", help="What folder to get the data from", default="unbinned")
@@ -38,6 +40,10 @@ for file in unprocessed_file_paths:
     print("Processing", file)
     bacteria = pd.read_csv(file)
 
+    file_name_ext = os.path.basename(file)
+    file_name = os.path.splitext(file_name_ext)[0]
+    ext = os.path.splitext(file_name_ext)[1]
+
     malditof = bacteria[bacteria.columns.drop(list(bacteria.filter(regex='[^0-9]')))]
 
     if "species" in bacteria.columns:
@@ -63,13 +69,12 @@ for file in unprocessed_file_paths:
 
     if args.Norm:
         if args.Norm == "min-max":
-            minmax_scaler = MinMaxScaler()
-            x_train = minmax_scaler.fit_transform(x_train)
-            x_test = minmax_scaler.transform(x_test)
+            scaler = MinMaxScaler()
         elif args.Norm == "standard":
-            standard_scaler = StandardScaler()
-            x_train = standard_scaler.fit_transform(x_train)
-            x_test = standard_scaler.transform(x_test)
+            scaler = StandardScaler()
+        x_train = scaler.fit_transform(x_train)
+        x_test = scaler.transform(x_test)
+        joblib.dump(scaler, processed_folder+"scaler/"+file_name+".save")
 
     train = pd.DataFrame(np.column_stack([x_train, y_train]))
     train.columns = list(malditof.columns) + antibiotics
@@ -77,9 +82,6 @@ for file in unprocessed_file_paths:
     test = pd.DataFrame(np.column_stack([x_test, y_test]))
     test.columns = list(malditof.columns) + antibiotics
 
-    file_name_ext = os.path.basename(file)
-    file_name = os.path.splitext(file_name_ext)[0]
-    ext = os.path.splitext(file_name_ext)[1]
     train_name = processed_folder+"train_"+file_name+ext
     test_name = processed_folder+"test_"+file_name+ext
 
