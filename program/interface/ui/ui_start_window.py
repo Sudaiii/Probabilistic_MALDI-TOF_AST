@@ -57,20 +57,15 @@ class Ui_Start(object):
 
         self.horizontalLayout_9 = QHBoxLayout()
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
-        self.horizontalSpacer_10 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_9.addItem(self.horizontalSpacer_10)
+        self.ms_image = QLabel(self.centralwidget)
+        self.ms_image.setObjectName(u"label")
+        self.ms_image.setScaledContents(True)
+        # self.ms_image.setMaximumWidth(600)
+        # self.ms_image.setMaximumHeight(400)
 
-        self.label = QLabel(self.centralwidget)
-        self.label.setObjectName(u"label")
-        self.label.setPixmap(QPixmap(u"C:/Users/elias/Downloads/aaa.png"))
-        self.label.setScaledContents(True)
 
-        self.horizontalLayout_9.addWidget(self.label)
-
-        self.horizontalSpacer_9 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_9.addItem(self.horizontalSpacer_9)
+        self.horizontalLayout_9.addWidget(self.ms_image)
 
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_9)
@@ -275,7 +270,7 @@ class Ui_Start(object):
         Start.setWindowTitle(QCoreApplication.translate("Start", u"MainWindow", None))
         self.microscope_image.setText("")
         self.title.setText(QCoreApplication.translate("Start", u"MALDI-TOF MS AST", None))
-        self.label.setText("")
+        self.ms_image.setText("")
         self.bacteria_image.setText("")
         self.bacteria_header.setText(QCoreApplication.translate("Start", u"Bacteria", None))
         self.bacteria_select.setCurrentText("")

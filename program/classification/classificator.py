@@ -1,5 +1,5 @@
-from processing_utils import preprocess
-from visualization_utils import spectrometry
+from .processing_utils import preprocess
+from .visualization_utils import spectrometry
 
 
 class Classificator():
@@ -7,14 +7,13 @@ class Classificator():
         self.bacteria = bacteria
         self.algorithm = algorithm
         self.bin_size = bin_size
-
         self.model = "abc"
     
     def visualize(self, file):
         X = preprocess(file, self.bacteria, self.bin_size)
         if len(X) > 1:
             X = X.iloc[[0]]
-        spectrometry(X)
+        return spectrometry(X)
         
 
     def classify(self, file):
@@ -23,4 +22,4 @@ class Classificator():
 
 
 
-Classificator().visualize("D:/Development/Projects/Probabilistic_MALDI-TOF_AST/data/program/k_pneumoniae_sample.csv")
+# Classificator().visualize("D:/Development/Projects/Probabilistic_MALDI-TOF_AST/data/program/k_pneumoniae_sample.csv")

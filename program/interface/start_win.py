@@ -3,12 +3,16 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog
 from PySide6.QtCore import QFile
 from PySide6.QtGui import QPixmap, QIcon
 
+from PIL.ImageQt import ImageQt
+
 from .ui.ui_start_window import Ui_Start
 
 from .config_win import Config
 from .results_win import Results
 
 from classification.classificator import Classificator
+
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -33,9 +37,10 @@ class MainWindow(QMainWindow):
             path = self.file_address.split("/")
             file = path[len(path)-1]
             self.ui.file_name.setText(file)
-            self.classificator.visualize(self.file_address)
-            # pixmap = QPixmap(self.image_addresses[0])
-
+            im = self.classificator.visualize(self.file_address)
+            qim = ImageQt(im)
+            pix = QPixmap.fromImage(qim)
+            self.ui.ms_image.setPixmap(pix)
 
     def deploy_config(self):
         self.config = Config()
