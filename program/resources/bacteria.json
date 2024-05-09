@@ -1,0 +1,6 @@
+{
+    "Staphylococcus aureus": "s_aureus",
+    "Escherichia coli": "e_coli",
+    "Klebsiella pneumoniae": "k_pneumoniae",
+    "Pseudomonas aeruginosa": "p_aeruginosa"
+}

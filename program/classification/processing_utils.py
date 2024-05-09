@@ -5,7 +5,12 @@ import joblib
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
-SCALERS_LOCATION = "../data/processed/binned/standard/scaler/"
+from variables import RESOURCE_PATH
+
+
+
+SCALERS_LOCATION = RESOURCE_PATH+"scalers/"
+
 
 
 def preprocess(file, bacteria, bin_size):

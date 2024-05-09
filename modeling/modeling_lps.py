@@ -29,17 +29,18 @@ def lps_to_multilabel_instance(lps_instance):
         multilabel_instance.append(int(result))
     return multilabel_instance
 
+
 def lps_to_multilabel_list(lps_list):
     multilabel_list = []
     for lps_instance in lps_list:
         multilabel_list.append(lps_to_multilabel_instance(lc.inverse_transform([lps_instance])))
     return multilabel_list
 
+
 def lps_f1_wrapper(true, pred, average="weighted"):
     non_lps_true = lps_to_multilabel_list(true)
     non_lps_pred = lps_to_multilabel_list(pred)
     return multilabel_f1_wrapper(non_lps_true, non_lps_pred, average=average)
-
 
 
 def optimize(train_features, train_labels, algorithm, output_model_file, output_validation_file, lps):
@@ -98,8 +99,6 @@ def multilabel(train_features, train_labels, test_features, algorithm, base_name
         feature_importance(model, train_features, train_y, test_features, algorithm, base_name)
 
     # proba = model.proba(test_x)
-
-
     return pred
 
 

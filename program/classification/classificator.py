@@ -1,24 +1,37 @@
+import json
+import joblib
+from os.path import exists
+
+from variables import RESOURCE_PATH
 from .processing_utils import preprocess
-from .visualization_utils import spectrometry
+
+
+
+MODEL_PATH = RESOURCE_PATH+"models/"
+
 
 
 class Classificator():
-    def __init__(self, bacteria="k_pneumoniae", algorithm="mlp", bin_size=20):
+    def __init__(self, bacteria="Klebsiella pneumoniae", algorithm="MLP", bin_size=5):
         self.bacteria = bacteria
+
+        bacteria_dictionary_file = open(RESOURCE_PATH+"bacteria.json", "r")
+        bacteria_dictionary = json.load(bacteria_dictionary_file)
+        self.bacteria_alias = bacteria_dictionary[self.bacteria]
+
         self.algorithm = algorithm
         self.bin_size = bin_size
-        self.model = "abc"
-    
-    def visualize(self, file):
-        X = preprocess(file, self.bacteria, self.bin_size)
-        if len(X) > 1:
-            X = X.iloc[[0]]
-        return spectrometry(X)
+
+        self.model_load()
         
 
+    def model_load(self):
+        model_file = self.bacteria_alias+"_driams_bin"+str(self.bin_size)+"_"+self.algorithm.lower()+"_standard_lps.joblib"
+        self.model = joblib.load(MODEL_PATH+model_file)
+
     def classify(self, file):
-        X = preprocess(file, self.bacteria, self.bin_size)
-        return self.model.predict_proba(X)
+        X = preprocess(file, self.bacteria_alias, self.bin_size)
+        return self.model.predict(X)
 
 
 

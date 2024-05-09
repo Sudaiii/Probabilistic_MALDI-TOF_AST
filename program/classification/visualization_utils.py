@@ -2,9 +2,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import matplotlib.ticker as mticker
+import pandas as pd
 import io
 
 import PIL
+
+
 
 LINEWIDTH = 1
 LABEL_SIZE = 8
@@ -15,11 +18,16 @@ BASE_PALETTE = sns.color_palette("tab20")
 
 
 
+def visualize(X):
+    if len(X) > 1:
+        X = X.iloc[[0]]
+    return spectrometry(X)
+
+
 def melt_data(X):
     melt_X = X.melt(var_name='Da', value_name='Value')
     melt_X["Da"] = melt_X["Da"].astype(str).astype(int)
     return melt_X
-
 
 
 def spectrometry(X):

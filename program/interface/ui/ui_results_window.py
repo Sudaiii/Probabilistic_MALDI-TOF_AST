@@ -141,23 +141,23 @@ class Ui_Results(object):
 
         self.base_result_layout = QVBoxLayout()
         self.base_result_layout.setObjectName(u"base_result_layout")
-        self.label_2 = QLabel(self.centralwidget)
-        self.label_2.setObjectName(u"label_2")
+        self.s_antibiotic_1_label = QLabel(self.centralwidget)
+        self.s_antibiotic_1_label.setObjectName(u"label_2")
         font1 = QFont()
         font1.setPointSize(18)
-        self.label_2.setFont(font1)
-        self.label_2.setAlignment(Qt.AlignCenter)
+        self.s_antibiotic_1_label.setFont(font1)
+        self.s_antibiotic_1_label.setAlignment(Qt.AlignCenter)
 
-        self.base_result_layout.addWidget(self.label_2)
+        self.base_result_layout.addWidget(self.s_antibiotic_1_label)
 
-        self.label = QLabel(self.centralwidget)
-        self.label.setObjectName(u"label")
+        self.s_proba_1_label = QLabel(self.centralwidget)
+        self.s_proba_1_label.setObjectName(u"label")
         font2 = QFont()
         font2.setPointSize(12)
-        self.label.setFont(font2)
-        self.label.setAlignment(Qt.AlignCenter)
+        self.s_proba_1_label.setFont(font2)
+        self.s_proba_1_label.setAlignment(Qt.AlignCenter)
 
-        self.base_result_layout.addWidget(self.label)
+        self.base_result_layout.addWidget(self.s_proba_1_label)
 
 
         self.results_layout.addLayout(self.base_result_layout)
@@ -264,11 +264,11 @@ class Ui_Results(object):
         self.bacteria_label.setText(QCoreApplication.translate("Start", u"TextLabel", None))
         self.spectrometry_label.setText("")
         self.probability_title_label.setText(QCoreApplication.translate("Start", u"Probabilidad de susceptibilidad", None))
-        self.label_2.setText(QCoreApplication.translate("Start", u"TextLabel", None))
-        self.label.setText(QCoreApplication.translate("Start", u"TextLabel", None))
+        self.s_antibiotic_1_label.setText(QCoreApplication.translate("Start", u"TextLabel", None))
+        self.s_proba_1_label.setText(QCoreApplication.translate("Start", u"TextLabel", None))
         self.binning_label.setText(QCoreApplication.translate("Start", u"Binning: []", None))
         self.model_label.setText(QCoreApplication.translate("Start", u"Modelo: []", None))
-        self.export_button.setText(QCoreApplication.translate("Start", u"Configuraci\u00f3n", None))
+        self.export_button.setText(QCoreApplication.translate("Start", u"Exportar", None))
         self.export_image.setText("")
     # retranslateUi
 
