@@ -4,3 +4,4 @@
 **/modeling/results
 **/modeling/models
 *.csv
+**/exploration/outputs
