@@ -1,7 +1,3 @@
-
-import xgboost as xgb
-from sklearn.svm import SVC
-
 from skopt import BayesSearchCV
 from skopt.space import Real, Categorical, Integer
 

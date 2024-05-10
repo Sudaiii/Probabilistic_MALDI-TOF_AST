@@ -1,15 +1,6 @@
-
-import xgboost as xgb
-from sklearn.svm import SVC
-
-from skopt import BayesSearchCV
-from skopt.space import Real, Categorical, Integer
-
 from sklearn.neural_network import MLPClassifier
 from sklearn.base import BaseEstimator, ClassifierMixin
-from sklearn.ensemble import RandomForestClassifier
-import xgboost as xgb
-from sklearn.svm import SVC
+
 
 
 class MLPWrapper(BaseEstimator, ClassifierMixin):
