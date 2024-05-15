@@ -17,6 +17,8 @@ from classification.visualization_utils import visualize
 
 from variables import RESOURCE_PATH
 
+
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()

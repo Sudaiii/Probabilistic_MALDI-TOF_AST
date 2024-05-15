@@ -44,7 +44,7 @@ class MLPWrapper(BaseEstimator, ClassifierMixin):
     def predict(self, X):
         return self.model.predict(X)
     
-    def predit_proba(self, X):
+    def predict_proba(self, X):
         return self.model.predict_proba(X)
 
     def score(self, X, y):

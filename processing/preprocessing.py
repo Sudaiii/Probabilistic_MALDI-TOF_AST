@@ -7,6 +7,9 @@ import numpy as np
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+
+from problem_transformation import agg_columns
 
 import joblib
 
@@ -74,7 +77,21 @@ for file in unprocessed_file_paths:
             scaler = StandardScaler()
         x_train = scaler.fit_transform(x_train)
         x_test = scaler.transform(x_test)
+
+        if not os.path.exists(processed_folder+"scaler/"):
+            os.makedirs(processed_folder+"scaler/")
+
         joblib.dump(scaler, processed_folder+"scaler/"+file_name+".save")
+
+    lc = LabelEncoder()
+
+    agg_y_train = agg_columns(y_train.astype(int))
+    lc.fit(agg_y_train.values.ravel())
+
+    if not os.path.exists(processed_folder+"encoder/"):
+        os.makedirs(processed_folder+"encoder/")
+
+    joblib.dump(lc, processed_folder+"encoder/"+file_name+"_encoder.save")
 
     train = pd.DataFrame(np.column_stack([x_train, y_train]))
     train.columns = list(malditof.columns) + antibiotics

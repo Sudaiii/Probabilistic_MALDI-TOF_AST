@@ -13,7 +13,6 @@ from classification.visualization_utils import visualize
 
 
 
-
 class Results(QMainWindow):
     def __init__(self, file, bacteria, algorithm="MLP", bin_size=5):
         super(Results, self).__init__()

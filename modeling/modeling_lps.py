@@ -82,7 +82,6 @@ def multilabel(train_features, train_labels, test_features, algorithm, base_name
 
     train_y = agg_columns(train_labels)
 
-    lc.fit(train_y.values.ravel())
     train_y = lc.transform(train_y.values.ravel())
 
     if not os.path.exists(model_file) or not os.path.exists(base_name+"_cv.txt"):
@@ -157,7 +156,6 @@ if __name__ == "__main__":
     input_file_paths = [input_folder + file for file in input_train_files]
 
     for file in input_file_paths:
-        lc = LabelEncoder()
         plt.close("all")
         
         print("\nProcessing", file)
@@ -178,6 +176,7 @@ if __name__ == "__main__":
         train_y = train_bac[antibiotics].astype(int)
         test_y = test_bac[antibiotics].astype(int)
 
+        lc = load("data/processed/"+args.Folder+"/"+args.Norm+"/encoder/"+file_name+"_encoder.save")
 
         if args.Multilabel == "lps":
             pred = multilabel(train_x, train_y, test_x, args.Algorithm, base_name, model_file)
