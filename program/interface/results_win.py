@@ -28,18 +28,17 @@ class Results(QMainWindow):
 
         # Classificator initialization
         self.classificator = Classificator(bacteria, algorithm, bin_size)
+        self.results = self.classificator.classify(file)
 
         # UI initialization
         self.ui = Ui_Results()
-        self.ui.setupUi(self)
+        self.ui.setupUi(self, self.results)
+        # self.ui.addProba(self.results)
 
         self.ui.file_label.setText("Archivo: " + file_name)
         self.ui.bacteria_label.setText("Bacteria: " + bacteria)
         self.ui.model_label.setText("Algoritmo: " + algorithm)
         self.ui.binning_label.setText("Binning: " + str(bin_size))
-
-        self.ui.s_antibiotic_1_label.setText("Classification:")
-        self.ui.s_proba_1_label.setText(str(self.classificator.classify(file)))
 
         x = pd.read_csv(self.file)
         im = visualize(x)

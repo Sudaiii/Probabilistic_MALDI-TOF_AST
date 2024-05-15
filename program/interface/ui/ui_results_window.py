@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLayout,
     QSpacerItem, QStatusBar, QVBoxLayout, QWidget)
 
 class Ui_Results(object):
-    def setupUi(self, Start):
+    def setupUi(self, Start, results):
         if not Start.objectName():
             Start.setObjectName(u"Start")
         Start.resize(814, 743)
@@ -40,8 +40,12 @@ class Ui_Results(object):
 
         self.horizontalLayout_10.addItem(self.horizontalSpacer_12)
 
+        font = QFont()
+        font.setPointSize(12)
+
         self.file_label = QLabel(self.centralwidget)
         self.file_label.setObjectName(u"file_label")
+        self.file_label.setFont(font)
 
         self.horizontalLayout_10.addWidget(self.file_label)
 
@@ -51,6 +55,7 @@ class Ui_Results(object):
 
         self.bacteria_label = QLabel(self.centralwidget)
         self.bacteria_label.setObjectName(u"bacteria_label")
+        self.bacteria_label.setFont(font)
 
         self.horizontalLayout_10.addWidget(self.bacteria_label)
 
@@ -133,41 +138,20 @@ class Ui_Results(object):
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_6)
 
+        ################
         self.results_layout = QHBoxLayout()
         self.results_layout.setObjectName(u"results_layout")
         self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
+        
         self.results_layout.addItem(self.horizontalSpacer_5)
-
-        self.base_result_layout = QVBoxLayout()
-        self.base_result_layout.setObjectName(u"base_result_layout")
-        self.s_antibiotic_1_label = QLabel(self.centralwidget)
-        self.s_antibiotic_1_label.setObjectName(u"label_2")
-        font1 = QFont()
-        font1.setPointSize(18)
-        self.s_antibiotic_1_label.setFont(font1)
-        self.s_antibiotic_1_label.setAlignment(Qt.AlignCenter)
-
-        self.base_result_layout.addWidget(self.s_antibiotic_1_label)
-
-        self.s_proba_1_label = QLabel(self.centralwidget)
-        self.s_proba_1_label.setObjectName(u"label")
-        font2 = QFont()
-        font2.setPointSize(12)
-        self.s_proba_1_label.setFont(font2)
-        self.s_proba_1_label.setAlignment(Qt.AlignCenter)
-
-        self.base_result_layout.addWidget(self.s_proba_1_label)
-
-
-        self.results_layout.addLayout(self.base_result_layout)
+        
+        self.addProba(results)
 
         self.horizontalSpacer_6 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
         self.results_layout.addItem(self.horizontalSpacer_6)
 
-
         self.verticalLayout_2.addLayout(self.results_layout)
+        ################
 
         self.verticalSpacer_3 = QSpacerItem(20, 20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
 
@@ -179,13 +163,21 @@ class Ui_Results(object):
 
         self.horizontalLayout_5.addItem(self.horizontalSpacer_7)
 
+        font = QFont()
+        font.setPointSize(12)
+        
         self.binning_label = QLabel(self.centralwidget)
         self.binning_label.setObjectName(u"binning_label")
+        self.binning_label.setFont(font)
 
         self.horizontalLayout_5.addWidget(self.binning_label)
 
+        horizontal_spacer = QSpacerItem(30, 30, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
+        self.horizontalLayout_5.addItem(horizontal_spacer)
+
         self.model_label = QLabel(self.centralwidget)
         self.model_label.setObjectName(u"model_label")
+        self.model_label.setFont(font)
 
         self.horizontalLayout_5.addWidget(self.model_label)
 
@@ -258,14 +250,56 @@ class Ui_Results(object):
         QMetaObject.connectSlotsByName(Start)
     # setupUi
 
+    def addProba(self, results):
+        max = list(results.values())[0]
+        for antibiotic in results:
+            base_result_layout = QVBoxLayout()
+            base_result_layout.setObjectName(u"base_result_layout_"+antibiotic)
+
+            # Probability Label
+            s_proba_label = QLabel(self.centralwidget)
+            s_proba_label.setObjectName(u"label_proba_"+antibiotic)
+
+            font1 = QFont()
+            font1.setPointSize(24)
+        
+            s_proba_label.setFont(font1)
+            s_proba_label.setAlignment(Qt.AlignCenter)
+
+            if results[antibiotic] == max:
+                s_proba_label.setStyleSheet("color: green;")
+
+            s_proba_label.setText(f"{results[antibiotic]*100:.2f}%")
+
+            base_result_layout.addWidget(s_proba_label)
+
+            # Antibiotic Label
+            s_antibiotic_label = QLabel(self.centralwidget)
+            s_antibiotic_label.setObjectName(u"label_"+antibiotic)
+            font2 = QFont()
+            font2.setPointSize(12)
+            s_antibiotic_label.setFont(font2)
+            s_antibiotic_label.setAlignment(Qt.AlignCenter)
+
+            s_antibiotic_label.setText(antibiotic)
+
+            base_result_layout.addWidget(s_antibiotic_label)
+
+            
+            # Adding to layout
+            self.results_layout.addLayout(base_result_layout)
+            
+            horizontal_spacer = QSpacerItem(30, 30, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
+            self.results_layout.addItem(horizontal_spacer)
+
+        
+
     def retranslateUi(self, Start):
         Start.setWindowTitle(QCoreApplication.translate("Start", u"MainWindow", None))
         self.file_label.setText(QCoreApplication.translate("Start", u"TextLabel", None))
         self.bacteria_label.setText(QCoreApplication.translate("Start", u"TextLabel", None))
         self.spectrometry_label.setText("")
         self.probability_title_label.setText(QCoreApplication.translate("Start", u"Probabilidad de susceptibilidad", None))
-        self.s_antibiotic_1_label.setText(QCoreApplication.translate("Start", u"TextLabel", None))
-        self.s_proba_1_label.setText(QCoreApplication.translate("Start", u"TextLabel", None))
         self.binning_label.setText(QCoreApplication.translate("Start", u"Binning: []", None))
         self.model_label.setText(QCoreApplication.translate("Start", u"Modelo: []", None))
         self.export_button.setText(QCoreApplication.translate("Start", u"Exportar", None))

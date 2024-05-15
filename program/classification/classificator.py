@@ -51,8 +51,8 @@ class Classificator():
                 if class_antibiotics[j] == "0":
                     antibiotic_proba[self.antibiotics[j]] += class_proba
 
-        print(antibiotic_proba)
-        return self.model.predict_proba(X)
+        sorted_antibiotic_proba = {k: v for k, v in sorted(antibiotic_proba.items(), key=lambda item: item[1], reverse=True)}
+        return sorted_antibiotic_proba
     
 
     def probability_dictionary(self):
