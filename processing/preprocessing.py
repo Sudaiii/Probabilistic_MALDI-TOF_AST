@@ -85,8 +85,10 @@ for file in unprocessed_file_paths:
 
     lc = LabelEncoder()
 
-    agg_y_train = agg_columns(y_train.astype(int))
-    lc.fit(agg_y_train.values.ravel())
+    agg_columns = pd.DataFrame()
+    agg_columns["Class"] = y_train.astype(int).astype(str).agg(''.join, axis=1)
+    agg_columns["Class"] = agg_columns["Class"].astype(str)
+    lc.fit(agg_columns.values.ravel())
 
     if not os.path.exists(processed_folder+"encoder/"):
         os.makedirs(processed_folder+"encoder/")
