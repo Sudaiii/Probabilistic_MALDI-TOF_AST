@@ -5,8 +5,6 @@ from os.path import exists
 from variables import RESOURCE_PATH
 from .processing_utils import preprocess
 
-from sklearn.preprocessing import LabelEncoder
-
 
 MODEL_PATH = RESOURCE_PATH+"models/"
 
@@ -38,8 +36,8 @@ class Classificator():
         self.antibiotics = antibiotic_dictionary[self.bacteria]
 
 
-    def classify(self, file):
-        X = preprocess(file, self.bacteria_alias, self.bin_size)
+    def classify(self, data):
+        X = preprocess(data, self.bacteria_alias, self.bin_size)
         proba = self.model.predict_proba(X)
         
         antibiotic_proba = self.probability_dictionary()

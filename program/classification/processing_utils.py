@@ -13,15 +13,14 @@ SCALERS_LOCATION = RESOURCE_PATH+"scalers/"
 
 
 
-def preprocess(file, bacteria, bin_size):
-    X = malditofms_to_pd(file)
-    X = bin(X, bin_size)
-    X = normalize(X, bacteria, bin_size)
-    return X
-
 def malditofms_to_pd(file):
     #...
     X = pd.read_csv(file)
+    return X
+
+def preprocess(X, bacteria, bin_size):
+    X = bin(X, bin_size)
+    X = normalize(X, bacteria, bin_size)
     return X
 
 def bin(X, bin_size):

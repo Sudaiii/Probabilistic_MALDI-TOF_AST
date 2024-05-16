@@ -18,6 +18,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLayout,
     QMainWindow, QMenuBar, QPushButton, QSizePolicy,
     QSpacerItem, QStatusBar, QVBoxLayout, QWidget)
+import pyqtgraph as pg
+
 
 class Ui_Results(object):
     def setupUi(self, Start, results):
@@ -72,20 +74,15 @@ class Ui_Results(object):
 
         self.horizontalLayout_9 = QHBoxLayout()
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
-        self.horizontalSpacer_10 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_9.addItem(self.horizontalSpacer_10)
+        self.spectrometry_label = pg.PlotWidget()
+        self.spectrometry_label.setBackground("w")
+        axis_styles = {"font-size": "16px", "text-align": "left"}
+        self.spectrometry_label.setLabel("left", "Intensidad", **axis_styles)
+        self.spectrometry_label.setLabel("bottom", "Masa (Da)", **axis_styles)
 
-        self.spectrometry_label = QLabel(self.centralwidget)
         self.spectrometry_label.setObjectName(u"spectrometry_label")
-        self.spectrometry_label.setPixmap(QPixmap(u"C:/Users/elias/Downloads/aaa.png"))
-        self.spectrometry_label.setScaledContents(True)
-
         self.horizontalLayout_9.addWidget(self.spectrometry_label)
-
-        self.horizontalSpacer_9 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_9.addItem(self.horizontalSpacer_9)
 
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_9)
@@ -298,7 +295,6 @@ class Ui_Results(object):
         Start.setWindowTitle(QCoreApplication.translate("Start", u"MainWindow", None))
         self.file_label.setText(QCoreApplication.translate("Start", u"TextLabel", None))
         self.bacteria_label.setText(QCoreApplication.translate("Start", u"TextLabel", None))
-        self.spectrometry_label.setText("")
         self.probability_title_label.setText(QCoreApplication.translate("Start", u"Probabilidad de susceptibilidad", None))
         self.binning_label.setText(QCoreApplication.translate("Start", u"Binning: []", None))
         self.model_label.setText(QCoreApplication.translate("Start", u"Modelo: []", None))

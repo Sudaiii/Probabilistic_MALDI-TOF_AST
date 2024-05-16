@@ -19,6 +19,9 @@ from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
     QLayout, QLineEdit, QMainWindow, QMenuBar,
     QPushButton, QSizePolicy, QSpacerItem, QStatusBar,
     QVBoxLayout, QWidget)
+import pyqtgraph as pg
+
+
 
 class Ui_Start(object):
     def setupUi(self, Start):
@@ -58,12 +61,15 @@ class Ui_Start(object):
         self.horizontalLayout_9 = QHBoxLayout()
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
 
-        self.ms_image = QLabel(self.centralwidget)
-        self.ms_image.setObjectName(u"label")
-        self.ms_image.setScaledContents(True)
-        # self.ms_image.setMaximumWidth(600)
-        # self.ms_image.setMaximumHeight(400)
+        self.ms_image = pg.PlotWidget()
+        self.ms_image.setBackground("w")
 
+        axis_styles = {"font-size": "16px", "text-align": "left"}
+        self.ms_image.setLabel("left", "Intensidad", **axis_styles)
+        self.ms_image.setLabel("bottom", "Masa (Da)", **axis_styles)
+
+
+        self.ms_image.setObjectName(u"ms_image")
 
         self.horizontalLayout_9.addWidget(self.ms_image)
 
@@ -190,13 +196,22 @@ class Ui_Start(object):
 
         self.horizontalLayout_5.addItem(self.horizontalSpacer_7)
 
+        font = QFont()
+        font.setPointSize(12)
+
         self.binning_label = QLabel(self.centralwidget)
         self.binning_label.setObjectName(u"binning_label")
+        self.binning_label.setFont(font)
 
         self.horizontalLayout_5.addWidget(self.binning_label)
 
+        self.horizontalSpacer_8 = QSpacerItem(20, 20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_5.addItem(self.horizontalSpacer_8)
+
         self.model_label = QLabel(self.centralwidget)
         self.model_label.setObjectName(u"model_label")
+        self.model_label.setFont(font)
 
         self.horizontalLayout_5.addWidget(self.model_label)
 
@@ -270,7 +285,6 @@ class Ui_Start(object):
         Start.setWindowTitle(QCoreApplication.translate("Start", u"MainWindow", None))
         self.microscope_image.setText("")
         self.title.setText(QCoreApplication.translate("Start", u"MALDI-TOF MS AST", None))
-        self.ms_image.setText("")
         self.bacteria_image.setText("")
         self.bacteria_header.setText(QCoreApplication.translate("Start", u"Bacteria", None))
         self.bacteria_select.setCurrentText("")

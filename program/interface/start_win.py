@@ -3,17 +3,17 @@ import json
 import pandas as pd
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog
-from PySide6.QtCore import QFile
-from PySide6.QtGui import QPixmap, QIcon
 
-from PIL.ImageQt import ImageQt
+
+import pyqtgraph as pg
 
 from .ui.ui_start_window import Ui_Start
 
 from .config_win import Config
 from .results_win import Results
 
-from classification.visualization_utils import visualize
+from classification.visualization_utils import melt_data
+from classification.processing_utils import malditofms_to_pd
 
 from variables import RESOURCE_PATH
 
@@ -63,19 +63,20 @@ class MainWindow(QMainWindow):
             path = self.file_address.split("/")
             file = path[len(path)-1]
             self.ui.file_name.setText(file)
-            x = pd.read_csv(self.file_address)
-            im = visualize(x)
-            qim = ImageQt(im)
-            pix = QPixmap.fromImage(qim)
-            self.ui.ms_image.setPixmap(pix)
+            self.X = malditofms_to_pd(self.file_address)
+            melt_X = melt_data(self.X)
+
+            pen = pg.mkPen(color=(58, 125, 173), width=2)
+            self.ui.ms_image.plot(melt_X["Da"], melt_X["Value"], pen=pen)
             self.ui.start_button.setEnabled(True)
+
 
     def deploy_config(self):
         self.config = Config()
         self.config.show()
 
     def deploy_results(self):
-        self.results = Results(file=self.file_address, bacteria=self.ui.bacteria_select.currentData(), algorithm=self.algorithm, bin_size=self.bin_size)
+        self.results = Results(file=self.file_address, data=self.X, bacteria=self.ui.bacteria_select.currentData(), algorithm=self.algorithm, bin_size=self.bin_size)
         self.results.show()
 
 
