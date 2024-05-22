@@ -2,7 +2,6 @@ import sys
 import pandas as pd 
 
 from PySide6.QtWidgets import QMainWindow
-from PySide6.QtGui import QPixmap
 
 from PIL.ImageQt import ImageQt
 
@@ -11,7 +10,6 @@ import pyqtgraph as pg
 from .ui.ui_results_window import Ui_Results
 
 from classification.classificator import Classificator
-from classification.visualization_utils import melt_data
 
 
 
@@ -42,7 +40,5 @@ class Results(QMainWindow):
         self.ui.model_label.setText("Algoritmo: " + algorithm)
         self.ui.binning_label.setText("Binning: " + str(bin_size))
         
-        melt_X = melt_data(self.X)
-
         pen = pg.mkPen(color=(58, 125, 173), width=2)
-        self.ui.spectrometry_label.plot(melt_X["Da"], melt_X["Value"], pen=pen)
+        self.ui.spectrometry_label.plot(self.X["mass"], self.X["intensity"], pen=pen)

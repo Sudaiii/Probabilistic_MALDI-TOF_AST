@@ -19,6 +19,7 @@ from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
     QLayout, QLineEdit, QMainWindow, QMenuBar,
     QPushButton, QSizePolicy, QSpacerItem, QStatusBar,
     QVBoxLayout, QWidget)
+from PySide6 import QtCore
 import pyqtgraph as pg
 
 
@@ -27,9 +28,10 @@ class Ui_Start(object):
     def setupUi(self, Start):
         if not Start.objectName():
             Start.setObjectName(u"Start")
-        Start.resize(814, 743)
+        Start.resize(700, 700)
         self.centralwidget = QWidget(Start)
         self.centralwidget.setObjectName(u"centralwidget")
+
         self.horizontalLayout_3 = QHBoxLayout(self.centralwidget)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.verticalLayout_2 = QVBoxLayout()
@@ -38,12 +40,12 @@ class Ui_Start(object):
 
         self.verticalLayout_2.addItem(self.verticalSpacer_4)
 
-        self.microscope_image = QLabel(self.centralwidget)
-        self.microscope_image.setObjectName(u"microscope_image")
-        self.microscope_image.setPixmap(QPixmap(u"resources/images/icons8-microscope-50"))
-        self.microscope_image.setAlignment(Qt.AlignCenter)
+        # self.microscope_image = QLabel(self.centralwidget)
+        # self.microscope_image.setObjectName(u"microscope_image")
+        # self.microscope_image.setPixmap(QPixmap(u"resources/images/icons8-microscope-50"))
+        # self.microscope_image.setAlignment(Qt.AlignCenter)
 
-        self.verticalLayout_2.addWidget(self.microscope_image)
+        # self.verticalLayout_2.addWidget(self.microscope_image)
 
         self.title = QLabel(self.centralwidget)
         self.title.setObjectName(u"title")
@@ -51,6 +53,7 @@ class Ui_Start(object):
         font.setPointSize(34)
         self.title.setFont(font)
         self.title.setAlignment(Qt.AlignCenter)
+        self.title.setProperty("class", "title_text")
 
         self.verticalLayout_2.addWidget(self.title)
 
@@ -62,9 +65,9 @@ class Ui_Start(object):
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
 
         self.ms_image = pg.PlotWidget()
-        self.ms_image.setBackground("w")
+        self.ms_image.setBackground("#31363B")
 
-        axis_styles = {"font-size": "16px", "text-align": "left"}
+        axis_styles = {"font-size": "14px", "text-align": "left", "font-family": "roboto", "color": "#ffffff", "font-weight": "normal"}
         self.ms_image.setLabel("left", "Intensidad", **axis_styles)
         self.ms_image.setLabel("bottom", "Masa (Da)", **axis_styles)
 
@@ -89,12 +92,12 @@ class Ui_Start(object):
 
         self.verticalLayout_4 = QVBoxLayout()
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.bacteria_image = QLabel(self.centralwidget)
-        self.bacteria_image.setObjectName(u"bacteria_image")
-        self.bacteria_image.setPixmap(QPixmap(u"resources/images/icons8-bacteria-50.png"))
-        self.bacteria_image.setAlignment(Qt.AlignCenter)
+        # self.bacteria_image = QLabel(self.centralwidget)
+        # self.bacteria_image.setObjectName(u"bacteria_image")
+        # self.bacteria_image.setPixmap(QPixmap(u"resources/images/icons8-bacteria-50.png"))
+        # self.bacteria_image.setAlignment(Qt.AlignCenter)
 
-        self.verticalLayout_4.addWidget(self.bacteria_image)
+        # self.verticalLayout_4.addWidget(self.bacteria_image)
 
         self.bacteria_header = QLabel(self.centralwidget)
         self.bacteria_header.setObjectName(u"bacteria_header")
@@ -190,37 +193,6 @@ class Ui_Start(object):
 
         self.verticalLayout_2.addItem(self.verticalSpacer_5)
 
-        self.horizontalLayout_5 = QHBoxLayout()
-        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
-        self.horizontalSpacer_7 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_5.addItem(self.horizontalSpacer_7)
-
-        font = QFont()
-        font.setPointSize(12)
-
-        self.binning_label = QLabel(self.centralwidget)
-        self.binning_label.setObjectName(u"binning_label")
-        self.binning_label.setFont(font)
-
-        self.horizontalLayout_5.addWidget(self.binning_label)
-
-        self.horizontalSpacer_8 = QSpacerItem(20, 20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_5.addItem(self.horizontalSpacer_8)
-
-        self.model_label = QLabel(self.centralwidget)
-        self.model_label.setObjectName(u"model_label")
-        self.model_label.setFont(font)
-
-        self.horizontalLayout_5.addWidget(self.model_label)
-
-        self.horizontalSpacer_8 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_5.addItem(self.horizontalSpacer_8)
-
-
-        self.verticalLayout_2.addLayout(self.horizontalLayout_5)
 
         self.horizontalLayout_7 = QHBoxLayout()
         self.horizontalLayout_7.setSpacing(0)
@@ -283,17 +255,13 @@ class Ui_Start(object):
 
     def retranslateUi(self, Start):
         Start.setWindowTitle(QCoreApplication.translate("Start", u"MainWindow", None))
-        self.microscope_image.setText("")
         self.title.setText(QCoreApplication.translate("Start", u"MALDI-TOF MS AST", None))
-        self.bacteria_image.setText("")
         self.bacteria_header.setText(QCoreApplication.translate("Start", u"Bacteria", None))
         self.bacteria_select.setCurrentText("")
         self.file_name.setText(QCoreApplication.translate("Start", u"[Direcci\u00f3n Archivo]", None))
         self.browse_button.setText(QCoreApplication.translate("Start", u"Buscar", None))
         self.start_button.setText(QCoreApplication.translate("Start", u"Empezar", None))
         self.loading_label.setText("")
-        self.binning_label.setText(QCoreApplication.translate("Start", u"Binning: []", None))
-        self.model_label.setText(QCoreApplication.translate("Start", u"Modelo: []", None))
         self.config_button.setText(QCoreApplication.translate("Start", u"Configuraci\u00f3n", None))
         self.config_image.setText("")
     # retranslateUi

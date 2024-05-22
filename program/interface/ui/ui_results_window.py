@@ -42,12 +42,9 @@ class Ui_Results(object):
 
         self.horizontalLayout_10.addItem(self.horizontalSpacer_12)
 
-        font = QFont()
-        font.setPointSize(12)
 
         self.file_label = QLabel(self.centralwidget)
         self.file_label.setObjectName(u"file_label")
-        self.file_label.setFont(font)
 
         self.horizontalLayout_10.addWidget(self.file_label)
 
@@ -57,7 +54,6 @@ class Ui_Results(object):
 
         self.bacteria_label = QLabel(self.centralwidget)
         self.bacteria_label.setObjectName(u"bacteria_label")
-        self.bacteria_label.setFont(font)
 
         self.horizontalLayout_10.addWidget(self.bacteria_label)
 
@@ -76,8 +72,8 @@ class Ui_Results(object):
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
 
         self.spectrometry_label = pg.PlotWidget()
-        self.spectrometry_label.setBackground("w")
-        axis_styles = {"font-size": "16px", "text-align": "left"}
+        self.spectrometry_label.setBackground("#31363B")
+        axis_styles = {"font-size": "14px", "text-align": "left", "font-family": "roboto", "color": "#ffffff", "font-weight": "normal"}
         self.spectrometry_label.setLabel("left", "Intensidad", **axis_styles)
         self.spectrometry_label.setLabel("bottom", "Masa (Da)", **axis_styles)
 
@@ -107,10 +103,9 @@ class Ui_Results(object):
         self.probability_title_label = QLabel(self.centralwidget)
         self.probability_title_label.setObjectName(u"probability_title_label")
         self.probability_title_label.setEnabled(True)
-        font = QFont()
-        font.setPointSize(24)
-        self.probability_title_label.setFont(font)
+
         self.probability_title_label.setAlignment(Qt.AlignCenter)
+        self.probability_title_label.setProperty("class", "big_text")
 
         self.verticalLayout_4.addWidget(self.probability_title_label)
 
@@ -256,12 +251,9 @@ class Ui_Results(object):
             # Probability Label
             s_proba_label = QLabel(self.centralwidget)
             s_proba_label.setObjectName(u"label_proba_"+antibiotic)
-
-            font1 = QFont()
-            font1.setPointSize(24)
         
-            s_proba_label.setFont(font1)
             s_proba_label.setAlignment(Qt.AlignCenter)
+            s_proba_label.setProperty("class", "big_text")
 
             if results[antibiotic] == max:
                 s_proba_label.setStyleSheet("color: green;")
@@ -273,9 +265,7 @@ class Ui_Results(object):
             # Antibiotic Label
             s_antibiotic_label = QLabel(self.centralwidget)
             s_antibiotic_label.setObjectName(u"label_"+antibiotic)
-            font2 = QFont()
-            font2.setPointSize(12)
-            s_antibiotic_label.setFont(font2)
+
             s_antibiotic_label.setAlignment(Qt.AlignCenter)
 
             s_antibiotic_label.setText(antibiotic)

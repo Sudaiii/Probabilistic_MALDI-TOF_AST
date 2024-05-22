@@ -4,6 +4,7 @@ import pandas as pd
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog
 
+from qt_material import apply_stylesheet
 
 import pyqtgraph as pg
 
@@ -12,8 +13,7 @@ from .ui.ui_start_window import Ui_Start
 from .config_win import Config
 from .results_win import Results
 
-from classification.visualization_utils import melt_data
-from classification.processing_utils import malditofms_to_pd
+from classification.processing_utils import read_file
 
 from variables import RESOURCE_PATH
 
@@ -30,8 +30,8 @@ class MainWindow(QMainWindow):
         self.ui = Ui_Start()
         self.ui.setupUi(self)
 
-        self.ui.model_label.setText("Algoritmo: " + self.algorithm)
-        self.ui.binning_label.setText("Binning: " + str(self.bin_size))
+        self.setWindowTitle("MALDI-TOF MS AST")
+
 
         self.__load_combo_box()
 
@@ -52,28 +52,31 @@ class MainWindow(QMainWindow):
             self.ui.bacteria_select.setItemData(i, bac_key)
             i+=1
 
+
     def browse_files(self):
         self.file_address = QFileDialog.getOpenFileName(
             self,
             'Buscar Archivo',
             '',
-            'Tabulated data (*.csv *.xlsx)'
+            'MALDI-TOF MS Data (*.csv *.txt)'
         )[0]
         if len(self.file_address) > 0:
             path = self.file_address.split("/")
             file = path[len(path)-1]
             self.ui.file_name.setText(file)
-            self.X = malditofms_to_pd(self.file_address)
-            melt_X = melt_data(self.X)
+            self.X = read_file(self.file_address)
+
 
             pen = pg.mkPen(color=(58, 125, 173), width=2)
-            self.ui.ms_image.plot(melt_X["Da"], melt_X["Value"], pen=pen)
+            self.ui.ms_image.clear()
+            self.ui.ms_image.plot(self.X["mass"], self.X["intensity"], pen=pen)
             self.ui.start_button.setEnabled(True)
 
 
     def deploy_config(self):
-        self.config = Config()
+        self.config = Config(self)
         self.config.show()
+
 
     def deploy_results(self):
         self.results = Results(file=self.file_address, data=self.X, bacteria=self.ui.bacteria_select.currentData(), algorithm=self.algorithm, bin_size=self.bin_size)
@@ -83,6 +86,8 @@ class MainWindow(QMainWindow):
 def launch():
     app = QApplication(sys.argv)
     #app.setWindowIcon(QIcon(resource_path('placeholder.ico')))
+    
+    apply_stylesheet(app, theme="dark_blue.xml", css_file="custom.css")
 
     window = MainWindow()
     window.show()

@@ -3,7 +3,7 @@ import joblib
 from os.path import exists
 
 from variables import RESOURCE_PATH
-from .processing_utils import preprocess
+from .processing_utils import preprocess_data
 
 
 MODEL_PATH = RESOURCE_PATH+"models/"
@@ -37,7 +37,7 @@ class Classificator():
 
 
     def classify(self, data):
-        X = preprocess(data, self.bacteria_alias, self.bin_size)
+        X = preprocess_data(data, self.bacteria_alias, self.bin_size)
         proba = self.model.predict_proba(X)
         
         antibiotic_proba = self.probability_dictionary()
