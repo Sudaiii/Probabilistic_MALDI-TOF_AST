@@ -25,7 +25,7 @@ class Ui_Results(object):
     def setupUi(self, Start, results):
         if not Start.objectName():
             Start.setObjectName(u"Start")
-        Start.resize(814, 743)
+        Start.resize(600, 600)
         self.centralwidget = QWidget(Start)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout_3 = QHBoxLayout(self.centralwidget)

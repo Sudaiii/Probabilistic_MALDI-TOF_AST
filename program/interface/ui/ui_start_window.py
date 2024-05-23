@@ -28,7 +28,7 @@ class Ui_Start(object):
     def setupUi(self, Start):
         if not Start.objectName():
             Start.setObjectName(u"Start")
-        Start.resize(700, 700)
+        Start.resize(600, 600)
         self.centralwidget = QWidget(Start)
         self.centralwidget.setObjectName(u"centralwidget")
 
