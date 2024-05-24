@@ -206,13 +206,13 @@ class Ui_Results(object):
         sizePolicy1.setHorizontalStretch(2)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.export_image.sizePolicy().hasHeightForWidth())
-        self.export_image.setSizePolicy(sizePolicy1)
-        self.export_image.setMinimumSize(QSize(24, 24))
-        self.export_image.setMaximumSize(QSize(24, 24))
-        self.export_image.setPixmap(QPixmap(u"../../AndryATA/Resources/Images/configuration.png"))
-        self.export_image.setScaledContents(True)
+        # self.export_image.setSizePolicy(sizePolicy1)
+        # self.export_image.setMinimumSize(QSize(24, 24))
+        # self.export_image.setMaximumSize(QSize(24, 24))
+        # self.export_image.setPixmap(QPixmap(u"../../AndryATA/Resources/Images/configuration.png"))
+        # self.export_image.setScaledContents(True)
 
-        self.horizontalLayout_7.addWidget(self.export_image)
+        # self.horizontalLayout_7.addWidget(self.export_image)
 
         self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
