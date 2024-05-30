@@ -6,6 +6,10 @@
     font-size: 24px;
 }}
 
+.bold_text {{
+    font-weight: bold;
+}}
+
 QLabel {{
     font-size: 14px;
 }}

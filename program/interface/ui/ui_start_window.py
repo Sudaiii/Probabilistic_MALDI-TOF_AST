@@ -64,17 +64,17 @@ class Ui_Start(object):
         self.horizontalLayout_9 = QHBoxLayout()
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
 
-        self.ms_image = pg.PlotWidget()
-        self.ms_image.setBackground("#31363B")
+        self.ms_graph = pg.PlotWidget()
+        self.ms_graph.setBackground("#31363B")
 
         axis_styles = {"font-size": "14px", "text-align": "left", "font-family": "roboto", "color": "#ffffff", "font-weight": "normal"}
-        self.ms_image.setLabel("left", "Intensidad", **axis_styles)
-        self.ms_image.setLabel("bottom", "Masa (Da)", **axis_styles)
+        self.ms_graph.setLabel("left", "Intensidad", **axis_styles)
+        self.ms_graph.setLabel("bottom", "Masa (Da)", **axis_styles)
 
 
-        self.ms_image.setObjectName(u"ms_image")
+        self.ms_graph.setObjectName(u"ms_image")
 
-        self.horizontalLayout_9.addWidget(self.ms_image)
+        self.horizontalLayout_9.addWidget(self.ms_graph)
 
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_9)
@@ -147,8 +147,8 @@ class Ui_Start(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.file_name.sizePolicy().hasHeightForWidth())
         self.file_name.setSizePolicy(sizePolicy)
-        self.file_name.setMinimumSize(QSize(250, 0))
-        self.file_name.setBaseSize(QSize(200, 20))
+        self.file_name.setMinimumSize(QSize(300, 0))
+        self.file_name.setBaseSize(QSize(300, 20))
         self.file_name.setReadOnly(True)
 
         self.horizontalLayout_2.addWidget(self.file_name)
@@ -259,15 +259,25 @@ class Ui_Start(object):
     # setupUi
 
     def retranslateUi(self, Start):
-        Start.setWindowTitle(QCoreApplication.translate("Start", u"MainWindow", None))
+        Start.setWindowTitle(QCoreApplication.translate("Start", u"MALDI-TOF MS AST", None))
         self.title.setText(QCoreApplication.translate("Start", u"MALDI-TOF MS AST", None))
         self.bacteria_header.setText(QCoreApplication.translate("Start", u"Bacteria", None))
         self.bacteria_select.setCurrentText("")
-        self.file_name.setText(QCoreApplication.translate("Start", u"[Direcci\u00f3n Archivo]", None))
+        self.file_name.setText(QCoreApplication.translate("Start", u"[Archivo en formato .csv o .txt]", None))
         self.browse_button.setText(QCoreApplication.translate("Start", u"Buscar", None))
         self.start_button.setText(QCoreApplication.translate("Start", u"Empezar", None))
         self.loading_label.setText("")
         self.config_button.setText(QCoreApplication.translate("Start", u"Configuraci\u00f3n", None))
         self.config_image.setText("")
+
+        self.bacteria_select.setToolTip("A que bacteria corresponden los archivos seleccionado(s).")
+        self.start_button.setToolTip("Obtener predicciones para los archivos seleccionados.")
+        self.file_name.setToolTip("Nombre del archivo a procesar.")
+        self.browse_button.setToolTip("Buscar archivos de espectrometría de masa MALDI-TOF en formato .csv o .txt.")
+        self.config_button.setToolTip("Modificar binning y algoritmo de Machine Learning utilizado.")
+        self.ms_graph.setToolTip(
+"""Visualización de la espectrometría de masa del archivo seleccionado. \n
+En caso de que se hayan seleccionado varios archivos, muestra el primero de la lista."""
+        )
     # retranslateUi
 

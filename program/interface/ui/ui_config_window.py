@@ -102,29 +102,6 @@ class Ui_Config(object):
 
         self.verticalLayout_5.addWidget(self.hiperparameters_label)
 
-        self.horizontalLayout_6 = QHBoxLayout()
-        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_6.addItem(self.horizontalSpacer_4)
-
-        self.verticalLayout = QVBoxLayout()
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.hiperparameter_values_label = QLabel(Dialog)
-        self.hiperparameter_values_label.setObjectName(u"hiperparameter_values_label")
-
-        self.verticalLayout.addWidget(self.hiperparameter_values_label)
-
-
-        self.horizontalLayout_6.addLayout(self.verticalLayout)
-
-        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_6.addItem(self.horizontalSpacer_3)
-
-
-        self.verticalLayout_5.addLayout(self.horizontalLayout_6)
-
         self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_5.addItem(self.verticalSpacer_2)
@@ -156,9 +133,17 @@ class Ui_Config(object):
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
         self.binning_label.setText(QCoreApplication.translate("Dialog", u"Binning", None))
-        self.model_label.setText(QCoreApplication.translate("Dialog", u"Modelo", None))
-        self.hiperparameters_label.setText(QCoreApplication.translate("Dialog", u"Hiperpar\u00e1metros", None))
-        self.hiperparameter_values_label.setText(QCoreApplication.translate("Dialog", u"[par\u00e1meteros]", None))
+        self.model_label.setText(QCoreApplication.translate("Dialog", u"Algoritmo", None))
         self.confirm_button.setText(QCoreApplication.translate("Dialog", u"Confirmar", None))
+
+        self.binning_select.setToolTip(
+"""Cuantas columnas agrupar. \n
+Como los datos de espectrometría de masa MALDI-TOF tienen muchas columnas, estos pasan por un proceso donde se reduce 
+el número de columnas al obtener la media de cada N columnas del espectro de masa (las cuales pasan a ser las nuevas columnas utilizadas). 
+Entre mas alto el N, la espectrometría es menos detallada y los resultados empeoran, pero los modelos son más rapidos. \n
+Recomendado: 5."""
+        )
+        self.model_select.setToolTip("Algoritmo de Machine Learning a utilizar para las predicciones. \nRecomendado: MLP.")
+    
     # retranslateUi
 

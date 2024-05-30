@@ -68,8 +68,8 @@ class MainWindow(QMainWindow):
 
 
             pen = pg.mkPen(color=(58, 125, 173), width=2)
-            self.ui.ms_image.clear()
-            self.ui.ms_image.plot(self.X["mass"], self.X["intensity"], pen=pen)
+            self.ui.ms_graph.clear()
+            self.ui.ms_graph.plot(self.X["mass"], self.X["intensity"], pen=pen)
             self.ui.start_button.setEnabled(True)
 
 

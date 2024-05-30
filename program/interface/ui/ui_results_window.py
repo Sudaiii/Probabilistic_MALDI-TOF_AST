@@ -43,19 +43,37 @@ class Ui_Results(object):
         self.horizontalLayout_10.addItem(self.horizontalSpacer_12)
 
 
+        self.horizontalLayout_11 = QHBoxLayout()
+
         self.file_label = QLabel(self.centralwidget)
         self.file_label.setObjectName(u"file_label")
+        self.file_label.setProperty("class", "bold_text")
 
-        self.horizontalLayout_10.addWidget(self.file_label)
+        self.file_name_label = QLabel(self.centralwidget)
+        self.file_name_label.setObjectName(u"file_name_label")
 
-        self.horizontalSpacer_13 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.horizontalLayout_11.addWidget(self.file_label)
+        self.horizontalLayout_11.addWidget(self.file_name_label)
+
+        self.horizontalLayout_10.addLayout(self.horizontalLayout_11)
+
+        self.horizontalSpacer_13 = QSpacerItem(20, 20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_10.addItem(self.horizontalSpacer_13)
 
+        self.horizontalLayout_12 = QHBoxLayout()
+
         self.bacteria_label = QLabel(self.centralwidget)
         self.bacteria_label.setObjectName(u"bacteria_label")
+        self.bacteria_label.setProperty("class", "bold_text")
 
-        self.horizontalLayout_10.addWidget(self.bacteria_label)
+        self.bacteria_name_label = QLabel(self.centralwidget)
+        self.bacteria_name_label.setObjectName(u"bacteria_name_label")
+
+        self.horizontalLayout_12.addWidget(self.bacteria_label)
+        self.horizontalLayout_12.addWidget(self.bacteria_name_label)
+
+        self.horizontalLayout_10.addLayout(self.horizontalLayout_12)
 
         self.horizontalSpacer_11 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
@@ -71,14 +89,14 @@ class Ui_Results(object):
         self.horizontalLayout_9 = QHBoxLayout()
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
 
-        self.spectrometry_label = pg.PlotWidget()
-        self.spectrometry_label.setBackground("#31363B")
+        self.ms_graph = pg.PlotWidget()
+        self.ms_graph.setBackground("#31363B")
         axis_styles = {"font-size": "14px", "text-align": "left", "font-family": "roboto", "color": "#ffffff", "font-weight": "normal"}
-        self.spectrometry_label.setLabel("left", "Intensidad", **axis_styles)
-        self.spectrometry_label.setLabel("bottom", "Masa (Da)", **axis_styles)
+        self.ms_graph.setLabel("left", "Intensidad", **axis_styles)
+        self.ms_graph.setLabel("bottom", "Masa (Da)", **axis_styles)
 
-        self.spectrometry_label.setObjectName(u"spectrometry_label")
-        self.horizontalLayout_9.addWidget(self.spectrometry_label)
+        self.ms_graph.setObjectName(u"ms_graph")
+        self.horizontalLayout_9.addWidget(self.ms_graph)
 
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_9)
@@ -148,37 +166,6 @@ class Ui_Results(object):
         self.verticalSpacer_3 = QSpacerItem(20, 20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
 
         self.verticalLayout_2.addItem(self.verticalSpacer_3)
-
-        self.horizontalLayout_5 = QHBoxLayout()
-        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
-        self.horizontalSpacer_7 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_5.addItem(self.horizontalSpacer_7)
-
-        font = QFont()
-        font.setPointSize(12)
-        
-        self.binning_label = QLabel(self.centralwidget)
-        self.binning_label.setObjectName(u"binning_label")
-        self.binning_label.setFont(font)
-
-        self.horizontalLayout_5.addWidget(self.binning_label)
-
-        horizontal_spacer = QSpacerItem(30, 30, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
-        self.horizontalLayout_5.addItem(horizontal_spacer)
-
-        self.model_label = QLabel(self.centralwidget)
-        self.model_label.setObjectName(u"model_label")
-        self.model_label.setFont(font)
-
-        self.horizontalLayout_5.addWidget(self.model_label)
-
-        self.horizontalSpacer_8 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_5.addItem(self.horizontalSpacer_8)
-
-
-        self.verticalLayout_2.addLayout(self.horizontalLayout_5)
 
         self.horizontalLayout_7 = QHBoxLayout()
         self.horizontalLayout_7.setSpacing(0)
@@ -254,6 +241,7 @@ class Ui_Results(object):
         
             s_proba_label.setAlignment(Qt.AlignCenter)
             s_proba_label.setProperty("class", "big_text")
+            s_proba_label.setToolTip("Probabilidad que la bacteria sea susceptible al antibiótico "+antibiotic)
 
             if results[antibiotic] == max:
                 s_proba_label.setStyleSheet("color: green;")
@@ -282,13 +270,19 @@ class Ui_Results(object):
         
 
     def retranslateUi(self, Start):
-        Start.setWindowTitle(QCoreApplication.translate("Start", u"MainWindow", None))
-        self.file_label.setText(QCoreApplication.translate("Start", u"TextLabel", None))
-        self.bacteria_label.setText(QCoreApplication.translate("Start", u"TextLabel", None))
+        Start.setWindowTitle(QCoreApplication.translate("Start", u"Resultados", None))
+        self.file_label.setText(QCoreApplication.translate("Start", u"Archivo:", None))
+        self.bacteria_label.setText(QCoreApplication.translate("Start", u"Bacteria:", None))
         self.probability_title_label.setText(QCoreApplication.translate("Start", u"Probabilidad de susceptibilidad", None))
-        self.binning_label.setText(QCoreApplication.translate("Start", u"Binning: []", None))
-        self.model_label.setText(QCoreApplication.translate("Start", u"Modelo: []", None))
         self.export_button.setText(QCoreApplication.translate("Start", u"Exportar", None))
         self.export_image.setText("")
+
+
+        self.bacteria_name_label.setToolTip("Bacteria a la cual se indicó corresponde el archivo en análisis.")
+        self.file_name_label.setToolTip("Archivo en análisis.")
+        self.export_button.setToolTip("Exportar resultados a .pdf.")
+
+        self.ms_graph.setToolTip("Visualización de la espectrometría de masa contenida por el archivo en análisis.")
+
     # retranslateUi
 

@@ -35,10 +35,8 @@ class Results(QMainWindow):
         self.ui = Ui_Results()
         self.ui.setupUi(self, self.results)
 
-        self.ui.file_label.setText("Archivo: " + file_name)
-        self.ui.bacteria_label.setText("Bacteria: " + bacteria)
-        self.ui.model_label.setText("Algoritmo: " + algorithm)
-        self.ui.binning_label.setText("Binning: " + str(bin_size))
+        self.ui.file_name_label.setText(file_name)
+        self.ui.bacteria_name_label.setText(bacteria)
         
         pen = pg.mkPen(color=(58, 125, 173), width=2)
-        self.ui.spectrometry_label.plot(self.X["mass"], self.X["intensity"], pen=pen)
+        self.ui.ms_graph.plot(self.X["mass"], self.X["intensity"], pen=pen)
