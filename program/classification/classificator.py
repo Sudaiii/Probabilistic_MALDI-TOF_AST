@@ -40,7 +40,7 @@ class Classificator():
         X = preprocess_data(data, self.bacteria_alias, self.bin_size)
         proba = self.model.predict_proba(X)
         
-        antibiotic_proba = self.probability_dictionary()
+        antibiotic_proba = self.__probability_dictionary()
     
         for i in range(len(proba[0])):
             class_proba = proba[0][i]
@@ -51,9 +51,9 @@ class Classificator():
 
         sorted_antibiotic_proba = {k: v for k, v in sorted(antibiotic_proba.items(), key=lambda item: item[1], reverse=True)}
         return sorted_antibiotic_proba
-    
+            
 
-    def probability_dictionary(self):
+    def __probability_dictionary(self):
         antibiotic_proba = {}
         for antibiotic in self.antibiotics:
             antibiotic_proba[antibiotic] = 0

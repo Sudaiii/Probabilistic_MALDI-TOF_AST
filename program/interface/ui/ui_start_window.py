@@ -47,15 +47,40 @@ class Ui_Start(object):
 
         # self.verticalLayout_2.addWidget(self.microscope_image)
 
+        self.horizontalLayout_10 = QHBoxLayout()
+
+        self.horizontalSpacer_11 = QSpacerItem(20, 70, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.horizontalLayout_10.addItem(self.horizontalSpacer_11)
+
+
         self.title = QLabel(self.centralwidget)
         self.title.setObjectName(u"title")
         font = QFont()
         font.setPointSize(34)
         self.title.setFont(font)
-        self.title.setAlignment(Qt.AlignCenter)
-        self.title.setProperty("class", "title_text")
+        self.title.setProperty("class", "title_text")        
 
-        self.verticalLayout_2.addWidget(self.title)
+        self.horizontalLayout_10.addWidget(self.title)
+
+        self.title_image = QLabel(self.centralwidget)
+        self.title_image.setObjectName(u"title_image")
+        self.title_image.setEnabled(True)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy1.setHorizontalStretch(2)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.title_image.sizePolicy().hasHeightForWidth())
+        self.title_image.setSizePolicy(sizePolicy1)
+        self.title_image.setMinimumSize(QSize(24, 24))
+        self.title_image.setMaximumSize(QSize(24, 24))
+        self.title_image.setPixmap(QPixmap(u"resources/images/icons8-cog-100.png"))
+        self.title_image.setScaledContents(True)
+        
+        self.horizontalLayout_10.addWidget(self.title_image)
+
+        self.horizontalSpacer_10 = QSpacerItem(20, 70, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.horizontalLayout_10.addItem(self.horizontalSpacer_10)
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout_10)
 
         self.verticalSpacer = QSpacerItem(20, 70, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -261,6 +286,7 @@ class Ui_Start(object):
     def retranslateUi(self, Start):
         Start.setWindowTitle(QCoreApplication.translate("Start", u"MALDI-TOF MS AST", None))
         self.title.setText(QCoreApplication.translate("Start", u"MALDI-TOF MS AST", None))
+        self.title_image.setText("")
         self.bacteria_header.setText(QCoreApplication.translate("Start", u"Bacteria", None))
         self.bacteria_select.setCurrentText("")
         self.file_name.setText(QCoreApplication.translate("Start", u"[Archivo en formato .csv o .txt]", None))

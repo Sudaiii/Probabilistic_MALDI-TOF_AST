@@ -12,6 +12,7 @@ from .ui.ui_start_window import Ui_Start
 
 from .config_win import Config
 from .results_win import Results
+from .results_multiple_win import ResultsMulti
 
 from classification.processing_utils import read_file
 
@@ -54,22 +55,24 @@ class MainWindow(QMainWindow):
 
 
     def browse_files(self):
-        self.file_address = QFileDialog.getOpenFileName(
+        self.ui.start_button.setEnabled(False)
+        self.file_addresses = QFileDialog.getOpenFileNames(
             self,
             'Buscar Archivo',
             '',
             'MALDI-TOF MS Data (*.csv *.txt)'
         )[0]
-        if len(self.file_address) > 0:
-            path = self.file_address.split("/")
-            file = path[len(path)-1]
-            self.ui.file_name.setText(file)
-            self.X = read_file(self.file_address)
-
+        if len(self.file_addresses) > 0:
+            self.X = read_file(self.file_addresses[0])
 
             pen = pg.mkPen(color=(58, 125, 173), width=2)
             self.ui.ms_graph.clear()
             self.ui.ms_graph.plot(self.X["mass"], self.X["intensity"], pen=pen)
+            if len(self.file_addresses) == 1:
+                path = self.file_addresses[0].split("/")
+                self.ui.file_name.setText(path[len(path)-1])
+            else:
+                self.ui.file_name.setText(str(len(self.file_addresses))+" archivos")
             self.ui.start_button.setEnabled(True)
 
 
@@ -79,8 +82,23 @@ class MainWindow(QMainWindow):
 
 
     def deploy_results(self):
-        self.results = Results(file=self.file_address, data=self.X, bacteria=self.ui.bacteria_select.currentData(), algorithm=self.algorithm, bin_size=self.bin_size)
-        self.results.show()
+        if len(self.file_addresses) == 1:
+            self.results = Results(
+                file=self.file_addresses[0], 
+                data=self.X, 
+                bacteria=self.ui.bacteria_select.currentData(), 
+                algorithm=self.algorithm, 
+                bin_size=self.bin_size
+            )
+            self.results.show()
+        else:
+            self.results = ResultsMulti(
+                files=self.file_addresses, 
+                bacteria=self.ui.bacteria_select.currentData(), 
+                algorithm=self.algorithm, 
+                bin_size=self.bin_size
+            )
+            self.results.show()
 
 
 def launch():

@@ -21,12 +21,13 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLayout,
 import pyqtgraph as pg
 
 
+
 class Ui_Results(object):
-    def setupUi(self, Start, results):
-        if not Start.objectName():
-            Start.setObjectName(u"Start")
-        Start.resize(600, 600)
-        self.centralwidget = QWidget(Start)
+    def setupUi(self, Result, results):
+        if not Result.objectName():
+            Result.setObjectName(u"Start")
+        Result.resize(600, 600)
+        self.centralwidget = QWidget(Result)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout_3 = QHBoxLayout(self.centralwidget)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
@@ -155,7 +156,7 @@ class Ui_Results(object):
         
         self.results_layout.addItem(self.horizontalSpacer_5)
         
-        self.addProba(results)
+        self.__addProba(results)
 
         self.horizontalSpacer_6 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
         self.results_layout.addItem(self.horizontalSpacer_6)
@@ -215,21 +216,21 @@ class Ui_Results(object):
 
         self.horizontalLayout_3.addLayout(self.verticalLayout_2)
 
-        Start.setCentralWidget(self.centralwidget)
-        self.menubar = QMenuBar(Start)
+        Result.setCentralWidget(self.centralwidget)
+        self.menubar = QMenuBar(Result)
         self.menubar.setObjectName(u"menubar")
         self.menubar.setGeometry(QRect(0, 0, 814, 22))
-        Start.setMenuBar(self.menubar)
-        self.statusbar = QStatusBar(Start)
+        Result.setMenuBar(self.menubar)
+        self.statusbar = QStatusBar(Result)
         self.statusbar.setObjectName(u"statusbar")
-        Start.setStatusBar(self.statusbar)
+        Result.setStatusBar(self.statusbar)
 
-        self.retranslateUi(Start)
+        self.retranslateUi(Result)
 
-        QMetaObject.connectSlotsByName(Start)
+        QMetaObject.connectSlotsByName(Result)
     # setupUi
 
-    def addProba(self, results):
+    def __addProba(self, results):
         max = list(results.values())[0]
         for antibiotic in results:
             base_result_layout = QVBoxLayout()
