@@ -155,9 +155,10 @@ class Ui_Results_Multi(object):
         for i in range(len(results)):
             max_value = 0
             max_labels = []
-
-            file_cell = QTableWidgetItem(files[i])
-            self.results_table.setItem(i, 0, file_cell)
+                
+            file_cell = QLabel(self.centralwidget)
+            file_cell.setText(files[i])
+            self.results_table.setCellWidget(i, 0, file_cell)
 
             j = 1
             for antibiotic in results[i]:
@@ -171,8 +172,6 @@ class Ui_Results_Multi(object):
 
                 antibiotic_cell.setText(f"{results[i][antibiotic]*100:.2f}%")
                 self.results_table.setCellWidget(i, j, antibiotic_cell)
-                # antibiotic_cell = QTableWidgetItem(f"{results[i][antibiotic]*100:.2f}%")
-                # self.results_table.setItem(i, j, antibiotic_cell)
                 j += 1
 
             for label in max_labels:
@@ -181,7 +180,7 @@ class Ui_Results_Multi(object):
             button = QPushButton()
             button.setText("Visualize")
             button.clicked.connect(self.signal_mapper.map)
-            self.signal_mapper.setMapping(button, i)            
+            self.signal_mapper.setMapping(button, str(i))            
 
             self.results_table.setCellWidget(i, j, button)
 
