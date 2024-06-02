@@ -93,7 +93,7 @@ class MainWindow(QMainWindow):
             self.results.show()
         else:
             self.results = ResultsMulti(
-                files=self.file_addresses, 
+                file_addresses=self.file_addresses, 
                 bacteria=self.ui.bacteria_select.currentData(), 
                 algorithm=self.algorithm, 
                 bin_size=self.bin_size

@@ -22,7 +22,7 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLayout,
 
 
 class Ui_Results_Multi(object):
-    def setupUi(self, ResultsMulti, files, results):
+    def setupUi(self, ResultsMulti, results):
         if not ResultsMulti.objectName():
             ResultsMulti.setObjectName(u"Results")
         ResultsMulti.resize(1200, 700)
@@ -66,7 +66,6 @@ class Ui_Results_Multi(object):
         __qtablewidgetitem = QTableWidgetItem()
         self.results_table.setHorizontalHeaderItem(0, __qtablewidgetitem)
         self.__setup_table(results)
-        self.__fill_table(files, results)
         self.results_table.setObjectName(u"results_table")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -146,49 +145,6 @@ class Ui_Results_Multi(object):
 
         self.results_table.setColumnWidth(0, 300)
         self.results_table.setColumnWidth(i, 130)
-
-    def __fill_table(self, files, results):
-        
-        self.signal_mapper = QSignalMapper(self.centralwidget)
-        self.signal_mapper.mappedString.connect(self.__is_pressed)
-
-        for i in range(len(results)):
-            max_value = 0
-            max_labels = []
-                
-            file_cell = QLabel(self.centralwidget)
-            file_cell.setText(files[i])
-            self.results_table.setCellWidget(i, 0, file_cell)
-
-            j = 1
-            for antibiotic in results[i]:
-                antibiotic_cell = QLabel(self.centralwidget)
-                if results[i][antibiotic] > max_value:
-                    max_value = results[i][antibiotic]
-                    max_labels = []
-                    max_labels.append(antibiotic_cell)
-                elif results[i][antibiotic] == max_value:
-                    max_labels.append(antibiotic_cell)
-
-                antibiotic_cell.setText(f"{results[i][antibiotic]*100:.2f}%")
-                self.results_table.setCellWidget(i, j, antibiotic_cell)
-                j += 1
-
-            for label in max_labels:
-                label.setStyleSheet("color: green;")
-
-            button = QPushButton()
-            button.setText("Visualize")
-            button.clicked.connect(self.signal_mapper.map)
-            self.signal_mapper.setMapping(button, str(i))            
-
-            self.results_table.setCellWidget(i, j, button)
-
-
-    @Slot(str)   
-    def __is_pressed(self, text):
-        print("ola")
-        print(text)
 
     def retranslateUi(self, Results):
         Results.setWindowTitle(QCoreApplication.translate("Results", u"Dialog", None))
