@@ -41,17 +41,23 @@ class Ui_Results_Multi(object):
         self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_3.addItem(self.horizontalSpacer_2)
+        
+        self.horizontalLayout_4 = QHBoxLayout()
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_3")
 
         self.bacteria_label = QLabel(ResultsMulti)
         self.bacteria_label.setObjectName(u"bacteria_label")
         self.bacteria_label.setProperty("class", "bold_text")
 
-        self.horizontalLayout_3.addWidget(self.bacteria_label)
+        self.horizontalLayout_4.addWidget(self.bacteria_label)
 
         self.bacteria_name_label = QLabel(ResultsMulti)
         self.bacteria_name_label.setObjectName(u"bacteria_name_label")
 
-        self.horizontalLayout_3.addWidget(self.bacteria_name_label)
+        self.horizontalLayout_4.addWidget(self.bacteria_name_label)
+
+        self.horizontalLayout_3.addLayout(self.horizontalLayout_4)
+        
 
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
@@ -144,7 +150,7 @@ class Ui_Results_Multi(object):
             self.results_table.setColumnWidth(col, self.results_table.columnWidth(col)+10)
 
         self.results_table.setColumnWidth(0, 300)
-        self.results_table.setColumnWidth(i, 130)
+        self.results_table.setColumnWidth(i, 150)
 
     def retranslateUi(self, Results):
         Results.setWindowTitle(QCoreApplication.translate("Results", u"Dialog", None))

@@ -5,6 +5,7 @@ import pyqtgraph as pg
 from .ui.ui_results_window import Ui_Results
 
 from classification.classificator import Classificator
+from reporting.pdf_gen import generate_individual_pdf
 
 
 
@@ -20,7 +21,7 @@ class Results(QMainWindow):
         self.bin_size = bin_size
 
         path = self.file.split("/")
-        file_name = path[len(path)-1]
+        self.file_name = path[len(path)-1]
 
         # Classificator initialization
         self.classificator = Classificator(bacteria, algorithm, bin_size)
@@ -30,8 +31,14 @@ class Results(QMainWindow):
         self.ui = Ui_Results()
         self.ui.setupUi(self, self.results)
 
-        self.ui.file_name_label.setText(file_name)
+        self.ui.file_name_label.setText(self.file_name)
         self.ui.bacteria_name_label.setText(bacteria)
         
         pen = pg.mkPen(color=(58, 125, 173), width=2)
         self.ui.ms_graph.plot(self.X["mass"], self.X["intensity"], pen=pen)
+
+        self.ui.export_button.clicked.connect(self.__generate_report)
+
+
+    def __generate_report(self):
+        generate_individual_pdf(self.X, self.results, self.file_name, self.bacteria, self.algorithm, self.bin_size)

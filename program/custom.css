@@ -1,5 +1,10 @@
 .title_text {{
     font-size: 34px;
+    font-weight: bold;
+}}
+
+.subtitle_text {{
+    font-size: 16px;
 }}
 
 .big_text {{

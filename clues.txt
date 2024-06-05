@@ -1,4 +1,0 @@
-https://www.ray.io/
-https://botorch.org/
-https://ax.dev/
-https://github.com/automl/Auto-PyTorch

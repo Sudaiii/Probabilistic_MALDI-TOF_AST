@@ -5,3 +5,4 @@
 **/modeling/models
 *.csv
 **/exploration/outputs
+**/results_morph

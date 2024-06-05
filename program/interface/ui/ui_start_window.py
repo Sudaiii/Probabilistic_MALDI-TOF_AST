@@ -55,9 +55,6 @@ class Ui_Start(object):
 
         self.title = QLabel(self.centralwidget)
         self.title.setObjectName(u"title")
-        font = QFont()
-        font.setPointSize(34)
-        self.title.setFont(font)
         self.title.setProperty("class", "title_text")        
 
         self.horizontalLayout_10.addWidget(self.title)
@@ -81,6 +78,27 @@ class Ui_Start(object):
         self.horizontalLayout_10.addItem(self.horizontalSpacer_10)
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_10)
+
+        #
+
+        self.horizontalLayout_11 = QHBoxLayout()
+
+        self.horizontalSpacer_12 = QSpacerItem(20, 70, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.horizontalLayout_11.addItem(self.horizontalSpacer_12)
+
+
+        self.subtitle = QLabel(self.centralwidget)
+        self.subtitle.setObjectName(u"subtitle")
+        self.subtitle.setProperty("class", "subtitle_text")        
+
+        self.horizontalLayout_11.addWidget(self.subtitle)
+        
+        self.horizontalSpacer_13 = QSpacerItem(20, 70, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.horizontalLayout_11.addItem(self.horizontalSpacer_13)
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout_11)
+
+        #
 
         self.verticalSpacer = QSpacerItem(20, 70, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -284,9 +302,10 @@ class Ui_Start(object):
     # setupUi
 
     def retranslateUi(self, Start):
-        Start.setWindowTitle(QCoreApplication.translate("Start", u"MALDI-TOF MS AST", None))
-        self.title.setText(QCoreApplication.translate("Start", u"MALDI-TOF MS AST", None))
+        Start.setWindowTitle(QCoreApplication.translate("Start", u"Fast AST", None))
+        self.title.setText(QCoreApplication.translate("Start", u"Fast AST", None))
         self.title_image.setText("")
+        self.subtitle.setText(QCoreApplication.translate("Start", u"Perfil de resistencia antimicrobiana en segundos", None))
         self.bacteria_header.setText(QCoreApplication.translate("Start", u"Bacteria", None))
         self.bacteria_select.setCurrentText("")
         self.file_name.setText(QCoreApplication.translate("Start", u"[Archivo en formato .csv o .txt]", None))

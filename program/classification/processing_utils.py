@@ -47,7 +47,7 @@ def bin(X, bin_size):
     # Rows are binned
     binned_X["bin"] = pd.cut(
         binned_X["mass"], 
-        bins=range(2000, 10005, bin_size), 
+        bins=range(2000, 10000+bin_size, bin_size), 
         labels=range(2000, 10000, bin_size), 
         right=False
     )

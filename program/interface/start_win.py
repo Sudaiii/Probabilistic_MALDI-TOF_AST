@@ -31,7 +31,7 @@ class MainWindow(QMainWindow):
         self.ui = Ui_Start()
         self.ui.setupUi(self)
 
-        self.setWindowTitle("MALDI-TOF MS AST")
+        self.setWindowTitle("Fast AST")
 
 
         self.__load_combo_box()
