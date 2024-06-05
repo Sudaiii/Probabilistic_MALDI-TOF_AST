@@ -1,1 +1,2 @@
-RESOURCE_PATH = "resources/"
+INTERNAL_PATH = "_internal/"
+RESOURCE_PATH = INTERNAL_PATH+"resources/"

@@ -6,3 +6,6 @@
 *.csv
 **/exploration/outputs
 **/results_morph
+*.exe
+**/program/dist
+**/program/build

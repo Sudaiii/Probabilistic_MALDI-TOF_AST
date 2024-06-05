@@ -2,6 +2,7 @@ import sys
 import json
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog
+from PySide6.QtGui import QIcon
 
 from qt_material import apply_stylesheet
 
@@ -15,7 +16,7 @@ from .results_multiple_win import ResultsMulti
 
 from classification.processing_utils import read_file
 
-from variables import RESOURCE_PATH
+from variables import RESOURCE_PATH, INTERNAL_PATH
 
 
 
@@ -102,9 +103,9 @@ class MainWindow(QMainWindow):
 
 def launch():
     app = QApplication(sys.argv)
-    #app.setWindowIcon(QIcon(resource_path('placeholder.ico')))
+    app.setWindowIcon(QIcon(INTERNAL_PATH+'fast_ast.ico'))
     
-    apply_stylesheet(app, theme="dark_blue.xml", css_file="custom.css")
+    apply_stylesheet(app, theme="dark_blue.xml", css_file=INTERNAL_PATH+"custom.css")
 
     window = MainWindow()
     window.show()
