@@ -55,19 +55,9 @@ class ResultsMulti(QMainWindow):
 
     def __fill_table(self):
         self.signal_mapper = QSignalMapper(self.ui.centralwidget)
-        self.signal_mapper.mappedInt.connect(self.__visualize_is_pressed)
-
-        headers = ["File"]
-        for key in self.results[0].keys():
-            headers.append(key)
-
-        self.pdf_table = [
-            headers
-        ]        
+        self.signal_mapper.mappedInt.connect(self.__visualize_is_pressed)     
 
         for i in range(len(self.results)):
-            pdf_row = []
-
             max_value = 0
             max_labels = []
                 
@@ -75,8 +65,6 @@ class ResultsMulti(QMainWindow):
             file_cell = QLabel(self.ui.centralwidget)
             file_cell.setText(self.file_names[i])
             self.ui.results_table.setCellWidget(i, 0, file_cell)
-
-            pdf_row.append(self.file_names[i])
 
             # Set results for each antibiotic
             j = 1
@@ -94,8 +82,6 @@ class ResultsMulti(QMainWindow):
                 antibiotic_cell.setText(f"{rounded_proba*100:.2f}%")
                 self.ui.results_table.setCellWidget(i, j, antibiotic_cell)
 
-                pdf_row.append(f"{rounded_proba*100:.2f}%")
-
                 j += 1
 
             for label in max_labels:
@@ -108,8 +94,6 @@ class ResultsMulti(QMainWindow):
             self.signal_mapper.setMapping(button, i)            
 
             self.ui.results_table.setCellWidget(i, j, button)
-
-            self.pdf_table.append(pdf_row)
 
 
     @Slot(int)   
@@ -125,4 +109,4 @@ class ResultsMulti(QMainWindow):
 
     
     def __generate_report(self):
-        generate_table_pdf(self.pdf_table, self.bacteria, self.algorithm, self.bin_size)
+        generate_table_pdf(self.X_data, self.file_names, self.results, self.bacteria, self.algorithm, self.bin_size)

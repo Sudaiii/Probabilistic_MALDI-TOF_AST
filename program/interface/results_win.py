@@ -8,7 +8,6 @@ from classification.classificator import Classificator
 from reporting.pdf_gen import generate_individual_pdf
 
 
-
 class Results(QMainWindow):
     def __init__(self, file, data, bacteria, algorithm="MLP", bin_size=5):
         super(Results, self).__init__()
@@ -41,4 +40,4 @@ class Results(QMainWindow):
 
 
     def __generate_report(self):
-        generate_individual_pdf(self.X, self.results, self.file_name, self.bacteria, self.algorithm, self.bin_size)
+        generate_individual_pdf(self.X, self.file_name, self.results, self.bacteria, self.algorithm, self.bin_size)

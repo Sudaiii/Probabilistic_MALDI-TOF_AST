@@ -69,7 +69,7 @@ class Ui_Start(object):
         self.title_image.setSizePolicy(sizePolicy1)
         self.title_image.setMinimumSize(QSize(24, 24))
         self.title_image.setMaximumSize(QSize(24, 24))
-        self.title_image.setPixmap(QPixmap(u"resources/images/icons8-cog-100.png"))
+        self.title_image.setPixmap(QPixmap(u"resources/images/icons8-bacteria-100.png"))
         self.title_image.setScaledContents(True)
         
         self.horizontalLayout_10.addWidget(self.title_image)

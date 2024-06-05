@@ -1,6 +1,5 @@
 import sys
 import json
-import pandas as pd
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog
 
