@@ -80,7 +80,9 @@ class ResultsMulti(QMainWindow):
                     max_labels.append(antibiotic_cell)
 
                 antibiotic_cell.setText(f"{rounded_proba*100:.2f}%")
+                antibiotic_cell.setToolTip("Probabilidad que la muestra sea susceptible al antibiótico "+antibiotic)
                 self.ui.results_table.setCellWidget(i, j, antibiotic_cell)
+
 
                 j += 1
 
@@ -90,6 +92,7 @@ class ResultsMulti(QMainWindow):
             # Set visualize buttons
             button = QPushButton()
             button.setText("Visualizar")
+            button.setToolTip("Visualizar la espectrometría de masa de la muestra.")
             button.clicked.connect(self.signal_mapper.map)
             self.signal_mapper.setMapping(button, i)            
 

@@ -1,2 +1,3 @@
 INTERNAL_PATH = "_internal/"
+# INTERNAL_PATH = ""
 RESOURCE_PATH = INTERNAL_PATH+"resources/"

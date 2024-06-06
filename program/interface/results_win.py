@@ -36,7 +36,7 @@ class Results(QMainWindow):
         pen = pg.mkPen(color=(58, 125, 173), width=2)
         self.ui.ms_graph.plot(self.X["mass"], self.X["intensity"], pen=pen)
 
-        self.ui.export_button.clicked.connect(self.__generate_report)
+        self.ui.report_button.clicked.connect(self.__generate_report)
 
 
     def __generate_report(self):

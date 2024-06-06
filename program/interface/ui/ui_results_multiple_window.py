@@ -42,8 +42,27 @@ class Ui_Results_Multi(object):
 
         self.horizontalLayout_3.addItem(self.horizontalSpacer_2)
         
+        #
+        self.horizontalLayout_6 = QHBoxLayout()
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_8")
+        
+        self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.horizontalLayout_6.addItem(self.horizontalSpacer_4) 
+
+        self.table_title = QLabel(ResultsMulti)
+        self.table_title.setObjectName(u"table_title")
+        self.table_title.setProperty("class", "title_text")
+
+        self.horizontalLayout_6.addWidget(self.table_title)
+
+        self.horizontalSpacer_6 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.horizontalLayout_6.addItem(self.horizontalSpacer_6) 
+
+        self.verticalLayout.addLayout(self.horizontalLayout_6)
+        #
+
         self.horizontalLayout_4 = QHBoxLayout()
-        self.horizontalLayout_4.setObjectName(u"horizontalLayout_3")
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
 
         self.bacteria_label = QLabel(ResultsMulti)
         self.bacteria_label.setObjectName(u"bacteria_label")
@@ -57,7 +76,7 @@ class Ui_Results_Multi(object):
         self.horizontalLayout_4.addWidget(self.bacteria_name_label)
 
         self.horizontalLayout_3.addLayout(self.horizontalLayout_4)
-        
+    
 
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
@@ -157,6 +176,11 @@ class Ui_Results_Multi(object):
         self.bacteria_label.setText(QCoreApplication.translate("Results", u"Bacteria:", None))
         self.bacteria_name_label.setText(QCoreApplication.translate("Results", u"name", None))
         ___qtablewidgetitem = self.results_table.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("Results", u"File", None));
-        self.report_button.setText(QCoreApplication.translate("Results", u"Exportar", None))
+        ___qtablewidgetitem.setText(QCoreApplication.translate("Results", u"File", None))
+        self.report_button.setText(QCoreApplication.translate("Results", u"Reporte", None))
+        self.table_title.setText(QCoreApplication.translate("Results", u"Probabilidades de susceptibilidad", None))
+
+        self.bacteria_name_label.setToolTip("Bacteria a la cual se indicó corresponden los archivos en análisis.")
+        self.report_button.setToolTip("Exportar resultados a .pdf.")
+
 

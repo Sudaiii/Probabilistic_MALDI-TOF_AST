@@ -177,15 +177,15 @@ class Ui_Results(object):
 
         self.horizontalLayout_7.addItem(self.horizontalSpacer_3)
 
-        self.export_button = QPushButton(self.centralwidget)
-        self.export_button.setObjectName(u"export_button")
+        self.report_button = QPushButton(self.centralwidget)
+        self.report_button.setObjectName(u"export_button")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.export_button.sizePolicy().hasHeightForWidth())
-        self.export_button.setSizePolicy(sizePolicy)
+        sizePolicy.setHeightForWidth(self.report_button.sizePolicy().hasHeightForWidth())
+        self.report_button.setSizePolicy(sizePolicy)
 
-        self.horizontalLayout_7.addWidget(self.export_button)
+        self.horizontalLayout_7.addWidget(self.report_button)
 
         self.export_image = QLabel(self.centralwidget)
         self.export_image.setObjectName(u"export_image")
@@ -242,7 +242,7 @@ class Ui_Results(object):
         
             s_proba_label.setAlignment(Qt.AlignCenter)
             s_proba_label.setProperty("class", "big_text")
-            s_proba_label.setToolTip("Probabilidad que la bacteria sea susceptible al antibiótico "+antibiotic)
+            s_proba_label.setToolTip("Probabilidad que la muestra sea susceptible al antibiótico "+antibiotic)
 
             if results[antibiotic] == max:
                 s_proba_label.setStyleSheet("color: green;")
@@ -275,13 +275,13 @@ class Ui_Results(object):
         self.file_label.setText(QCoreApplication.translate("Start", u"Archivo:", None))
         self.bacteria_label.setText(QCoreApplication.translate("Start", u"Bacteria:", None))
         self.probability_title_label.setText(QCoreApplication.translate("Start", u"Probabilidad de susceptibilidad", None))
-        self.export_button.setText(QCoreApplication.translate("Start", u"Exportar", None))
+        self.report_button.setText(QCoreApplication.translate("Start", u"Reporte", None))
         self.export_image.setText("")
 
 
         self.bacteria_name_label.setToolTip("Bacteria a la cual se indicó corresponde el archivo en análisis.")
         self.file_name_label.setToolTip("Archivo en análisis.")
-        self.export_button.setToolTip("Exportar resultados a .pdf.")
+        self.report_button.setToolTip("Exportar resultados a .pdf.")
 
         self.ms_graph.setToolTip("Visualización de la espectrometría de masa contenida por el archivo en análisis.")
 
