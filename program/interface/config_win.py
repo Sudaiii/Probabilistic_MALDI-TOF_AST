@@ -14,7 +14,6 @@ class Config(QDialog):
         self.main_window = main_window
         self.ui = Ui_Config()
         self.ui.setupUi(self)
-        self.setWindowTitle("Configuration")
 
         self.__load_combo_box()
 

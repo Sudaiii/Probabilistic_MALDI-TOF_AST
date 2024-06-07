@@ -172,7 +172,7 @@ class Ui_Results_Multi(object):
         self.results_table.setColumnWidth(i, 150)
 
     def retranslateUi(self, Results):
-        Results.setWindowTitle(QCoreApplication.translate("Results", u"Dialog", None))
+        Results.setWindowTitle(QCoreApplication.translate("Results", u"Resultados", None))
         self.bacteria_label.setText(QCoreApplication.translate("Results", u"Bacteria:", None))
         self.bacteria_name_label.setText(QCoreApplication.translate("Results", u"name", None))
         ___qtablewidgetitem = self.results_table.horizontalHeaderItem(0)

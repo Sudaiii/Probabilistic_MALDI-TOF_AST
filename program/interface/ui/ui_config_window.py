@@ -131,7 +131,7 @@ class Ui_Config(object):
     # setupUi
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
+        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Configuración", None))
         self.binning_label.setText(QCoreApplication.translate("Dialog", u"Binning", None))
         self.model_label.setText(QCoreApplication.translate("Dialog", u"Algoritmo", None))
         self.confirm_button.setText(QCoreApplication.translate("Dialog", u"Confirmar", None))
