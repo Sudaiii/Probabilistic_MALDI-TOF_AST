@@ -1,11 +1,11 @@
 **/__pycache__/
 **/.idea/
 **/venv/
-**/modeling/results
-**/modeling/models
+**experiments/modeling/results
+**experiments/modeling/models
 *.csv
-**/exploration/outputs
-**/results_morph
+**experiments/exploration/outputs
+**/results
 *.exe
 **/program/dist
 **/program/build
