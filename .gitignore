@@ -12,3 +12,4 @@
 *.exe
 **/program/dist
 **/program/build
+**ipynb

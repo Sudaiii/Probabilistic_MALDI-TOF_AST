@@ -5,16 +5,22 @@ import pandas as pd
 import numpy as np
 
 
+
+# Bin Sizes to create a version of the dataset for.
 bin_sizes = [5, 20]
 
 antibiotic_dictionary_file = open("data/antibiotics.json", "r")
 antibiotic_dictionary = json.load(antibiotic_dictionary_file)
 
-unbinned_folder = "data/unprocessed/unbinned/"
+# Create folder to store binned datasets in
 binned_folder = "data/unprocessed/binned/"
+os.makedirs(binned_folder, exist_ok=True)
+
+unbinned_folder = "data/unprocessed/unbinned/"
 unbinned_files = os.listdir(unbinned_folder)
 unbinned_file_paths = [unbinned_folder + file for file in unbinned_files]
 
+# For each bin size, create dataset
 for bin_size in bin_sizes:
     print("Binning:", unbinned_file_paths)
     print("Bin Size:", bin_size)
