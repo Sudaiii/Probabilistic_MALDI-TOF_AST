@@ -13,12 +13,11 @@ import joblib
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-f", "--Folder", help="What folder to get the data from", default="unbinned")
-parser.add_argument("-m", "--Min", help="Minimum amount of instances a class must have to be included", default=10)
+parser.add_argument("-f", "--Folder", help="What folder to get the data from", default="binned")
 parser.add_argument("-n", "--Norm", help="Data normalization method. Supports \"none\",\"min-max\" and \"standard\"", required=True)
 args = parser.parse_args()
 
-min_instances = args.Min
+min_instances = 10
 
 unprocessed_folder = "data/unprocessed/"+args.Folder+"/"
 processed_folder = "data/processed/"+args.Folder+"/"

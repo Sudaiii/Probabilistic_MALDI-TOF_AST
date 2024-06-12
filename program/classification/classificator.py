@@ -43,9 +43,9 @@ class Classificator():
     def classify(self, data):
         X = preprocess_data(data, self.bacteria_alias, self.bin_size)
         proba = self.model.predict_proba(X)
-        
+        print(proba)
         antibiotic_proba = self.__probability_dictionary()
-    
+        
         for i in range(len(proba[0])):
             class_proba = proba[0][i]
             class_antibiotics = list(self.classes[i])

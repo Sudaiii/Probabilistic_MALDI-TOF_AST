@@ -149,13 +149,13 @@ def tsne_scatterplot(x, y, perplexities, class_names, output_file):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-f", "--Folder", help="What folder to get the data from", default="binned", choices=["unbinned", "binned"])
+parser.add_argument("-f", "--Folder", help="What folder to get the data from", default="binned")
 parser.add_argument("-n", "--Norm", help="Data normalization method. Supports \"none\",\"min-max\" and \"standard\"", default="standard", choices=["none", "min-max", "standard"])
-parser.add_argument("-m", "--Mode", help="Whether to use data as is (no argument) or to select specific features based on a .txt file", default="all")
 args = parser.parse_args()
 
 input_folder = "data/processed/"+args.Folder+"/"+args.Norm+"/"
 output_folder = "exploration/outputs/"
+os.makedirs(output_folder, exist_ok=True)
 input_files = os.listdir(input_folder)
 input_train_files = [x for x in input_files if "test" not in x and not os.path.isdir(os.path.join(input_folder, x))]
 input_file_paths = [input_folder + file for file in input_train_files]
@@ -174,17 +174,6 @@ for file in input_file_paths:
     antibiotics = bacteria.columns.drop(malditof.columns)
     bacteria[antibiotics] = bacteria[antibiotics].replace([0.0, 1.0], ["S", "R"])
     profile = bacteria[antibiotics]
-
-    if args.Mode == "selected":
-        print("Using selected features")
-        with open("data/features/"+file_name+"_selected_features.txt") as file:
-            selected_features = file.read().split(",")
-        selected_features.pop()
-
-        base_name = output_folder+file_name+"_selected"
-
-        malditof = malditof[selected_features]
-        bacteria = bacteria[malditof.columns.append(antibiotics)]    
 
     class_count = profile.value_counts().count()
 

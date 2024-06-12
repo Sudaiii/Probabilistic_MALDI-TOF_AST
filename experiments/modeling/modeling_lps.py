@@ -140,7 +140,7 @@ def independent(train_features, train_labels, test_features, antibiotics, algori
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("-f", "--Folder", help="What folder to get the data from", default="binned", choices=["unbinned", "binned"])
+    parser.add_argument("-f", "--Folder", help="What folder to get the data from", default="binned")
     parser.add_argument("-n", "--Norm", help="Data normalization method. Supports \"none\",\"min-max\" and \"standard\"", default="standard", choices=["none", "min-max", "standard"])
     parser.add_argument("-a", "--Algorithm", help="ML Algorithm to use (options: xgb, svc, rf, mlp)", choices=["xgb", "svc", "rf", "mlp"], required=True)
     parser.add_argument("-m", "--Multilabel", help="Evaluate all labels through a single model using LPS or not", default="independent", choices=["lps", "independent"])
@@ -151,6 +151,7 @@ if __name__ == "__main__":
     input_folder = "data/processed/"+args.Folder+"/"+args.Norm+"/"
 
     output_folder = "modeling/results/"
+    os.makedirs(output_folder, exist_ok=True)
     input_files = os.listdir(input_folder)
     input_train_files = [x for x in input_files if "test" not in x and not os.path.isdir(os.path.join(input_folder, x))]
     input_file_paths = [input_folder + file for file in input_train_files]
