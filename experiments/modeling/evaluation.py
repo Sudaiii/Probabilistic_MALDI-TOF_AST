@@ -175,6 +175,7 @@ def metrics_report(true, pred, label_names, output_file):
 
 def confusion_matrix(true, pred, label_names, output_file):
     plt.clf()
+    plt.style.use("default")
 
     fig, axes = plt.subplots(1, len(label_names), figsize=(len(label_names)*5, 5))
     fig.supxlabel("Predicted Label")

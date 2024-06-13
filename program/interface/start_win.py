@@ -45,7 +45,7 @@ class MainWindow(QMainWindow):
 
 
     def __load_combo_box(self):
-        antibiotic_dictionary_file = open(RESOURCE_PATH+"antibiotics.json", "r")
+        antibiotic_dictionary_file = open(RESOURCE_PATH+"antibiotics.json", "r", encoding="utf-8")
         antibiotic_dictionary = json.load(antibiotic_dictionary_file)
         i = 0
         for bac_key in antibiotic_dictionary.keys():

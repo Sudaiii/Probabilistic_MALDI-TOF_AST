@@ -28,6 +28,7 @@ def feature_importance(model, train_features, train_labels, test_features, algor
     if not os.path.exists(output_file+"_shap_summary.png"):
         shap_values = np.load(output_file+"_shap.txt.npy")
         plt.clf()
-        shap.summary_plot(shap_values, test_sample)
+        plt.style.use("default")
+        shap.summary_plot(shap_values, test_sample, plot_type="bar")
         plt.savefig(output_file+"_shap_summary.png",dpi=150, bbox_inches='tight')
         plt.clf()

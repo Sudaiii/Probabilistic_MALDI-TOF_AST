@@ -24,7 +24,7 @@ class Classificator():
         
 
     def load_files(self):
-        bacteria_dictionary_file = open(RESOURCE_PATH+"bacteria.json", "r")
+        bacteria_dictionary_file = open(RESOURCE_PATH+"bacteria.json", "r", encoding="utf-8")
         bacteria_dictionary = json.load(bacteria_dictionary_file)
         self.bacteria_alias = bacteria_dictionary[self.bacteria]
 
@@ -35,7 +35,7 @@ class Classificator():
         self.lc = joblib.load(RESOURCE_PATH+"/encoder/"+lc_file)
         self.classes = self.lc.classes_
 
-        antibiotics_file = open(RESOURCE_PATH+"antibiotics.json", "r")
+        antibiotics_file = open(RESOURCE_PATH+"antibiotics.json", "r", encoding="utf-8")
         antibiotic_dictionary = json.load(antibiotics_file)
         self.antibiotics = antibiotic_dictionary[self.bacteria]
 

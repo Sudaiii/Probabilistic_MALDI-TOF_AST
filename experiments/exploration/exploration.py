@@ -22,9 +22,11 @@ BASE_PALETTE = sns.color_palette("tab20")
 
 def single_label_class_distribution(data, labels, output_file):
     plt.clf()
+    plt.style.use("default")
 
     sns.set(rc={'figure.figsize':(5, 5)})
     sns.set(font_scale=1.2)
+    sns.set_style("ticks")
     class_dist = sns.heatmap(data[labels].apply(pd.Series.value_counts).T, annot=True, fmt="d", linewidth=.5, cmap="rocket_r")
     
     fig = class_dist.get_figure()
@@ -32,8 +34,6 @@ def single_label_class_distribution(data, labels, output_file):
 
 
 def agg_label_class_distribution(data, labels, output_file):
-    plt.clf()
-
     value_counts = data[labels].value_counts()
     df_value_counts = value_counts.rename("Count").to_frame().reset_index()
 
@@ -52,7 +52,9 @@ def agg_label_class_distribution(data, labels, output_file):
 
 def label_correlation(y, output_file):
     plt.clf()
+    plt.style.use("default")
 
+    sns.set_style("ticks")
     sns.set(rc={'figure.figsize':(7, 7)})
     corr = y.corr()
     mask = np.triu(np.ones_like(corr, dtype=bool))
@@ -65,7 +67,8 @@ def label_correlation(y, output_file):
 
 def mean_mass_spectra_lineplot(data, label, output_file):
     plt.clf()
-
+    plt.style.use("default")
+    sns.set_style("ticks")
     lower_limit = int(malditof.columns[0])
     upper_limit = int(malditof.columns[-1])
     jump = int((upper_limit - lower_limit + 1) / 20)
@@ -79,11 +82,11 @@ def mean_mass_spectra_lineplot(data, label, output_file):
     fig, axes = plt.subplots(1, 1, figsize=(30, 20))
     
     sns.set(font_scale = 2)
-    line = sns.lineplot(ax=axes, data=data, x="Da", y="Value", hue=label, 
+    line = sns.lineplot(ax=axes, data=data, x="Da", y="Intensity", hue=label, 
                             palette=palette, linewidth=LINEWIDTH)
     line.set(xticks=np.arange(lower_limit, upper_limit, jump))
     line.set_xlabel("Da", fontsize=LABEL_SIZE)
-    line.set_ylabel("Value", fontsize=LABEL_SIZE)
+    line.set_ylabel("Intensity", fontsize=LABEL_SIZE)
 
     line.set_xticklabels(axes.get_xticks(), size=AXIS_TICK_SIZE)
     ticks_loc = axes.get_yticks()
@@ -99,7 +102,8 @@ def mean_mass_spectra_lineplot(data, label, output_file):
 
 def pca_scatterplot(x, y, class_names, output_file):
     plt.clf()
-
+    plt.style.use("default")
+    sns.set_style("ticks")
     class_count = np.unique(y).size
     palette = BASE_PALETTE[:class_count]
 
@@ -122,7 +126,8 @@ def pca_scatterplot(x, y, class_names, output_file):
 
 def tsne_scatterplot(x, y, perplexities, class_names, output_file):
     plt.clf()
-
+    plt.style.use("default")
+    sns.set_style("ticks")
     class_count = np.unique(y).size
     palette = BASE_PALETTE[:class_count]
 
@@ -192,7 +197,7 @@ for file in input_file_paths:
 
 
     print("     Antibiotic Mean Mass Spectra Correlation...")
-    meltdata = bacteria.melt(antibiotics, var_name='Da', value_name='Value')
+    meltdata = bacteria.melt(antibiotics, var_name='Da', value_name='Intensity')
     meltdata["Da"] = meltdata["Da"].astype(str).astype(int)
 
     for antibiotic in antibiotics:
