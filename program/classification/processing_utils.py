@@ -53,7 +53,7 @@ def bin(X, bin_size):
     )
     binned_X = binned_X.drop(["mass"], axis=1)
     # Mean value of each bin is calculated
-    binned_X = binned_X.groupby(["bin"]).mean().reset_index(drop=False)
+    binned_X = binned_X.groupby(["bin"], observed=False).mean().reset_index(drop=False)
     # Data is transposed
     binned_X = binned_X.set_index("bin").T.reset_index(drop=True)
     return binned_X
