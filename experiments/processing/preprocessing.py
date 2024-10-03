@@ -14,15 +14,14 @@ import joblib
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-f", "--Folder", help="What folder to get the data from", default="binned")
-parser.add_argument("-n", "--Norm", help="Data normalization method. Supports \"none\",\"min-max\" and \"standard\"", required=True)
+parser.add_argument("-n", "--Norm", help="Data normalization method. Supports \"none\",\"min-max\" and \"standard\"", default="standard")
+parser.add_argument("-o", "--Oversampling", help="Method used to oversample data. Supports \"none\", \"random\" and \"smotetomek\"", default="none")
 args = parser.parse_args()
 
 min_instances = 10
 
 unprocessed_folder = "data/unprocessed/"+args.Folder+"/"
-processed_folder = "data/processed/"+args.Folder+"/"
-if args.Norm:
-    processed_folder = processed_folder+args.Norm+"/"
+processed_folder = "data/processed/"+args.Folder+"/"+args.Oversampling+"/"+args.Norm+"/"
 
 
 if not os.path.exists(processed_folder):
@@ -80,6 +79,12 @@ for file in unprocessed_file_paths:
 
         joblib.dump(scaler, processed_folder+"scaler/"+file_name+".save")
 
+    if args.Oversampling:
+        if args.Oversampling == "random":
+            print("a")
+        elif args.Oversampling == "smotetomek":
+            print("b")
+    
     lc = LabelEncoder()
 
     agg_columns = pd.DataFrame()
