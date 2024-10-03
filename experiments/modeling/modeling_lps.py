@@ -77,33 +77,40 @@ def optimize(train_features, train_labels, algorithm, output_model_file, output_
     output.close() 
 
 
-def multilabel(train_features, train_labels, test_features, algorithm, base_name, model_file):
+def multilabel(train_features, train_labels, test_features, algorithm, base_name, model_file, oversampled=False):
     model_file = model_file+".joblib"
 
     train_y = agg_columns(train_labels)
 
     train_y = lc.transform(train_y.values.ravel())
 
-    if not os.path.exists(model_file) or not os.path.exists(base_name+"_cv.txt"):
+    if not oversampled and (not os.path.exists(model_file) or not os.path.exists(base_name+"_cv.txt")):
         print("     Model training...")
         optimize(train_features, train_y, algorithm, model_file, base_name+"_cv.txt", True)
 
+    if oversampled and not os.path.exists(model_file):
+        model_file_base = model_file.replace("_random", "").replace("_smotetomek", "")
+        if os.path.exists(model_file_base):
+            model = load(model_file_base) 
+            model.fit(train_features, train_y)
+            dump(model, model_file)
+        else:
+            print("First run the script with data that's not oversampled")
+    
     model = load(model_file) 
 
     pred = model.predict(test_features)
     pred = lps_to_multilabel_list(pred)
 
-    if "bin5" not in base_name:
-        print("     SHAP...")
-        feature_importance(model, train_features, train_y, test_features, algorithm, base_name)
+    # if "bin5" not in base_name:
+    #     print("     SHAP...")
+    #     feature_importance(model, train_features, train_y, test_features, algorithm, base_name)
 
-    # proba = model.proba(test_x)
     return pred
 
 
-def independent(train_features, train_labels, test_features, antibiotics, algorithm, base_name, model_file):
+def independent(train_features, train_labels, test_features, antibiotics, algorithm, base_name, model_file, oversampled=False):
     classifications = []
-    probabilities = []
 
     for antibiotic in antibiotics:
         print(" ", antibiotic, "...")
@@ -113,19 +120,28 @@ def independent(train_features, train_labels, test_features, antibiotics, algori
 
         antibiotic_train_y = train_labels[antibiotic]
 
-        if not os.path.exists(antibiotic_model_file) or not os.path.exists(antibiotic_base_name+"_cv.txt"):
+        if not oversampled and (not os.path.exists(antibiotic_model_file) or not os.path.exists(antibiotic_base_name+"_cv.txt")):
             print("     Model training...")
             optimize(train_features, antibiotic_train_y, algorithm, antibiotic_model_file, antibiotic_base_name+"_cv.txt", False)
+        
+        if oversampled and not os.path.exists(antibiotic_model_file):
+            print("AAA")
+            antibiotic_model_file_base = antibiotic_model_file.replace("_random", "").replace("_smotetomek", "")
+            if os.path.exists(antibiotic_model_file_base):
+                model = load(antibiotic_model_file_base) 
+                model.fit(train_features, antibiotic_train_y)
+                dump(model, antibiotic_model_file)
+            else:
+                print("First run the script with data that's not oversampled")
 
         model = load(antibiotic_model_file) 
 
         antibiotic_pred = model.predict(test_features)
         classifications.append(antibiotic_pred)
         
-        if "bin5" not in base_name:
-            print("     SHAP...")
-            feature_importance(model, train_features, antibiotic_train_y, test_features, algorithm, antibiotic_base_name)
-        # probabilities = model.proba(test_x)
+        # if "bin5" not in base_name:
+        #     print("     SHAP...")
+        #     feature_importance(model, train_features, antibiotic_train_y, test_features, algorithm, antibiotic_base_name)
 
     pred = []
     for i in range(len(classifications[0])):
@@ -142,13 +158,14 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-f", "--Folder", help="What folder to get the data from", default="binned")
     parser.add_argument("-n", "--Norm", help="Data normalization method. Supports \"none\",\"min-max\" and \"standard\"", default="standard", choices=["none", "min-max", "standard"])
+    parser.add_argument("-o", "--Oversampling", help="Method used to oversample data. Supports \"none\", \"random\" and \"smotetomek\"", default="none")
     parser.add_argument("-a", "--Algorithm", help="ML Algorithm to use (options: xgb, svc, rf, mlp)", choices=["xgb", "svc", "rf", "mlp"], required=True)
     parser.add_argument("-m", "--Multilabel", help="Evaluate all labels through a single model using LPS or not", default="independent", choices=["lps", "independent"])
     args = parser.parse_args()
     
     mode = args.Multilabel
 
-    input_folder = "data/processed/"+args.Folder+"/"+args.Norm+"/"
+    input_folder = "data/processed/"+args.Folder+"/"+args.Oversampling+"/"+args.Norm+"/"
 
     output_folder = "modeling/results/"
     os.makedirs(output_folder, exist_ok=True)
@@ -166,8 +183,8 @@ if __name__ == "__main__":
         file_name_ext = os.path.basename(file)
         file_name = os.path.splitext(file_name_ext)[0].replace("train_", "")
 
-        base_name = output_folder+file_name+"_"+args.Algorithm+"_"+args.Norm+"_"+mode
-        model_file = "modeling/models/"+file_name+"_"+args.Algorithm+"_"+args.Norm+"_"+mode
+        base_name = output_folder+file_name+"_"+args.Algorithm+"_"+args.Oversampling+"_"+args.Norm+"_"+mode
+        model_file = "modeling/models/"+file_name+"_"+args.Algorithm+"_"+args.Oversampling+"_"+args.Norm+"_"+mode
 
         antibiotics = train_bac.columns.drop(train_bac[train_bac.columns.drop(list(train_bac.filter(regex='[^0-9]')))].columns)
 
@@ -177,12 +194,14 @@ if __name__ == "__main__":
         train_y = train_bac[antibiotics].astype(int)
         test_y = test_bac[antibiotics].astype(int)
 
-        lc = load("data/processed/"+args.Folder+"/"+args.Norm+"/encoder/"+file_name+"_encoder.save")
+        lc = load("data/processed/"+args.Folder+"/"+args.Oversampling+"/"+args.Norm+"/encoder/"+file_name+"_encoder.save")
+
+        oversampled = args.Oversampling != "none"
 
         if args.Multilabel == "lps":
-            pred = multilabel(train_x, train_y, test_x, args.Algorithm, base_name, model_file)
+            pred = multilabel(train_x, train_y, test_x, args.Algorithm, base_name, model_file, oversampled)
         else:
-            pred = independent(train_x, train_y, test_x, antibiotics, args.Algorithm, base_name, model_file)
+            pred = independent(train_x, train_y, test_x, antibiotics, args.Algorithm, base_name, model_file, oversampled)
 
         print("  Results...")
         metrics_report(test_y, pred, antibiotics, base_name+"_results.txt")

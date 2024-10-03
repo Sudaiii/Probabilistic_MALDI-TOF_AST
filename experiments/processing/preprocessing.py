@@ -9,6 +9,8 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 
+from oversampling import random_oversampling, smote_tomek_oversampling
+
 import joblib
 
 
@@ -78,12 +80,6 @@ for file in unprocessed_file_paths:
             os.makedirs(processed_folder+"scaler/")
 
         joblib.dump(scaler, processed_folder+"scaler/"+file_name+".save")
-
-    if args.Oversampling:
-        if args.Oversampling == "random":
-            print("a")
-        elif args.Oversampling == "smotetomek":
-            print("b")
     
     lc = LabelEncoder()
 
@@ -96,6 +92,21 @@ for file in unprocessed_file_paths:
         os.makedirs(processed_folder+"encoder/")
 
     joblib.dump(lc, processed_folder+"encoder/"+file_name+"_encoder.save")
+
+    if args.Oversampling:
+        y_train_lps = lc.transform(agg_columns.values.ravel())
+        
+        if args.Oversampling == "random":
+            x_train, y_train_lps = random_oversampling(x_train, y_train_lps)
+        elif args.Oversampling == "smotetomek":
+            x_train, y_train_lps = smote_tomek_oversampling(x_train, y_train_lps)
+
+        y_train_agg = lc.inverse_transform(y_train_lps)
+        
+        y_train = []
+        for instance in y_train_agg:
+            y_train.append(list(instance))
+
 
     train = pd.DataFrame(np.column_stack([x_train, y_train]))
     train.columns = list(malditof.columns) + antibiotics
