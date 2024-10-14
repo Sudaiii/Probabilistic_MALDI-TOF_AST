@@ -77,18 +77,65 @@ def optimize(train_features, train_labels, algorithm, output_model_file, output_
     output.close() 
 
 
-def multilabel(train_features, train_labels, test_features, algorithm, base_name, model_file, oversampled=False):
+def multilabel(train_features, train_labels, test_features, algorithm, base_name, model_file, oversampled=False, retrain=True):
     model_file = model_file+".joblib"
 
     train_y = agg_columns(train_labels)
-
     train_y = lc.transform(train_y.values.ravel())
 
-    if not oversampled and "driamsB" not in base_name and "driamsC" not in base_name and (not os.path.exists(model_file) or not os.path.exists(base_name+"_cv.txt")):
+    bac_options = ["s_aureus", "p_aeruginosa", "k_pneumoniae", "e_coli"]
+    for bac_option in bac_options:
+        if bac_option in model_file:
+            model_bac = bac_option
+    standarization_options = ["none", "min-max", "standard"]
+    for standarization_option in standarization_options:
+        if standarization_option in model_file:
+            model_standarization = standarization_option
+    bin_options = ["bin5", "bin20"]
+    for bin_option in bin_options:
+        if bin_option in model_file:
+            model_bin = bin_option
+    model_file_base = "modeling/models/"+model_bac+"_driams_"+model_bin+"_"+algorithm+"_"+model_standarization+"_lps.joblib"
+
+    if retrain and not oversampled and "driamsB" not in base_name and "driamsC" not in base_name and "driamsD" not in base_name and (not os.path.exists(model_file) or not os.path.exists(base_name+"_cv.txt")):
         print("     Model training...")
         optimize(train_features, train_y, algorithm, model_file, base_name+"_cv.txt", True)
 
-    if (oversampled or "driamsB" in base_name or "driamsC" in base_name) and not os.path.exists(model_file):
+    if retrain and (oversampled or "driamsB" in base_name or "driamsC" in base_name or "driamsD" in base_name) and not os.path.exists(model_file):
+        print("     Model training...")
+        if os.path.exists(model_file_base):
+            model = load(model_file_base) 
+            model.fit(train_features, train_y)
+            dump(model, model_file)
+        else:
+            print("First run the script with Driams A data that's not oversampled")
+    
+    if retrain:
+        model = load(model_file) 
+    elif os.path.exists(model_file_base):
+        model = load(model_file_base)
+
+    pred = model.predict(test_features)
+    pred = lps_to_multilabel_list(pred)
+
+    # if "bin5" not in base_name:
+    #     print("     SHAP...")
+    #     feature_importance(model, train_features, train_y, test_features, algorithm, base_name)
+
+    return pred
+
+
+def independent(train_features, train_labels, test_features, antibiotics, algorithm, base_name, model_file, oversampled=False, retrain=True):
+    classifications = []
+
+    for antibiotic in antibiotics:
+        print(" ", antibiotic, "...")
+
+        antibiotic_base_name = base_name+"_"+antibiotic
+        antibiotic_model_file = model_file+"_"+antibiotic+".joblib"
+
+        antibiotic_train_y = train_labels[antibiotic]
+
         bac_options = ["s_aureus", "p_aeruginosa", "k_pneumoniae", "e_coli"]
         for bac_option in bac_options:
             if bac_option in model_file:
@@ -101,55 +148,14 @@ def multilabel(train_features, train_labels, test_features, algorithm, base_name
         for bin_option in bin_options:
             if bin_option in model_file:
                 model_bin = bin_option
-        model_file_base = "modeling/models/"+model_bac+"_driams_"+model_bin+"_"+algorithm+"_"+model_standarization+"_lps.joblib"
-        if os.path.exists(model_file_base):
-            model = load(model_file_base) 
-            model.fit(train_features, train_y)
-            dump(model, model_file)
-        else:
-            print("First run the script with Driams A data that's not oversampled")
-    
-    model = load(model_file) 
+        antibiotic_model_file_base = "modeling/models/"+model_bac+"_driams_"+model_bin+"_"+algorithm+"_"+model_standarization+"_independent_"+antibiotic+".joblib"
 
-    pred = model.predict(test_features)
-    pred = lps_to_multilabel_list(pred)
-
-    # if "bin5" not in base_name:
-    #     print("     SHAP...")
-    #     feature_importance(model, train_features, train_y, test_features, algorithm, base_name)
-
-    return pred
-
-
-def independent(train_features, train_labels, test_features, antibiotics, algorithm, base_name, model_file, oversampled=False):
-    classifications = []
-
-    for antibiotic in antibiotics:
-        print(" ", antibiotic, "...")
-
-        antibiotic_base_name = base_name+"_"+antibiotic
-        antibiotic_model_file = model_file+"_"+antibiotic+".joblib"
-
-        antibiotic_train_y = train_labels[antibiotic]
-
-        if not oversampled and "driamsB" not in base_name and "driamsC" not in base_name and (not os.path.exists(antibiotic_model_file) or not os.path.exists(antibiotic_base_name+"_cv.txt")):
+        if retrain and not oversampled and "driamsB" not in base_name and "driamsC" not in base_name and "driamsD" not in base_name and (not os.path.exists(antibiotic_model_file) or not os.path.exists(antibiotic_base_name+"_cv.txt")):
             print("     Model training...")
             optimize(train_features, antibiotic_train_y, algorithm, antibiotic_model_file, antibiotic_base_name+"_cv.txt", False)
         
-        if (oversampled or "driamsB" in base_name or "driamsC" in base_name) and not os.path.exists(antibiotic_model_file):
-            bac_options = ["s_aureus", "p_aeruginosa", "k_pneumoniae", "e_coli"]
-            for bac_option in bac_options:
-                if bac_option in model_file:
-                    model_bac = bac_option
-            standarization_options = ["none", "min-max", "standard"]
-            for standarization_option in standarization_options:
-                if standarization_option in model_file:
-                    model_standarization = standarization_option
-            bin_options = ["bin5", "bin20"]
-            for bin_option in bin_options:
-                if bin_option in model_file:
-                    model_bin = bin_option
-            antibiotic_model_file_base = "modeling/models/"+model_bac+"_driams_"+model_bin+"_"+algorithm+"_"+model_standarization+"_independent_"+antibiotic+".joblib"
+        if retrain and (oversampled or "driamsB" in base_name or "driamsC" in base_name or "driamsD" in base_name) and not os.path.exists(antibiotic_model_file):
+            print("     Model training...")
             if os.path.exists(antibiotic_model_file_base):
                 model = load(antibiotic_model_file_base) 
                 model.fit(train_features, antibiotic_train_y)
@@ -157,7 +163,10 @@ def independent(train_features, train_labels, test_features, antibiotics, algori
             else:
                 print("First run the script with Driams A data that's not oversampled")
 
-        model = load(antibiotic_model_file) 
+        if retrain:
+            model = load(antibiotic_model_file) 
+        elif os.path.exists(antibiotic_model_file_base):
+            model = load(antibiotic_model_file_base)
 
         antibiotic_pred = model.predict(test_features)
         classifications.append(antibiotic_pred)
@@ -193,18 +202,23 @@ if __name__ == "__main__":
     output_folder = "modeling/results/"
     os.makedirs(output_folder, exist_ok=True)
     input_files = os.listdir(input_folder)
-    input_train_files = [x for x in input_files if "test" not in x and not os.path.isdir(os.path.join(input_folder, x))]
+    input_train_files = [x for x in input_files if "train" not in x and not os.path.isdir(os.path.join(input_folder, x))]
     input_file_paths = [input_folder + file for file in input_train_files]
 
     for file in input_file_paths:
         plt.close("all")
         
         print("\nProcessing", file)
-        train_bac = pd.read_csv(file)
-        test_bac = pd.read_csv(file.replace("train", "test"))
+        test_bac = pd.read_csv(file)
+        train_file = file.replace("test", "train")
+        if os.path.exists(train_file):
+            train_bac = pd.read_csv(train_file)
+            retrain = True
+        else:
+            retrain = False
 
         file_name_ext = os.path.basename(file)
-        file_name = os.path.splitext(file_name_ext)[0].replace("train_", "")
+        file_name = os.path.splitext(file_name_ext)[0].replace("test_", "")
 
         if args.Oversampling == "none":
             base_name = output_folder+file_name+"_"+args.Algorithm+"_"+args.Norm+"_"+mode
@@ -213,22 +227,35 @@ if __name__ == "__main__":
             base_name = output_folder+file_name+"_"+args.Algorithm+"_"+args.Oversampling+"_"+args.Norm+"_"+mode
             model_file = "modeling/models/"+file_name+"_"+args.Algorithm+"_"+args.Oversampling+"_"+args.Norm+"_"+mode
 
-        antibiotics = train_bac.columns.drop(train_bac[train_bac.columns.drop(list(train_bac.filter(regex='[^0-9]')))].columns)
+        antibiotics = test_bac.columns.drop(test_bac[test_bac.columns.drop(list(test_bac.filter(regex='[^0-9]')))].columns)
 
-        train_x = train_bac[train_bac.columns.drop(list(train_bac.filter(regex='[^0-9]')))]
         test_x = test_bac[test_bac.columns.drop(list(test_bac.filter(regex='[^0-9]')))]
-
-        train_y = train_bac[antibiotics].astype(int)
         test_y = test_bac[antibiotics].astype(int)
 
-        lc = load("data/processed/"+args.Folder+"/"+args.Oversampling+"/"+args.Norm+"/encoder/"+file_name.replace("A__", "").replace("B__", "")+"_encoder.save")
+        if retrain:
+            train_x = train_bac[train_bac.columns.drop(list(train_bac.filter(regex='[^0-9]')))]
+            train_y = train_bac[antibiotics].astype(int)
+        else:
+            train_x = test_x
+            train_y = test_y
+
+        bac_options = ["s_aureus", "p_aeruginosa", "k_pneumoniae", "e_coli"]
+        for bac_option in bac_options:
+            if bac_option in file_name:
+                model_bac = bac_option
+        bin_options = ["bin5", "bin20"]
+        for bin_option in bin_options:
+            if bin_option in file_name:
+                model_bin = bin_option
+        lc_file_name = "data/processed/"+args.Folder+"/"+args.Oversampling+"/"+args.Norm+"/encoder/"+model_bac+"_driams_"+model_bin+"_encoder.save"
+        lc = load(lc_file_name)
 
         oversampled = args.Oversampling != "none"
 
         if args.Multilabel == "lps":
-            pred = multilabel(train_x, train_y, test_x, args.Algorithm, base_name, model_file, oversampled)
+            pred = multilabel(train_x, train_y, test_x, args.Algorithm, base_name, model_file, oversampled, retrain=retrain)
         else:
-            pred = independent(train_x, train_y, test_x, antibiotics, args.Algorithm, base_name, model_file, oversampled)
+            pred = independent(train_x, train_y, test_x, antibiotics, args.Algorithm, base_name, model_file, oversampled, retrain=retrain)
 
         print("  Results...")
         metrics_report(test_y, pred, antibiotics, base_name+"_results.txt")
